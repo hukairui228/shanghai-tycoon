@@ -1,7 +1,16 @@
-<title>商海浮沉</title>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0d10">
+<meta name="description" content="商海浮沉 · 上海贸易帝国模拟：跨港套利、A 股、合同、澳门，与 AI 财团争夺富豪榜。">
+<title>商海浮沉 · 上海贸易帝国</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Cormorant+Garamond:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- 字体异步加载：国内网络访问 Google Fonts 会阻塞首屏，失败时自动回落到系统字体 -->
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Cormorant+Garamond:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* Private-office terminal: ink ground, champagne hairlines, banknote guilloche. Desks open as framed windows. Red up / green down (A-share). Single deliberate dark look. */
 :root{
@@ -29,18 +38,18 @@ button{cursor:pointer}
 svg.ic{fill:none;stroke:currentColor;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
 
 .top{border-bottom:1px solid var(--hair2);background:rgba(11,13,16,.82);backdrop-filter:blur(10px);flex:none}
-.top .wrap{display:flex;align-items:center;gap:18px;padding-block:12px;flex-wrap:wrap}
-.mark{display:flex;align-items:center;gap:12px;min-width:0;background:none;border:0;padding:0;text-align:left}
+.top .wrap{display:flex;align-items:center;gap:14px;padding-block:12px;flex-wrap:wrap}
+.mark{display:flex;align-items:center;gap:12px;min-width:0;flex:1 1 200px;background:none;border:0;padding:0;text-align:left;overflow:hidden}
 .mono{width:44px;height:44px;border:1px solid var(--gold);display:grid;place-items:center;font-family:var(--f-serif);font-size:20px;color:var(--gold);flex:none;position:relative}
 .mono::after{content:"";position:absolute;inset:3px;border:1px solid var(--hair)}
 .mark .co{font-family:var(--f-serif);font-weight:600;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:240px}
 .mark .ti{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
 .xp{width:90px;height:2px;background:var(--hair2);position:relative}
 .xp i{position:absolute;inset:0 auto 0 0;background:var(--gold)}
-.figs{display:flex;gap:26px;margin-left:12px}
+.figs{display:flex;gap:20px;flex:none}
 .figs div{display:flex;flex-direction:column}
 .figs b{font-family:var(--f-fig);font-size:22px;font-weight:600;line-height:1.1;font-variant-numeric:lining-nums}
-.ctl{margin-left:auto;display:flex;align-items:center;gap:10px}
+.ctl{margin-left:auto;display:flex;align-items:center;gap:8px;flex:none}
 .date{text-align:right}
 .date .d{font-family:var(--f-mono);font-size:13px}
 .date .w{font-size:11px;color:var(--muted)}
@@ -91,7 +100,7 @@ svg.ic{fill:none;stroke:currentColor;stroke-width:1.3;stroke-linecap:round;strok
 @keyframes mq{to{transform:translateX(-100%)}}
 
 .ov{position:fixed;inset:0;z-index:20;background:rgba(5,6,8,.72);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:max(14px,env(safe-area-inset-top,0px)) max(14px,env(safe-area-inset-right,0px)) max(14px,env(safe-area-inset-bottom,0px)) max(14px,env(safe-area-inset-left,0px))}
-.win{width:min(1140px,100%);height:min(880px,100%);display:flex;flex-direction:column;background:var(--bg);border:1px solid var(--hair);border-radius:4px;overflow:hidden;box-shadow:0 40px 100px -30px #000;animation:rise .25s ease-out}
+.win{width:min(1140px,100%);height:auto;min-height:min(540px,100%);max-height:min(880px,100%);display:flex;flex-direction:column;background:var(--bg);border:1px solid var(--hair);border-radius:4px;overflow:hidden;box-shadow:0 40px 100px -30px #000;animation:rise .25s ease-out}
 @keyframes rise{from{transform:translateY(12px);opacity:0}}
 .win-h{display:flex;align-items:center;gap:14px;padding:16px 20px;border-bottom:1px solid var(--hair2);flex:none;background:linear-gradient(180deg,var(--surface2),var(--bg))}
 .win-h svg.ic{width:30px;height:30px;color:var(--gold);flex:none}
@@ -261,9 +270,11 @@ canvas.chart{width:100%;height:230px;display:block}
 .opt{display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid var(--hair2);border-radius:3px;padding:12px 14px;background:var(--surface);text-align:left;width:100%}
 .opt:hover{border-color:var(--gold)}
 .opt:disabled{opacity:.4;cursor:not-allowed}
-.toasts{position:fixed;right:max(16px,env(safe-area-inset-right,0px));top:calc(78px + env(safe-area-inset-top,0px));z-index:50;display:flex;flex-direction:column;gap:6px;align-items:flex-end;pointer-events:none;max-width:min(360px,90vw)}
+.toasts{position:fixed;right:max(16px,env(safe-area-inset-right,0px));top:calc(80px + env(safe-area-inset-top,0px));z-index:50;display:flex;flex-direction:column;gap:6px;align-items:flex-end;pointer-events:none;max-width:min(300px,86vw)}
 .toast{background:rgba(19,22,27,.97);border:1px solid var(--hair3);border-left:2px solid var(--gold);padding:8px 14px;border-radius:3px;font-size:12.5px;animation:tin .25s ease-out}
 .toast.bad{border-left-color:var(--down)}
+@media (min-width:721px){body.aiopen .toasts{right:calc(430px + 16px)}}
+.mob-only{display:none}
 @keyframes tin{from{transform:translateX(10px);opacity:0}}
 .floaty{position:fixed;z-index:60;font:600 22px var(--f-fig);pointer-events:none;animation:fly 1.4s ease-out forwards}
 @keyframes fly{to{transform:translateY(-40px);opacity:0}}
@@ -278,22 +289,142 @@ canvas.chart{width:100%;height:230px;display:block}
   .ov{padding:0} .win{border-radius:0;height:100%;border:0}
   .win-h{padding:12px 14px} .wb{padding:14px} .tabs{padding:0 10px}
   .pc{width:46px;height:66px} .pc .b{font-size:20px}
+  .mob-only{display:inline} .dsk-only{display:none}
+  .toasts{top:auto;bottom:calc(24px + env(safe-area-inset-bottom,0px));left:12px;right:64px;align-items:stretch;max-width:none}
   .pk{grid-template-columns:1fr 1fr;grid-template-areas:"s2 s2" "s1 s3" "mid mid" "s0 s0"}
   .felt{border-radius:28px;padding:18px 12px}
   .reel{height:180px} .sym{height:60px;font-size:30px} .sym.s7{font-size:44px}
   .tok{width:44px;height:44px} .tok span{width:32px;height:32px;font-size:10px}
 }
+
+/* ===== 2026 迭代：宏观 / 情报 / AI 智囊 / 设置 ===== */
+.env{display:flex;align-items:center;gap:8px;flex:none}
+.macro{display:flex;align-items:center;gap:7px;border:1px solid var(--hair3);border-radius:3px;padding:4px 9px;font-size:11.5px;color:var(--muted);white-space:nowrap}
+.macro i{width:6px;height:6px;border-radius:50%;background:var(--gold);flex:none;box-shadow:0 0 0 3px rgba(200,169,106,.13)}
+.macro b{font-weight:500;color:var(--ink)}
+.macro.boom i{background:var(--up);box-shadow:0 0 0 3px rgba(216,96,78,.15)}
+.macro.slump i{background:var(--down);box-shadow:0 0 0 3px rgba(79,159,128,.15)}
+.macro.hot i{background:#c98a3f;box-shadow:0 0 0 3px rgba(201,138,63,.15)}
+.intelp{display:flex;align-items:center;gap:6px;border:1px solid var(--hair);border-radius:3px;padding:4px 9px;font:500 11.5px var(--f-mono);color:var(--gold);cursor:pointer;background:none;white-space:nowrap}
+.intelp:hover{background:rgba(200,169,106,.08)}
+.intelp svg{width:13px;height:13px;stroke-width:1.6}
+
+.ai-fab{position:fixed;right:max(18px,env(safe-area-inset-right,0px));bottom:calc(46px + env(safe-area-inset-bottom,0px));z-index:30;width:52px;height:52px;border-radius:50%;border:1px solid var(--gold);background:radial-gradient(120% 120% at 30% 20%,#23282f,#12151a);color:var(--gold);display:grid;place-items:center;box-shadow:0 10px 30px -8px rgba(0,0,0,.8),0 0 0 1px rgba(200,169,106,.1);transition:transform .18s,border-color .18s}
+.ai-fab:hover{transform:translateY(-2px);border-color:var(--gold-hi)}
+.ai-fab svg{width:24px;height:24px}
+.ai-fab .bd{position:absolute;top:-3px;right:-3px;min-width:16px;height:16px;border-radius:9px;background:var(--up);color:#fff;font:600 10px/16px var(--f-mono);text-align:center;padding:0 4px}
+.ai-fab.busy::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px solid var(--gold);animation:ping 1.4s ease-out infinite}
+@keyframes ping{to{transform:scale(1.25);opacity:0}}
+
+.drawer{position:fixed;inset:0;z-index:35;display:flex;justify-content:flex-end;background:rgba(5,6,8,.55);backdrop-filter:blur(3px);animation:fade .18s ease-out}
+@keyframes fade{from{opacity:0}}
+.dw{width:min(430px,100%);height:100%;background:linear-gradient(180deg,#12151a,#0b0d10);border-left:1px solid var(--hair);display:flex;flex-direction:column;min-height:0;animation:slidein .22s cubic-bezier(.2,.8,.2,1)}
+@keyframes slidein{from{transform:translateX(24px);opacity:.6}}
+.dw-h{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--hair2);flex:none}
+.dw-h .t{font-family:var(--f-serif);font-weight:600;font-size:16px}
+.dw-h .s{font-size:11px;color:var(--muted);margin-top:1px}
+.dw-h .x{margin-left:auto;border:1px solid var(--hair3);background:none;border-radius:3px;width:30px;height:30px;color:var(--muted);display:grid;place-items:center;font-size:15px}
+.dw-b{flex:1;overflow:auto;padding:14px 16px;display:flex;flex-direction:column;gap:12px;min-height:0;scroll-behavior:smooth}
+.dw-f{flex:none;border-top:1px solid var(--hair2);padding:10px 12px 12px;display:flex;flex-direction:column;gap:8px}
+.msg{max-width:92%;font-size:13px;line-height:1.62;padding:9px 12px;border-radius:4px;white-space:pre-wrap;word-break:break-word;animation:rise .18s ease-out}
+.msg.u{align-self:flex-end;background:rgba(200,169,106,.14);border:1px solid rgba(200,169,106,.3);color:var(--ink)}
+.msg.a{align-self:flex-start;background:var(--surface);border:1px solid var(--hair2);color:#d8d2c6}
+.msg.e{align-self:stretch;background:rgba(168,65,47,.12);border:1px solid rgba(216,96,78,.35);color:#e8b6ae;font-size:12px}
+.msg b{color:var(--gold-hi);font-weight:500}
+.msg .cur{display:inline-block;width:6px;height:13px;background:var(--gold);vertical-align:-2px;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.qchips{display:flex;gap:6px;flex-wrap:wrap}
+.qchips button{border:1px solid var(--hair2);background:none;border-radius:12px;padding:4px 10px;font-size:11.5px;color:var(--muted);white-space:nowrap}
+.qchips button:hover{color:var(--gold-hi);border-color:var(--hair)}
+.composer{display:flex;gap:8px;align-items:flex-end}
+.composer textarea{flex:1;resize:none;background:var(--surface);border:1px solid var(--hair3);border-radius:4px;padding:9px 11px;font:13px/1.5 var(--f-sans);color:var(--ink);max-height:110px;min-height:40px}
+.composer textarea:focus{outline:none;border-color:var(--hair)}
+.send{width:40px;height:40px;flex:none;border-radius:4px;border:1px solid var(--gold);background:var(--gold);color:#16120a;display:grid;place-items:center}
+.send:disabled{opacity:.4;cursor:not-allowed}
+.send svg{width:17px;height:17px}
+
+.set-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid var(--hair2)}
+.set-row:last-child{border-bottom:0}
+.set-row .lab{font-size:13px}
+.set-row .hint{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.45}
+.set-row input[type=text],.set-row input[type=password],.set-row select{background:var(--surface);border:1px solid var(--hair3);border-radius:3px;padding:7px 9px;font:12.5px var(--f-mono);max-width:210px;width:100%}
+.set-row select{font-family:var(--f-sans)}
+.sw{width:38px;height:20px;border-radius:11px;border:1px solid var(--hair3);background:var(--surface2);position:relative;flex:none;transition:background .15s,border-color .15s;padding:0}
+.sw::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#6b6862;transition:transform .16s,background .16s}
+.sw.on{background:rgba(200,169,106,.22);border-color:var(--gold)}
+.sw.on::after{transform:translateX(18px);background:var(--gold)}
+.tagline{display:inline-flex;align-items:center;gap:5px;font:500 10px var(--f-mono);letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--hair3);border-radius:2px;padding:2px 7px;color:var(--muted)}
+.tagline.ok{border-color:rgba(79,159,128,.5);color:var(--down)}
+.tagline.bad{border-color:rgba(216,96,78,.5);color:var(--up)}
+
+.tip{position:relative;display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border:1px solid var(--hair3);border-radius:50%;font:500 9px var(--f-mono);color:var(--muted);cursor:help;vertical-align:1px}
+.tip:hover::after{content:attr(data-t);position:absolute;bottom:150%;left:50%;transform:translateX(-50%);width:max-content;max-width:240px;background:#1b1f26;border:1px solid var(--hair3);border-radius:3px;padding:6px 9px;font:400 11.5px/1.5 var(--f-sans);color:var(--ink);z-index:70;box-shadow:0 8px 24px rgba(0,0,0,.6);white-space:normal;text-align:left}
+.kbd{display:inline-block;border:1px solid var(--hair3);border-bottom-width:2px;border-radius:3px;padding:0 5px;font:500 10.5px var(--f-mono);color:var(--muted);line-height:16px;min-width:18px;text-align:center}
+.sc-grid{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-size:13px;align-items:center}
+.sc-grid .k2{text-align:right}
+
+.ins{display:flex;align-items:center;gap:10px;border:1px dashed var(--hair3);border-radius:3px;padding:9px 12px;background:rgba(200,169,106,.03);font-size:12.5px}
+.ins.on{border-style:solid;border-color:var(--hair);background:rgba(200,169,106,.08)}
+.ins input{accent-color:var(--gold);width:15px;height:15px}
+
+.rep{width:100%;border-collapse:collapse;font-size:13px}
+.rep td{padding:7px 0;border-bottom:1px solid var(--hair2)}
+.rep td:last-child{text-align:right;font-family:var(--f-mono)}
+.rep tr.tot td{border-bottom:0;border-top:1px solid var(--hair);font-weight:600;padding-top:10px}
+
+.toast{pointer-events:auto;cursor:default;display:flex;align-items:center;gap:8px;max-width:100%}
+.toast .cls{margin-left:auto;opacity:.45;font-size:15px;line-height:1;padding:0 2px}
+.toast:hover .cls{opacity:1}
+.toast.lv{border-left-color:var(--gold-hi);background:rgba(30,26,18,.98)}
+.toast.good{border-left-color:var(--up)}
+.newsbadge{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
+
+/* 桌面端密度优化：desks 随宽度自适应 */
+@media (min-width:1200px){.desks{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:720px){
+  .top .wrap{gap:8px 10px;padding-block:10px}
+  .mark{order:1;flex:1 1 auto;gap:9px}
+  .env{order:2;flex:none}
+  .figs{order:3;flex:1 1 auto;gap:14px;margin-left:0}
+  .figs b{font-size:17px}
+  .ctl{order:4;flex:none;margin-left:auto;gap:6px}
+  .seg button{padding:5px 7px;font-size:10px}
+  .ib{width:28px;height:28px}
+  .hero canvas{height:56px!important}
+  .hero .big{font-size:clamp(32px,9vw,44px)}
+}
+@media (max-width:520px){
+  .env{order:2;flex:1 1 100%;overflow-x:auto;scrollbar-width:none}
+  .env::-webkit-scrollbar{display:none}
+  .intelp,.macro{padding:5px 8px;font-size:11px}
+  .ai-fab{width:46px;height:46px;bottom:calc(42px + env(safe-area-inset-bottom,0px))}
+  .mode{grid-template-columns:1fr}
+  .dw{width:100%;border-left:0}
+}
+/* 情报按钮选中态 / 跑马灯交给 JS 位移 / 现货行可点 */
+.intelp.on{border-color:var(--gold);color:var(--gold-hi);background:rgba(200,169,106,.08)}
+.ticker .tk{padding-left:0;animation:none;will-change:transform}
+tr[data-sp]{cursor:pointer}
+tr[data-sp]:hover td{background:rgba(236,230,218,.03)}
+.wb canvas{display:block}
+@media (prefers-reduced-motion:reduce){.ticker .tk{transition:none}}
 </style>
 
 <canvas id="bgc" aria-hidden="true"></canvas>
 <div id="app">
   <header class="top gut"><div class="wrap" id="top"></div><div class="dayline"><i id="dayFill"></i></div></header>
   <div class="hub gut"><div class="wrap"><main id="main"></main><aside class="side" id="side"></aside></div></div>
-  <div class="ticker"><div class="tk" id="ticker"></div></div>
+  <div class="ticker" id="tkBox"><div class="tk" id="ticker"></div></div>
 </div>
 <div id="winRoot"></div>
 <div id="modalRoot"></div>
+<div id="setRoot"></div>
+<div id="aiRoot"></div>
+<button class="ai-fab" id="aiFab" type="button" aria-label="AI 智囊" title="AI 智囊（快捷键 A）">
+  <svg class="ic" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.5 18.4 9l5.9.5-4.5 3.8 1.4 5.7L16 16l-5.2 3 1.4-5.7L7.7 9.5 13.6 9z"/><path d="M6 25h20M9 21.5v3.5M16 21v4.5M23 21.5v3.5"/></svg>
+</button>
 <div class="toasts" id="toasts"></div>
+<noscript><p style="padding:20px;color:#ece6da">本游戏需要启用 JavaScript。</p></noscript>
 
 <script>
 (function(){
@@ -384,14 +515,29 @@ const ACH=[
  {id:'tr100',n:'贸易老手',d:'累计 100 笔商品交易'},{id:'beat',n:'力压群雄',d:'净资产超过全部 AI 对手'},
  {id:'mac',n:'濠江初访',d:'第一次在澳门下注'},{id:'god',n:'一掷千金',d:'在澳门单局赢下 ¥100万'},
  {id:'jp',n:'累积大奖',d:'老虎机击中累积奖池'},{id:'ipo',n:'敲钟',d:'公司成功上市'},
+ {id:'ai',n:'军师入幕',d:'首次咨询 AI 智囊'},{id:'intel1',n:'信息差',d:'首次使用情报'},{id:'ins1',n:'有惊无险',d:'投保的货船遭遇变故并获赔'},
+ {id:'nego',n:'谈判桌上',d:'成功议下一份合同'},{id:'blk',n:'黑天鹅',d:'经历一次黑天鹅事件'},
 ];
+
+// 宏观周期：影响商品趋势中枢、波动率、股市漂移。每 40–80 天切换一次。
+const MACRO=[
+ {id:'recover',n:'复苏',en:'Recovery',bias:.02,vol:.95,mu:.0009,seed:'good',d:'需求回暖，订单与信贷都在放宽'},
+ {id:'boom',n:'繁荣',en:'Boom',bias:.05,vol:1.05,mu:.0016,seed:'good',d:'景气度高企，风险偏好上升'},
+ {id:'overheat',n:'过热',en:'Overheat',bias:.03,vol:1.35,mu:.0004,seed:'',d:'通胀抬头，波动加大，央行随时出手'},
+ {id:'slump',n:'衰退',en:'Contraction',bias:-.05,vol:1.2,mu:-.0012,seed:'bad',d:'需求萎缩，现金为王'},
+];
+const MACROBY=Object.fromEntries(MACRO.map(m=>[m.id,m]));
+
+// 情报点数：由「研究部」每日产出，可换取确定性信息
+const INTEL_COST={event:20,forecast:35,rival:50};
+const INTEL_MAX=400;
+
 const ROOMS=[
  {id:'main',n:'中场',en:'MAIN FLOOR',lv:1,min:100,max:100000,chips:[100,500,1000,5000,10000,50000],blinds:[100,200],buy:[10000,60000],slot:[10,50,100,500,1000],seed:300000},
  {id:'vip',n:'贵宾厅',en:'VIP SALON',lv:5,min:5000,max:3000000,chips:[5000,10000,50000,100000,500000,1000000],blinds:[2500,5000],buy:[250000,1500000],slot:[1000,5000,10000,50000],seed:8000000},
  {id:'pr',n:'至尊厅',en:'PRIVÉ',lv:9,min:100000,max:50000000,chips:[100000,500000,1000000,5000000,10000000],blinds:[50000,100000],buy:[5000000,30000000],slot:[50000,100000,500000,1000000],seed:120000000},
 ];
 const CHIPCOL=['#2f5fa8','#a8262a','#2f7a55','#2a2a2a','#7a3fa0','#b8892b','#c46a2c'];
-
 // ================= UTIL =================
 const $=s=>document.querySelector(s);
 const rnd=Math.random;
@@ -419,6 +565,17 @@ const todayKey=()=>{const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+
 function setHTML(el,h){if(el&&el._h!==h){el.innerHTML=h;el._h=h}}
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// —— 性能工具 ——
+// 把多次 refresh() 合并到同一帧，避免一帧内重复构建 DOM
+function raf(fn){return requestAnimationFrame(fn)}
+// 只更新变化的文本节点，避免整块 innerHTML 重建
+function setTxt(el,v){if(el&&el.textContent!==v)el.textContent=v}
+function setAttr(el,k,v){if(el&&el.getAttribute(k)!==v)el.setAttribute(k,v)}
+function setCls(el,v){if(el&&el.className!==v)el.className=v}
+// 图表数据注册表：取代把数组 JSON 塞进 data-* 属性（每帧序列化+解析的开销）
+const CH=new Map();let __chId=0;
+function chReg(data){const id='c'+(++__chId);CH.set(id,data);if(CH.size>400)CH.clear();return id}
+const uid=((p,n=0)=>()=>p+(++n))('u');
 // ================= ICONS =================
 const P={
 trade:'<path d="M4 12 16 5l12 7M6 12h20M8 14v10M13 14v10M19 14v10M24 14v10M4 27h24"/>',
@@ -445,32 +602,58 @@ people:'<circle cx="11" cy="11" r="4"/><circle cx="22" cy="12" r="3.2"/><path d=
 eye:'<path d="M3 16s5-8 13-8 13 8 13 8-5 8-13 8S3 16 3 16z"/><circle cx="16" cy="16" r="4"/>',
 snd:'<path d="M5 12h4l6-5v18l-6-5H5zM20 11.5a6 6 0 0 1 0 9M23 8a10.5 10.5 0 0 1 0 16"/>',
 mute:'<path d="M5 12h4l6-5v18l-6-5H5zM20 13l6 6M26 13l-6 6"/>',
+ai:'<path d="M16 3.5 18.4 9l5.9.5-4.5 3.8 1.4 5.7L16 16l-5.2 3 1.4-5.7L7.7 9.5 13.6 9zM6 25h20M9 21.5v3.5M16 21v4.5M23 21.5v3.5"/>',
+gear2:'<circle cx="16" cy="16" r="4"/><path d="M16 4v3M16 25v3M4 16h3M25 16h3M7.5 7.5l2 2M22.5 22.5l2 2M24.5 7.5l-2 2M9.5 22.5l-2 2"/>',
+intel:'<path d="M16 4a5 5 0 0 0-5 5c0 2 1 3 1 5v2h8v-2c0-2 1-3 1-5a5 5 0 0 0-5-5zM13 20h6M14 24h4M15 27h2"/>',
+send:'<path d="M5 16 27 6 21 27l-6-8z"/><path d="M15 19l6-13"/>',
 };
 const ic=(k,st='')=>`<svg class="ic" viewBox="0 0 32 32" aria-hidden="true" style="${st}">${P[k]||''}</svg>`;
-
 // ================= STATE =================
 let S=null;
 function mkCandles(p0,vol,n){const out=[];let p=p0;for(let i=0;i<n;i++){const o=p;p=p*(1+randn()*vol);const hi=Math.max(o,p)*(1+Math.abs(randn())*vol*.5),lo=Math.min(o,p)*(1-Math.abs(randn())*vol*.5);out.push([o,hi,lo,p])}
   const k=p0/p;return out.map(c=>c.map(v=>+(v*k).toFixed(2)))}
 function newGame(company){
-  const s={v:3,company:company||'未命名贸易行',day:0,cash:150000,xp:0,level:1,prestige:0,loan:0,rate:.055,
+  const s={v:4,company:company||'未命名贸易行',day:0,cash:150000,xp:0,level:1,prestige:0,loan:0,rate:.055,
     mkt:{},trend:{},inv:{},ships:[],stk:{},hold:{},owned:[],upg:{wh:0,fleet:0,speed:0,trader:0,analyst:0,office:0},
     offers:[],contracts:[],rivals:RIVALS.map(r=>({id:r.id,nw:r.nw,shares:Math.round(r.nw/(12+rnd()*10))})),
-    events:[],queued:[],news:[],nwHist:[],stats:{tradeProfit:0,stockProfit:0,trades:0,contracts:0,maxNW:0,spins:0},
+    events:[],queued:[],news:[],nwHist:[],stats:{tradeProfit:0,stockProfit:0,trades:0,contracts:0,maxNW:0,spins:0,insPaid:0,insClaim:0,nego:0},
     ach:{},tut:0,goal:null,ipo:false,nextDecision:16,pendingInv:[],shipId:1,offerId:1,seen:{},wheel:'',wheelAng:0,
-    casino:{net:0,wagered:0,trips:0},jackpot:{},pokerStack:0};
+    casino:{net:0,wagered:0,trips:0},jackpot:{},pokerStack:0,
+    // v4 新增
+    macro:{id:'recover',until:45},intel:0,rivalIntent:null,month:{start:0,nw:0},
+    ai:{events:0,generated:0,lastAt:0}};
   for(const g of GOODS)s.trend[g.id]=1;
   for(const c of CITIES){s.mkt[c.id]={};s.inv[c.id]={};
     for(const g of GOODS){const p=g.base*c.cf[g.id]*(1+randn()*.02);s.mkt[c.id][g.id]={p,prev:p,h:[]};
       for(let i=0;i<30;i++)s.mkt[c.id][g.id].h.push(+(p*(1+randn()*g.vol*1.5)).toPrecision(5))}}
   for(const st of STOCKS){const c=mkCandles(st.p,st.vol,50);s.stk[st.s]={p:st.p,prev:c[c.length-1][0],c,earn:Math.floor(rnd()*80)+20}}
   for(const r of RIVALS){const rv=s.rivals.find(x=>x.id===r.id);const p=+(rv.nw/rv.shares).toFixed(2);const c=mkCandles(p,.02,50);s.stk[r.s]={p,prev:c[c.length-1][0],c,earn:1e9}}
+  s.month.nw=0;
   return s}
 function migrate(s){s.seen=s.seen||{};s.pendingInv=s.pendingInv||[];s.stats.spins=s.stats.spins||0;s.wheel=s.wheel||'';s.wheelAng=s.wheelAng||0;
   s.casino=s.casino||{net:0,wagered:0,trips:0};s.jackpot=s.jackpot||{};
   if(s.pokerStack){s.cash+=s.pokerStack;s.pokerStack=0}
   for(const k in s.stk){const q=s.stk[k];if(!q.c){q.c=(q.h||[q.p]).map((v,i,a)=>{const o=i?a[i-1]:v;return [o,Math.max(o,v),Math.min(o,v),v]});delete q.h}}
+  // v3/v4 兼容
+  s.v=4;
+  s.stats=s.stats||{};for(const k of ['tradeProfit','stockProfit','trades','contracts','maxNW','spins','insPaid','insClaim','nego'])s.stats[k]=s.stats[k]||0;
+  if(!s.macro||!MACROBY[s.macro.id])s.macro={id:'recover',until:s.day+45};
+  s.intel=s.intel||0;if(s.rivalIntent===undefined)s.rivalIntent=null;
+  if(!s.month)s.month={start:s.day,nw:netWorthRaw(s)};
+  if(!s.ai)s.ai={events:0,generated:0,lastAt:0};
+  for(const sh of s.ships)if(sh.ins===undefined)sh.ins=false;
+  s.upg=s.upg||{wh:0,fleet:0,speed:0,trader:0,analyst:0,office:0};
+  for(const k of ['wh','fleet','speed','trader','analyst','office'])s.upg[k]=s.upg[k]||0;
   return s}
+// migrate 期间 S 可能还没赋值，用纯函数版本
+function netWorthRaw(s){let t=s.cash||0;
+  for(const c in s.inv||{})for(const g in s.inv[c])t+=s.inv[c][g].q*(s.mkt[c]&&s.mkt[c][g]?s.mkt[c][g].p:0)*(1-spread((s.upg&&s.upg.trader)||0));
+  for(const x of s.ships||[])t+=x.q*((s.mkt[x.to]&&s.mkt[x.to][x.good])?s.mkt[x.to][x.good].p:0);
+  for(const k in s.hold||{})t+=s.hold[k].q*((s.stk[k]||{}).p||0);
+  for(const o of s.owned||[])t+=o.val;
+  for(const x of s.pendingInv||[])t+=x.amt;
+  return t-(s.loan||0)}
+
 const upgLv=id=>S.upg[id]||0;
 const cityUnlocked=c=>S.level>=C[c].lv;
 const goodUnlocked=g=>S.level>=G[g].lv;
@@ -501,23 +684,38 @@ function maxBuy(city,g){const room=(whCap(upgLv('wh'))-invUsed(city))/G[g].sz;le
 const TIERS=[[.3,'至尊','PLATINUM','#d9d4c7'],[.22,'尊享','GOLD','#c8a96a'],[.15,'优选','SILVER','#9aa3ad'],[0,'标准','BRONZE','#9a6f4f']];
 const tier=p=>TIERS.find(t=>p>=t[0]);
 function bestArb(){let best=null;for(const g of unlockedGoods())for(const a of unlockedCities())for(const b of unlockedCities()){if(a.id===b.id)continue;const r=(bidP(b.id,g.id)-askP(a.id,g.id))/askP(a.id,g.id);if(!best||r>best.r)best={g,a,b,r}}return best}
-
 // ================= FX =================
-function toast(t,k){const el=document.createElement('div');el.className='toast'+(k?' '+k:'');el.textContent=t;const box=$('#toasts');box.appendChild(el);setTimeout(()=>el.remove(),k==='lv'?4200:2800);if(box.children.length>4)box.children[0].remove()}
+// toast：同文案去重（避免每次刷新刷屏）、限长、可点掉、带类型
+const _toastSeen=new Map();
+function toast(t,k){
+  t=String(t);
+  const box=$('#toasts');if(!box)return;
+  const now=Date.now(),prev=_toastSeen.get(t);
+  if(prev&&now-prev<900)return;
+  _toastSeen.set(t,now);
+  if(_toastSeen.size>80)for(const [key,ts] of _toastSeen)if(now-ts>6000)_toastSeen.delete(key);
+  const el=document.createElement('div');el.className='toast'+(k?' '+k:'');
+  const span=document.createElement('span');span.textContent=t;el.appendChild(span);
+  const x=document.createElement('span');x.className='cls';x.textContent='×';el.appendChild(x);
+  const kill=()=>{el.style.opacity='0';el.style.transform='translateX(8px)';setTimeout(()=>el.remove(),160)};
+  el.addEventListener('click',kill);
+  box.appendChild(el);
+  setTimeout(kill,k==='lv'?3800:2600);
+  while(box.children.length>3)box.children[0].remove();
+}
 let actx=null,muted=false;try{muted=localStorage.getItem('sh_mute')==='1'}catch(e){}
 function snd(type){if(muted)return;try{actx=actx||new (window.AudioContext||window.webkitAudioContext)()}catch(e){return}if(!actx)return;
-  const seq={click:[[880,.025,'sine']],coin:[[1175,.06,'sine'],[1568,.14,'sine']],buy:[[660,.05,'sine'],[880,.07,'sine']],bad:[[196,.16,'triangle']],lv:[[523,.12,'sine'],[784,.12,'sine'],[1047,.32,'sine']],card:[[2200,.02,'triangle']],chip:[[1800,.025,'square'],[2400,.02,'square']],tick:[[1400,.012,'square']]}[type]||[[700,.04,'sine']];
+  const seq={click:[[880,.025,'sine']],coin:[[1175,.06,'sine'],[1568,.14,'sine']],buy:[[660,.05,'sine'],[880,.07,'sine']],bad:[[196,.16,'triangle']],lv:[[523,.12,'sine'],[784,.12,'sine'],[1047,.32,'sine']],card:[[2200,.02,'triangle']],chip:[[1800,.025,'square'],[2400,.02,'square']],tick:[[1400,.012,'square']],ai:[[1319,.05,'sine'],[1760,.07,'sine']]}[type]||[[700,.04,'sine']];
   let t=actx.currentTime;for(const [f,d,w] of seq){const o=actx.createOscillator(),g=actx.createGain();o.type=w;o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(type==='chip'||type==='tick'?.04:.09,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g).connect(actx.destination);o.start(t);o.stop(t+d+.02);t+=d*.85}}
 function floaty(txt,color){const ref=win?$('#winRoot .x'):$('#cashFig');if(!ref)return;const r=ref.getBoundingClientRect();const el=document.createElement('div');el.className='floaty';el.textContent=txt;el.style.color=color||'var(--gold-hi)';el.style.left=(win?r.left-170:r.left)+'px';el.style.top=(win?r.top+4:r.bottom+2)+'px';document.body.appendChild(el);setTimeout(()=>el.remove(),1500)}
-
 // ================= NEWS / XP =================
-function news(t,k){S.news.unshift({d:S.day,t,k:k||''});if(S.news.length>80)S.news.length=80}
+let newsSeq=0;
+function news(t,k){S.news.unshift({d:S.day,t,k:k||''});if(S.news.length>80)S.news.length=80;newsSeq++}
 function gainXP(x){if(!(x>0))return;S.xp+=x;while(S.level<15&&S.xp>=xpNeed(S.level)){S.xp-=xpNeed(S.level);S.level++;onLevelUp()}}
 function onLevelUp(){const u=UNLOCKS[S.level];snd('lv');news(`${S.company} 晋升「${TITLES[S.level]}」${u?'，解锁 '+u:''}`,'gold');
   queueModal(()=>`<div class="cap">Promotion</div><div class="lvn">${S.level}</div><h2>${TITLES[S.level]}</h2><div class="rule"></div>${u?`<p>新解锁 · <span class="gold">${u}</span></p>`:'<p class="muted">授信额度与订单规模随等级提升</p>'}<button class="btn pri lg" type="button" data-close>继续经营</button>`);
   if(S.level>=9)grant('cAll')}
 function grant(id){if(S.ach[id]!=null)return;S.ach[id]=S.day;const a=ACH.find(x=>x.id===id);if(!a)return;toast(`荣誉 · ${a.n}`,'lv');snd('coin');news(`获得荣誉「${a.n}」`,'gold');S.prestige+=10;gainXP(30);pushPlayer(true)}
-
 // ================= SIMULATION =================
 const EVENTS=[
  {t:'主产区遭遇罕见干旱，{g}减产预期升温',goods:['rice','soy','cotton','coffee'],m:[1.12,1.25],days:[20,40]},
@@ -554,15 +752,37 @@ function fireEvent(ev){news(ev.t,ev.m>1||ev.mkt>0?'good':(ev.m<1||ev.mkt<0?'bad'
 function evMult(city,g){let m=1;for(const e of S.events){if(e.city&&e.city!==city)continue;if(e.goods==='all'||e.goods.includes(g))m*=e.m}return m}
 function pushCandle(k,np){const o=k.c.length?k.c[k.c.length-1][3]:k.p;const hi=Math.max(o,np)*(1+Math.abs(randn())*.006),lo=Math.min(o,np)*(1-Math.abs(randn())*.006);k.prev=o;k.p=np;k.c.push([+o.toFixed(2),+hi.toFixed(2),+lo.toFixed(2),+np.toFixed(2)]);if(k.c.length>90)k.c.shift()}
 let lastTick=performance.now();
+function rivalMove(){const r=pick(RIVALS),c=pick(unlockedCities()),g=pick(unlockedGoods()),dir=rnd()<.55?1:-1,mag=.03+rnd()*.05;S.mkt[c.id][g.id].p*=1+dir*mag;
+  news(`${r.co}${r.boss}在${c.n}${dir>0?'大举扫货':'集中抛售'}${g.n}，当地价格${dir>0?'上涨':'下跌'}${(mag*100).toFixed(1)}%`,dir>0?'good':'bad');AI.maybeTaunt(r,dir,g)}
+// 对手先「起意」再动手：给了情报系统可侦查的窗口
+function planRivalMove(){const r=pick(RIVALS),c=pick(unlockedCities()),g=pick(unlockedGoods());
+  return {r:r.id,c:c.id,g:g.id,dir:rnd()<.55?1:-1,mag:.03+rnd()*.055,at:S.day+1+Math.floor(rnd()*3)}}
+function execRivalMove(it){const r=RIVALS.find(x=>x.id===it.r);if(!r)return;
+  S.mkt[it.c][it.g].p*=1+it.dir*it.mag;
+  news(`${r.co}${r.boss}在${C[it.c].n}${it.dir>0?'大举扫货':'集中抛售'}${G[it.g].n}，当地价格${it.dir>0?'上涨':'下跌'}${(it.mag*100).toFixed(1)}%`,it.dir>0?'good':'bad');
+  AI.maybeTaunt(r,it.dir,G[it.g])}
+// 宏观周期切换
+function rotateMacro(){const cur=S.macro.id;const pool=MACRO.filter(m=>m.id!==cur);const next=pick(pool);
+  S.macro={id:next.id,until:S.day+40+Math.floor(rnd()*40)};
+  news(`宏观转入「${next.n}」 · ${next.d}`,next.seed||'');S.prestige=Math.max(0,S.prestige);
+  toast(`宏观周期 · ${next.n}`,'lv')}
+const macro=()=>MACROBY[S.macro.id]||MACRO[0];
+// 价格预期：用模拟自身的均值回归模型推算，不是拍脑袋
+function forecast(gid,days){
+  const mb=macro();const out=[];
+  for(const c of unlockedCities()){const m=S.mkt[c.id][gid];const E=G[gid].base*C[c.id].cf[gid]*S.trend[gid]*(1+mb.bias)*evMult(c.id,gid);
+    const k=Math.pow(.93,days);const exp=m.p*k+E*(1-k);out.push({c:c.id,r:exp/m.p-1})}
+  return out.sort((a,b)=>b.r-a.r)}
 function tick(){
-  S.day++;lastTick=performance.now();const wk=isWeekend(S.day);
+  S.day++;lastTick=performance.now();const wk=isWeekend(S.day);const mb=macro();
+  if(S.day>=S.macro.until)rotateMacro();
   for(const q of S.queued.filter(q=>q.at<=S.day))fireEvent(q);
   S.queued=S.queued.filter(q=>q.at>S.day);S.events=S.events.filter(e=>e.until>S.day);
   if(rnd()<.09)scheduleEvent();
-  for(const g of GOODS){let t=S.trend[g.id];t*=Math.exp(randn()*g.vol*.45);t+=.012*(1-t);S.trend[g.id]=clamp(t,.6,1.6)}
+  for(const g of GOODS){let t=S.trend[g.id];t*=Math.exp(randn()*g.vol*.45*(mb.vol||1));t+=.012*((1+(mb.bias||0)*2)-t);S.trend[g.id]=clamp(t,.55,1.8)}
   for(const c of CITIES)for(const g of GOODS){const m=S.mkt[c.id][g.id];m.prev=m.p;const E=g.base*c.cf[g.id]*S.trend[g.id]*evMult(c.id,g.id);
-    m.p=Math.max(g.base*.3,m.p+.07*(E-m.p)+m.p*g.vol*randn());m.h.push(+m.p.toPrecision(5));if(m.h.length>60)m.h.shift()}
-  if(!wk){const mk=.0003+randn()*.009;
+    m.p=Math.max(g.base*.3,m.p+.07*(E-m.p)+m.p*g.vol*(mb.vol||1)*randn());m.h.push(+m.p.toPrecision(5));if(m.h.length>60)m.h.shift()}
+  if(!wk){const mk=.0003+(mb.mu||0)+randn()*.009;
     for(const st of STOCKS){const k=S.stk[st.s];let r=st.beta*mk+randn()*st.vol;
       if(st.good){r+=.5*(S.trend[st.good]-(k.lt||S.trend[st.good]));k.lt=S.trend[st.good]}
       if(S.day>=k.earn){const sur=randn()*.06;r+=sur;k.earn=S.day+90;news(`${st.n}发布季报，${sur>0?'净利润超预期，股价大涨':'业绩不及预期，股价重挫'}`,sur>0?'good':'bad')}
@@ -571,13 +791,21 @@ function tick(){
   for(const r of RIVALS){const rv=S.rivals.find(x=>x.id===r.id);let mu=r.mu;if(pnw>rv.nw*1.5)mu+=.0012;if(pnw<rv.nw/3)mu-=.0008;rv.nw*=Math.exp(mu+r.sig*randn()*.6);
     const k=S.stk[r.s];if(!wk){const base=k.c[k.c.length-1][3];pushCandle(k,clamp(rv.nw/rv.shares*(1+randn()*.01),base*.9,base*1.1))}}
   if(wk)for(const k in S.stk)S.stk[k].prev=S.stk[k].p;
-  if(rnd()<.2)rivalMove();
+  // 对手：先起意，后执行
+  if(!S.rivalIntent&&rnd()<.22)S.rivalIntent=planRivalMove();
+  if(S.rivalIntent&&S.day>=S.rivalIntent.at){execRivalMove(S.rivalIntent);S.rivalIntent=null}
+  // 研究部产出情报
+  const al=upgLv('analyst');if(al>0)S.intel=clamp(S.intel+al*2,0,INTEL_MAX);
   const arrived=S.ships.filter(x=>x.eta<=S.day);
   for(const sh of arrived){const inv=S.inv[sh.to];const cur=inv[sh.good]||{q:0,cost:0};const room=whCap(upgLv('wh'))-invUsed(sh.to);
     if(sh.q*G[sh.good].sz>room+1e-9){news(`${C[sh.to].n}仓库爆仓，${G[sh.good].n}暂存码头，产生堆存费`,'bad');S.cash-=Math.round(sh.q*G[sh.good].sz*40)}
+    // 航运保险：途中价格被打崩或延误，才赔
+    if(sh.ins){const m=evMult(sh.to,sh.good);const late=sh.eta>(sh.plan||sh.eta);
+      if(m<.995||late){const claim=Math.round(sh.unit*sh.q*.8);S.cash+=claim;S.stats.insClaim+=claim;
+        news(`保险理赔 · ${G[sh.good].n} 运输途中${late?'延误':'价格跳水'}，获赔 ${fmt(claim)}`,'good');grant('ins1');floaty('+'+fmt(claim));snd('coin')}}
     inv[sh.good]={q:cur.q+sh.q,cost:(cur.q*cur.cost+sh.unit*sh.q)/(cur.q+sh.q)};toast(`货船抵达${C[sh.to].n} · ${G[sh.good].n} ${fmtQ(sh.q)}${G[sh.good].u}`);snd('buy')}
   if(arrived.length)S.ships=S.ships.filter(x=>x.eta>S.day);
-  S.loan*=1+S.rate/365;S.cash-=dailyCost();
+  S.loan*=1+S.rate/365;const cost=dailyCost();S.cash-=cost;S.stats.costSum=(S.stats.costSum||0)+cost;S.stats.interestSum=(S.stats.interestSum||0)+S.loan*S.rate/365;
   for(const o of S.owned){const l=LUXBY[o.id];o.val*=Math.exp(l.ap/365+randn()*.004)}
   if(S.cash<0){const need=-S.cash;if(creditLimit()-S.loan>=need){S.loan+=need;S.cash=0;if(!S.seen.autoLoan){S.seen.autoLoan=1;news('现金不足，银行已自动放贷周转','bad')}}}
   const slots=3+upgLv('office');if(S.offers.length<slots&&rnd()<.3)genOffer();
@@ -594,17 +822,43 @@ function tick(){
   if(S.tut>=TUT.length){if(!S.goal||S.day>=S.goal.end){const base=Math.max(nw,100000);S.goal={end:S.day+7,target:Math.round(base*(.04+rnd()*.04)/1000)*1000,baseProfit:S.stats.tradeProfit+S.stats.stockProfit,reward:Math.round(base*.02/1000)*1000+5000,done:false}}
     else if(!S.goal.done&&S.stats.tradeProfit+S.stats.stockProfit-S.goal.baseProfit>=S.goal.target){S.goal.done=true;S.cash+=S.goal.reward;gainXP(S.goal.reward/300);toast(`周目标达成 · 奖励 ${fmt(S.goal.reward)}`,'lv');snd('coin');floaty('+'+fmt(S.goal.reward))}}
   if(S.day>=S.nextDecision){S.nextDecision=S.day+20+Math.floor(rnd()*20);decision()}
+  if(S.day%30===0)monthlyReport(nw);
+  AI.maybeGenerate();          // AI 时事（有 key 才行动，异步、非阻塞）
   if(nw<0&&S.cash<=0&&S.loan>=creditLimit()){gameOver();return}
   checkTut();if(S.day%5===0)save();
   refresh()}
-function rivalMove(){const r=pick(RIVALS),c=pick(unlockedCities()),g=pick(unlockedGoods()),dir=rnd()<.55?1:-1,mag=.03+rnd()*.05;S.mkt[c.id][g.id].p*=1+dir*mag;
-  news(`${r.co}${r.boss}在${c.n}${dir>0?'大举扫货':'集中抛售'}${g.n}，当地价格${dir>0?'上涨':'下跌'}${(mag*100).toFixed(1)}%`,dir>0?'good':'bad')}
+// 月度经营回顾
+function monthlyReport(nw){
+  const m=S.month||{start:S.day,nw:nw};const d=nw-m.nw;
+  const trade=S.stats.tradeProfit-(m.trade0||0),stock=S.stats.stockProfit-(m.stock0||0),cas=S.casino.net-(m.cas0||0);
+  const cost=(S.stats.costSum||0)-(m.cost0||0),intr=(S.stats.interestSum||0)-(m.intr0||0);
+  const other=d-trade-stock-cas+cost+intr;
+  news(`月度结算 · 净资产 ${d>=0?'+':''}${fmt(d)}`,'gold');
+  queueModal(()=>`<div class="cap">Monthly Statement · ${dateStr(S.day)}</div><h2>第 ${Math.floor(S.day/30)} 个月经营回顾</h2><div class="rule"></div>
+   <table class="rep"><tbody>
+    <tr><td>期初净资产</td><td>${fmt(m.nw)}</td></tr>
+    <tr><td>贸易利润</td><td class="${cls(trade)}">${fmt(trade)}</td></tr>
+    <tr><td>股票盈亏</td><td class="${cls(stock)}">${fmt(stock)}</td></tr>
+    <tr><td>澳门净额</td><td class="${cls(cas)}">${fmt(cas)}</td></tr>
+    <tr><td>经营开支</td><td class="down">${fmt(-cost)}</td></tr>
+    <tr><td>利息</td><td class="down">${fmt(-intr)}</td></tr>
+    <tr><td>其他（藏品、合约、行情）</td><td class="${cls(other)}">${fmt(other)}</td></tr>
+    <tr class="tot"><td>期末净资产</td><td class="${cls(d)}">${fmt(nw)}</td></tr>
+   </tbody></table>
+   <p class="note">宏观：${macro().n} · ${macro().d}</p>
+   <button class="btn pri lg" type="button" data-close>继续</button>`);
+  S.month={start:S.day,nw,trade0:S.stats.tradeProfit,stock0:S.stats.stockProfit,cas0:S.casino.net,cost0:S.stats.costSum||0,intr0:S.stats.interestSum||0}}
+
 function genOffer(){const g=pick(unlockedGoods()),cities=unlockedCities(),c=pick(cities);const nw=Math.max(netWorth(),80000);const val=nw*(.15+rnd()*.5);
   let q=Math.max(1,Math.round(val/g.base));q=Math.max(1,Math.min(q,Math.floor(whCap(upgLv('wh'))*.8/g.sz)));if(g.sz===1&&q>20)q=Math.round(q/5)*5;
   const mval=q*g.base*c.cf[g.id]*S.trend[g.id];const prem=.1+Math.pow(rnd(),1.6)*.3;const reward=Math.round(mval*(1+prem)*rewardMul()/100)*100;
   const far=Math.max(...cities.map(x=>dist(x.id,c.id)));
   S.offers.push({id:S.offerId++,client:pick(CLIENTS),good:g.id,q,city:c.id,reward,prem,days:Math.round(12+rnd()*12+far*.6),exp:S.day+6+Math.floor(rnd()*6)})}
-function decision(){const nw=Math.max(netWorth(),50000);const opts=[
+function decision(){
+  // 有 AI 时，有一部分抉择交给模型现场生成（数值仍走白名单）
+  if(typeof AI!=='undefined'&&AI.ready()&&!modalOpen&&!S.seen.__swanOnce&&rnd()<.45){S.seen.__swanOnce=1;aiBlackSwan();return}
+  decisionTemplate()}
+function decisionTemplate(){const nw=Math.max(netWorth(),50000);const opts=[
   ()=>{const amt=Math.round(nw*.06/1000)*1000;const name=pick(['云图智能','极光出行','蓝鲸生物','星火机器人','绿洲咖啡连锁']);
     return {h:'创业邀约',b:`大学同学在做「${name}」，A 轮还差一点，想请你投 <span class="gold">${fmt(amt)}</span>。60 天后揭晓：成功拿回 4 倍，失败血本无归。`,a:[['投资',()=>{if(S.cash<amt){toast('现金不够');return}S.cash-=amt;S.pendingInv.push({name,amt,mult:4,p:.32,at:S.day+60});news(`向${name}投资${fmt(amt)}`,'gold')}],['婉拒',()=>{}]]}},
   ()=>{const amt=Math.round(nw*.03/1000)*1000+5000;const pr=Math.round(amt/2000)+20;return {h:'慈善晚宴',b:`商会邀你出席年度慈善晚宴。捐出 <span class="gold">${fmt(amt)}</span>，声望 <span class="gold">+${pr}</span>。`,a:[['捐赠',()=>{if(S.cash<amt){toast('现金不够');return}S.cash-=amt;S.prestige+=pr;news(`${S.company}在慈善晚宴上捐款${fmt(amt)}`,'gold')}],['下次再说',()=>{}]]}},
@@ -614,7 +868,6 @@ function decision(){const nw=Math.max(netWorth(),50000);const opts=[
     return {h:'工厂急售',b:`一家工厂周转困难，愿以市价 <span class="gold">${Math.round(disc*100)} 折</span> 打包转让 ${fmtQ(q)}${g.u} ${g.n}（货在${c.n}），总价 <span class="gold">${fmt(price)}</span>。`,a:[['接货',()=>{if(S.cash<price){toast('现金不够');return}if(invUsed(c.id)+q*g.sz>whCap(upgLv('wh'))){toast(`${c.n}仓库放不下`);return}S.cash-=price;const cur=S.inv[c.id][g.id]||{q:0,cost:0};S.inv[c.id][g.id]={q:cur.q+q,cost:(cur.q*cur.cost+price)/(cur.q+q)};news(`折价接手${g.n} ${fmtQ(q)}${g.u}`,'gold')}],['放弃',()=>{}]]}},
  ];let d=null,n=0;while(!d&&n++<6)d=pick(opts)();if(!d)return;
  queueModal(()=>`<div class="cap">Situation</div><h2>${d.h}</h2><div class="rule"></div><p>${d.b}</p><div class="row" style="justify-content:center">${d.a.map((x,i)=>`<button class="btn ${i?'':'pri'}" type="button" data-act="${i}">${x[0]}</button>`).join('')}</div>`,i=>{d.a[i][1]();refresh()})}
-
 // ================= ACTIONS =================
 function buyGood(city,g,q){q=Math.floor(q);if(!(q>0))return;const room=whCap(upgLv('wh'))-invUsed(city);
   if(q*G[g].sz>room+1e-9){toast(`${C[city].n}仓库只剩 ${fmtQ(room)} 吨`,'bad');snd('bad');return}
@@ -626,11 +879,13 @@ function sellGood(city,g,q){const cur=S.inv[city][g];if(!cur)return;q=Math.min(M
   S.stats.trades++;S.stats.tradeProfit+=profit;
   if(profit>0){gainXP(profit/500);grant('t1');flag('sellProfit');if(profit>=1e5)grant('p100k');snd('coin');floaty('+'+fmt(profit))}else{snd('bad');floaty(fmt(profit),'var(--down)')}
   if(S.stats.trades>=100)grant('tr100');toast(`卖出 ${G[g].n} · ${profit>=0?'盈利':'亏损'} ${fmt(Math.abs(profit))}`);refresh()}
-function ship(from,to,g,q){const cur=S.inv[from][g];if(!cur||from===to)return;q=Math.min(Math.floor(q*1000)/1000,cur.q);if(!(q>0))return;
+function ship(from,to,g,q,ins){const cur=S.inv[from][g];if(!cur||from===to)return;q=Math.min(Math.floor(q*1000)/1000,cur.q);if(!(q>0))return;
   if(shipUsed()+q*G[g].sz>fleetCap(upgLv('fleet'))+1e-9){toast('船队运力不足','bad');snd('bad');return}
-  const fee=freight(from,to,g,q);if(fee>S.cash){toast('现金不够付运费','bad');return}
-  S.cash-=fee;const unit=cur.cost+fee/q;cur.q-=q;if(cur.q<1e-6)delete S.inv[from][g];const d=shipDays(from,to);
-  S.ships.push({id:S.shipId++,from,to,good:g,q,unit,dep:S.day,eta:S.day+d});snd('coin');toast(`起航 · ${C[from].n} → ${C[to].n}，预计 ${d} 天`);flag('ship');refresh()}
+  const d=shipDays(from,to);const prem=ins?Math.round(cur.cost*q*.016):0;
+  const fee=freight(from,to,g,q)+prem;if(fee>S.cash){toast('现金不够付运费','bad');return}
+  S.cash-=fee;if(ins)S.stats.insPaid+=prem;const unit=cur.cost+(fee-prem)/q+prem/q;cur.q-=q;if(cur.q<1e-6)delete S.inv[from][g];
+  S.ships.push({id:S.shipId++,from,to,good:g,q,unit,dep:S.day,eta:S.day+d,plan:S.day+d,ins:!!ins});
+  snd('coin');toast(`起航 · ${C[from].n} → ${C[to].n}，预计 ${d} 天${ins?' · 已投保':''}`);flag('ship');refresh()}
 function buyStock(s,lots){if(isWeekend(S.day)){toast('周末休市');return}const q=lots*100,k=S.stk[s],amt=k.p*q,fee=Math.max(5,amt*.00025);
   if(!(lots>0)||amt+fee>S.cash){toast('现金不足','bad');return}S.cash-=amt+fee;const h=S.hold[s]||{q:0,cost:0};S.hold[s]={q:h.q+q,cost:(h.q*h.cost+amt+fee)/(h.q+q)};
   grant('s1');flag('stock');snd('buy');toast(`买入 ${stockName(s)} ${q} 股`);refresh()}
@@ -670,15 +925,443 @@ function spin(){if(spinning||S.wheel===todayKey())return;spinning=true;const i=M
     if(k==='w'){if(upgLv('wh')<12){S.upg.wh++;msg='仓储中心免费升级一级'}else{S.cash+=50000;msg='现金 ¥5万'}}
     snd('lv');toast(`今日红利 · ${msg}`,'lv');save();refresh()},4300)}
 
+// ===== 情报：把「研究部」变成真正的信息优势 =====
+function intelReady(){return S.intel>=INTEL_COST.event}
+function buyIntel(kind){
+  const cost=INTEL_COST[kind];if(S.intel<cost){toast(`情报点数不足（需 ${cost}）`,'bad');snd('bad');return}
+  if(kind==='event'){
+    const q=S.queued.slice().sort((a,b)=>a.at-b.at)[0];
+    if(!q){toast('目前没有在途消息');return}
+    S.intel-=cost;grant('intel1');snd('ai');
+    const gg=q.goods==='all'?'全港商品':(q.goods||[]).map(x=>G[x]?G[x].n:x).join('、');
+    const _mg=Math.abs(q.m-1)*100;
+    queueModal(()=>`<div class="cap">Intelligence · 内参</div><h2>消息人士透露</h2><div class="rule"></div>
+      <p style="text-align:left">${esc(q.t)}</p>
+      <div class="kv" style="text-align:left;margin-top:8px"><span class="muted">影响品种</span><span>${gg}</span>
+      <span class="muted">影响范围</span><span>${q.city?C[q.city].n+'港':'全部港口'}</span>
+      <span class="muted">价格方向</span><span class="${q.m>1?'up':'down'}">${q.m>1?'上涨':'下跌'} 约 ${_mg.toFixed(0)}%<span class="note"> · ${_mg>=8?'剧烈':_mg>=4?'明显':'轻微'}</span></span>
+      <span class="muted">生效时间</span><span>${q.at-S.day} 天后</span></div>
+      <button class="btn pri lg" type="button" data-close>记下了</button>`);
+    news('动用情报网：拿到一条未公开的消息','gold');refresh();return}
+  if(kind==='forecast'){
+    if(!ui.good||!goodUnlocked(ui.good)){toast('先选中一个品种');return}
+    S.intel-=cost;grant('intel1');snd('ai');
+    const f=forecast(ui.good,5);const g=G[ui.good];
+    queueModal(()=>`<div class="cap">Intelligence · 5 日模型</div><h2>${g.n} 价格展望</h2><div class="rule"></div>
+      <p class="note" style="text-align:left">基于均值回归与在途事件推算的 5 日后中枢，不是保证。</p>
+      <table class="rep"><tbody>${f.map(x=>`<tr><td>${C[x.c].n} <span class="note m">现价 ${fmtP(S.mkt[x.c][ui.good].p)}</span></td><td class="${cls(x.r)}">${pct(x.r,1)}</td></tr>`).join('')}</tbody></table>
+      <button class="btn pri lg" type="button" data-close>收下</button>`);
+    news(`研究部提交 ${g.n} 五日价格展望`,'gold');refresh();return}
+  if(kind==='rival'){
+    if(!S.rivalIntent){toast('暂时没有侦测到对手异动');return}
+    S.intel-=cost;grant('intel1');snd('ai');
+    const it=S.rivalIntent,r=RIVALS.find(x=>x.id===it.r);
+    queueModal(()=>`<div class="cap">Intelligence · 商业间谍</div><h2>${r.co} 的下一步</h2><div class="rule"></div>
+      <p style="text-align:left">${r.boss} 正在 ${C[it.c].n} 筹备${it.dir>0?'大举买入':'集中抛售'} <span class="gold">${G[it.g].n}</span>，预计 ${it.at-S.day} 天后动手，幅度约 ${(it.mag*100).toFixed(1)}%。</p>
+      <p class="note">提前埋伏或在消息兑现后反向操作，都行。</p>
+      <button class="btn pri lg" type="button" data-close>知道了</button>`);
+    news(`你买通了${r.co}的一名交易员`,'gold');refresh();return}
+}
+// AI 事件/抉择的数值效果落地（只接受白名单字段，避免模型乱给数）
+function applyFx(fx){
+  if(!fx||typeof fx!=='object')return[];
+  const out=[];
+  if(fx.cashPct){const v=Math.round(netWorth()*clamp(+fx.cashPct,-.25,.25));S.cash+=v;out.push(['现金',v])}
+  if(fx.prestige){const v=Math.round(clamp(+fx.prestige,-120,180));S.prestige=Math.max(0,S.prestige+v);out.push(['声望',v])}
+  if(fx.xpPct){gainXP(Math.round(xpNeed(S.level)*clamp(+fx.xpPct,0,.8)));out.push(['经验','+' ])}
+  if(fx.intel){const v=Math.round(clamp(+fx.intel,0,120));S.intel=clamp(S.intel+v,0,INTEL_MAX);out.push(['情报',v])}
+  if(fx.debtPct){const v=Math.round(S.loan*clamp(+fx.debtPct,-.5,.5));S.loan=Math.max(0,S.loan-v);out.push(['债务',-v])}
+  if(fx.shipDelay){const d=Math.round(clamp(+fx.shipDelay,0,8));for(const s of S.ships)s.eta+=d;if(d)out.push(['船期延误',d+'天'])}
+  if(fx.shock&&G[fx.shock.good]){const g=G[fx.shock.good];const mult=clamp(+fx.shock.mult||1,.75,1.4);const days=Math.round(clamp(+fx.shock.days||20,5,45));
+    S.events.push({city:null,goods:[g.id],m:mult,until:S.day+days});out.push([g.n,mult>1?'涨':'跌']);}
+  return out
+}
+// 合同议价：无 API 时用本地模型兜底（也是 AI 的校验器基准）
+function negotiateLocal(id){
+  const o=S.offers.find(x=>x.id===id);if(!o)return null;
+  const gap=o.prem-.2;                    // 溢价越高越难再抬
+  const p=clamp(.55-gap*1.2,.08,.6);
+  if(rnd()<p)return {accept:true,rewardDelta:clamp(gap<0?.12:.05,0,.15),daysDelta:-2,reply:'对方翻了翻计算器，同意小幅上调，但要求期限更紧。'};
+  return {accept:false,rewardDelta:0,daysDelta:0,walkAway:rnd()<.1,reply:'对方表示这个价格已经贴着成本，谈不下来。'};
+}
+// ================= AI · DeepSeek =================
+// 设计原则：
+//  1) 没有 key 时游戏完整可玩，所有 AI 功能静默降级（议价用本地模型兜底）
+//  2) 模型只输出「白名单字段」，数值一律 clamp 后再进游戏，不让模型直接改账
+//  3) 所有请求异步、可中断、有超时与重试；不做逐帧调用，只按事件触发
+const AI_LS='sh_ai_v1';
+const AI=(function(){
+  const cfg={key:'',model:'deepseek-chat',base:'https://api.deepseek.com',enabled:true,news:true,taunt:true,mock:false};
+  const stat={calls:0,inTok:0,outTok:0,lastErr:'',ok:0,fail:0};
+  let aborter=null,busy=false,lastTaunt=-99,lastNewsGen=-99;
+
+  function load(){
+    try{const raw=localStorage.getItem(AI_LS);if(raw){const o=JSON.parse(raw);for(const k in cfg)if(o[k]!==undefined)cfg[k]=o[k]}}
+    catch(e){}
+    try{if(new URLSearchParams(location.search).get('mock')==='1')cfg.mock=true}catch(e){}
+    return cfg;
+  }
+  function saveCfg(){try{localStorage.setItem(AI_LS,JSON.stringify(cfg))}catch(e){saveCfg.lastErr=e.message}}
+
+  const ready=()=>cfg.enabled&&(cfg.mock||!!cfg.key);
+  function errText(code,body){
+    if(code===401||code===403)return 'DeepSeek 密钥无效或已过期（设置里重新填一次）';
+    if(code===402)return 'DeepSeek 账户余额不足';
+    if(code===429)return '请求太频繁，稍后再试';
+    if(code>=500)return 'DeepSeek 服务端异常，稍后再试';
+    return 'DeepSeek 请求失败：'+(body?String(body).slice(0,120):'网络错误');
+  }
+  // 核心：一次对话（json=true 时要求返回 JSON 对象）
+  async function chat(messages,opt={}){
+    if(!ready())throw new Error('未配置 DeepSeek 密钥');
+    if(cfg.mock)return mockChat(messages,opt);
+    const ctl=new AbortController();aborter=ctl;
+    const to=setTimeout(()=>ctl.abort(),opt.timeout||60000);
+    const body={model:opt.model||cfg.model,messages,temperature:opt.temperature??.7,stream:!!opt.onDelta,max_tokens:opt.max_tokens||900};
+    if(opt.json)body.response_format={type:'json_object'};
+    let lastErr=null;
+    for(let attempt=0;attempt<2;attempt++){
+      try{
+        const r=await fetch(cfg.base.replace(/\/$/,'')+'/chat/completions',{
+          method:'POST',signal:ctl.signal,
+          headers:{'Content-Type':'application/json','Authorization':'Bearer '+cfg.key},
+          body:JSON.stringify(body)});
+        if(!r.ok){const txt=await r.text().catch(()=>'');throw new Error(errText(r.status,txt))}
+        stat.calls++;
+        if(opt.onDelta)return await readStream(r,opt.onDelta);
+        const j=await r.json();
+        if(j.usage){stat.inTok+=j.usage.prompt_tokens||0;stat.outTok+=j.usage.completion_tokens||0}
+        const text=j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content||'';
+        stat.ok++;
+        return text;
+      }catch(e){
+        lastErr=e;
+        if(e.name==='AbortError')throw new Error('请求超时或被中断');
+        if(attempt===0)await new Promise(r=>setTimeout(r,700));
+      }
+    }
+    stat.fail++;stat.lastErr=lastErr&&lastErr.message||'未知错误';
+    throw lastErr||new Error('请求失败');
+  }
+  async function readStream(res,onDelta){
+    const reader=res.body.getReader();const dec=new TextDecoder();let buf='',all='';
+    for(;;){
+      const {done,value}=await reader.read();if(done)break;
+      buf+=dec.decode(value,{stream:true});
+      const parts=buf.split('\n\n');buf=parts.pop()||'';
+      for(const p of parts){
+        for(const line of p.split('\n')){
+          if(!line.startsWith('data:'))continue;
+          const d=line.slice(5).trim();if(d==='[DONE]')continue;
+          try{const j=JSON.parse(d);const t=j.choices&&j.choices[0]&&j.choices[0].delta&&j.choices[0].delta.content;
+            if(t){all+=t;onDelta(t,all)}}catch(e){}
+        }
+      }
+    }
+    stat.ok++;return all;
+  }
+  // JSON 模式下的稳妥解析：容忍代码块、前后缀文本
+  function parseJSON(text){
+    if(!text)return null;
+    let t=String(text).trim().replace(/^```(?:json)?/i,'').replace(/```$/,'').trim();
+    const a=t.indexOf('{'),b=t.lastIndexOf('}');
+    if(a<0||b<a)return null;
+    try{return JSON.parse(t.slice(a,b+1))}catch(e){return null}
+  }
+  function abort(){try{aborter&&aborter.abort()}catch(e){}busy=false}
+
+  // ---------- 上下文：给模型的真实状态（紧凑，控制 token） ----------
+  function ctx(){
+    const nw=netWorth();
+    const inv=[];
+    for(const c in S.inv){const rows=[];let v=0;
+      for(const g in S.inv[c]){const q=S.inv[c][g].q;v+=q*bidP(c,g);if(q>0)rows.push(`${G[g].n}x${Math.round(q)}@成本${Math.round(S.inv[c][g].cost)}`)}
+      if(rows.length)inv.push({港:C[c].n,货:rows.slice(0,4),值:Math.round(v)})}
+    const best=[];
+    for(const g of unlockedGoods())for(const a of unlockedCities())for(const b of unlockedCities()){
+      if(a.id===b.id)continue;
+      const r=(bidP(b.id,g.id)-askP(a.id,g.id))/askP(a.id,g.id);
+      if(r>.01)best.push({货:g.n,买:a.n,卖:b.n,价差:+(r*100).toFixed(1)})}
+    best.sort((x,y)=>y.价差-x.价差);
+    const mb=macro();
+    return {
+      公司:S.company,等级:S.level,头衔:TITLES[S.level],第几天:S.day,日期:dateStr(S.day),
+      现金:Math.round(S.cash),净资产:Math.round(nw),负债:Math.round(S.loan),授信:Math.round(creditLimit()-S.loan),
+      声望:prestigeTotal(),情报点:S.intel,宏观:`${mb.n}（${mb.d}）`,
+      日开销:Math.round(dailyCost()),库存:inv,在途: S.ships.map(x=>`${G[x.good].n} ${Math.round(x.q)}${G[x.good].u} ${C[x.from].n}→${C[x.to].n} 还有${x.eta-S.day}天`),
+      可交付合同:S.contracts.filter(k=>{const i=S.inv[k.city][k.good];return i&&i.q>=k.q-1e-9}).map(k=>`${k.client} ${G[k.good].n}${Math.round(k.q)} 于${C[k.city].n}`),
+      执行中合同:S.contracts.map(k=>`${k.client} ${G[k.good].n}${Math.round(k.q)} 剩${k.due-S.day}天 回款${Math.round(k.reward)}`),
+      新订单:S.offers.slice(0,4).map(o=>`#${o.id} ${o.client} ${G[o.good].n}${Math.round(o.q)} 到${C[o.city].n} 期限${o.days}天 回款${Math.round(o.reward)} 溢价${(o.prem*100).toFixed(0)}%`),
+      套利机会:best.slice(0,5),
+      持仓股票:Object.keys(S.hold).map(k=>`${stockName(k)} ${S.hold[k].q}股 成本${S.hold[k].cost.toFixed(2)} 现价${S.stk[k].p.toFixed(2)}`),
+      在途事件:S.events.map(e=>`${(e.goods==='all'?'全品':e.goods.map(g=>G[g].n).join('/'))}${e.city?'@'+C[e.city].n:''} 价格x${e.m.toFixed(2)} 剩${e.until-S.day}天`),
+      澳门累计:S.casino.net,
+      升级:UPG.map(u=>u.n+upgLv(u.id)).join(' '),
+      最近新闻:S.news.slice(0,4).map(n=>`${dateStr(n.d,1)} ${n.t}`)
+    };
+  }
+  const RULES=`你是《商海浮沉》里的家族办公室首席顾问，玩家是上海一家贸易公司的老板。
+游戏机制（必须遵守，不要编造）：
+- 跨港套利：A港买入价与B港卖出价之差，扣掉运费和买卖价差才是利润；价格冲击随下单量占深度比例上升。
+- 合约化：签下大客户订单后在指定港口交付指定数量，回款含溢价（声望越高溢价越高），逾期违约赔 10% 并掉声望。
+- 股市：周末休市，±10% 涨跌停，佣金万 2.5，卖出印花税 0.05%。
+- 宏观周期影响商品中枢与波动；研究部每日产出情报点，可查未公开消息、价格模型、对手动向。
+- 澳门是负期望游戏，只当消遣。
+回答要求：简体中文；先给结论；3 条以内要点，每条不超过 40 字；必须引用玩家真实数字（现金、仓位、价差），不要空话；不要输出表格和代码块。`;
+
+  // ---------- 对话式顾问 ----------
+  const history=[];
+  async function advise(userText,onDelta){
+    const sys={role:'system',content:RULES+'\n当前状态 JSON：\n'+JSON.stringify(ctx())};
+    const msgs=[sys,...history.slice(-6),{role:'user',content:userText}];
+    history.push({role:'user',content:userText});
+    const out=await chat(msgs,{onDelta,temperature:.6,max_tokens:700});
+    history.push({role:'assistant',content:out});
+    if(history.length>14)history.splice(0,history.length-14);
+    return out;
+  }
+  function resetChat(){history.length=0}
+
+  // ---------- 自然语言下单：解析 → 确认 → 执行 ----------
+  const CMD_SYS=`把玩家的话解析成结构化下单指令，只输出 JSON，不要解释。
+字段：{"reply":"简短中文回应","actions":[...]}
+可用 action（字段严格照抄，数值用阿拉伯数字）：
+{"type":"buy","city":"sh|sz|sg|db|sp|rt","good":"rice|soy|steel|cotton|oil|copper|chip|coffee|gold","q":吨数}
+{"type":"sell","city":同上,"good":同上,"q":吨数}
+{"type":"ship","from":同上,"to":同上,"good":同上,"q":吨数,"ins":true|false}
+{"type":"buyStock","code":"股票代码","lots":手数}{"type":"sellStock","code":"...","lots":手数}
+{"type":"deliver","id":合同id}{"type":"accept","id":订单id}
+{"type":"borrow","amt":金额}{"type":"repay","amt":金额}
+{"type":"intel","kind":"event|forecast|rival"}
+{"type":"goto","desk":"trade|port|deal|stock|bank|hq|lux|macau|rank|wheel|ach|settings"}
+{"type":"say"}   // 当玩家不是在下单，只是聊天，就返回空 actions
+规则：玩家没说数量就用 q=0 表示"能买/卖多少就多少"；没说港口就从上下文挑最合理的；看不懂就只返回 {"reply":"...","actions":[]}。最多 3 个 action。城市必须用代码 sh/sz/sg/db/sp/rt。`;
+  async function command(text){
+    const raw=await chat([{role:'system',content:CMD_SYS+'\n当前状态：\n'+JSON.stringify(ctx())},{role:'user',content:text}],{json:true,temperature:.15,max_tokens:500,tag:'cmd'});
+    const j=parseJSON(raw)||{reply:'我没太听懂，可以再说具体点（港口、品种、数量）。',actions:[]};
+    return {reply:String(j.reply||''),actions:Array.isArray(j.actions)?j.actions.slice(0,3):[]};
+  }
+  // 把 action 规整成「可执行 + 可核对」的形式：确认卡上写的，就是真正会执行的
+  function describe(a){
+    const g=a.good&&G[a.good]?G[a.good]:null,cn=a.city&&C[a.city]?C[a.city].n:'';
+    const cityOk=!!(a.city&&C[a.city]),goodOk=!!(a.good&&G[a.good]);
+    const bad=t=>({ok:false,t,sub:''});
+    switch(a.type){
+      case 'buy':{
+        if(!cityOk||!goodOk)return bad('港口或品种无效');
+        const mx=maxBuy(a.city,a.good);
+        if(mx<1)return {ok:false,t:`买入 ${g.n}`,sub:'现金或仓容不足，一吨都买不了'};
+        const q=clamp(Math.round(+a.q||0)||mx,1,mx);
+        const qt=quoteBuy(a.city,a.good,q);
+        return {ok:true,t:`在${cn}买入 ${g.n} ${fmtQ(q)}${g.u}`,sub:`花费 ${fmt(qt.total)} · 均价 ${fmtP(qt.unit)} · 本港最多可买 ${fmtQ(mx)}${g.u}`,act:{...a,q}}}
+      case 'sell':{
+        if(!cityOk||!goodOk)return bad('港口或品种无效');
+        const inv=S.inv[a.city]&&S.inv[a.city][a.good];
+        if(!inv||inv.q<=0)return {ok:false,t:`卖出 ${g.n}`,sub:`${cn}没有这个品种的持仓`};
+        const q=clamp(Math.round((+a.q||0)||inv.q),0.001,inv.q);
+        const total=quoteSell(a.city,a.good,q).total;
+        return {ok:true,t:`在${cn}卖出 ${g.n} ${fmtQ(q)}${g.u}`,sub:`收入 ${fmt(total)} · 持仓 ${fmtQ(inv.q)}${g.u}`,act:{...a,q}}}
+      case 'ship':{
+        if(!cityOk||!goodOk||!C[a.to])return bad('航线无效');
+        const inv=S.inv[a.from]&&S.inv[a.from][a.good];
+        if(!inv||inv.q<=0)return {ok:false,t:`从${C[a.from].n}发运 ${g.n}`,sub:'起运港没有该品种'};
+        const room=Math.max(0,(fleetCap(upgLv('fleet'))-shipUsed())/g.sz);
+        const q=Math.min(inv.q,Math.max(0.001,(+a.q||inv.q)),room);
+        if(q<0.001)return {ok:false,t:`从${C[a.from].n}发运 ${g.n}`,sub:'船队运力已满'};
+        const fee=freight(a.from,a.to,a.good,q);
+        return {ok:true,t:`${C[a.from].n} → ${C[a.to].n} 运 ${g.n} ${fmtQ(q)}${g.u}`,
+          sub:`运费 ${fmt(fee)} · ${shipDays(a.from,a.to)} 天${a.ins?' · 已投保':''}${q<inv.q?' · 受运力限制已缩量':''}`,act:{...a,q}}}
+      case 'buyStock':{
+        const k=S.stk[a.code];if(!k)return bad('没有这只票');
+        const maxLots=Math.floor(S.cash/(k.p*100*1.001));
+        if(maxLots<1)return {ok:false,t:`买入 ${stockName(a.code)}`,sub:'现金不足一手'};
+        const lots=clamp(Math.round(+a.lots||0)||1,1,maxLots);
+        return {ok:true,t:`买入 ${stockName(a.code)} ${lots} 手`,sub:`约 ${fmt(k.p*lots*100)} · 现价 ${k.p.toFixed(2)}`,act:{...a,lots}}}
+      case 'sellStock':{
+        const h=S.hold[a.code];if(!h)return {ok:false,t:`卖出 ${stockName(a.code)}`,sub:'没有持仓'};
+        const lots=clamp(Math.round(+a.lots||0)||Math.floor(h.q/100),1,Math.floor(h.q/100)||1);
+        return {ok:true,t:`卖出 ${stockName(a.code)} ${lots} 手`,sub:`持有 ${h.q} 股 · 现价 ${S.stk[a.code].p.toFixed(2)}`,act:{...a,lots}}}
+      case 'deliver':{const k=S.contracts.find(x=>x.id===+a.id);return k?{ok:true,t:`向 ${k.client} 交付 ${G[k.good].n}`,sub:`回款 ${fmt(k.reward)}`,act:a}:bad('合同不存在')}
+      case 'accept':{const o=S.offers.find(x=>x.id===+a.id);return o?{ok:true,t:`签下 ${o.client} 的订单`,sub:`回款 ${fmt(o.reward)} · 期限 ${o.days} 天`,act:a}:bad('订单已失效')}
+      case 'borrow':{const amt=Math.min(Math.max(0,Math.round(+a.amt||0)),Math.max(0,creditLimit()-S.loan));
+        return amt>0?{ok:true,t:`申请贷款 ${fmt(amt)}`,sub:'按日计息，随净资产调整授信',act:{...a,amt}}:bad('可用额度不足')}
+      case 'repay':{const amt=Math.min(+a.amt||0,S.loan,S.cash);
+        return amt>0?{ok:true,t:`还款 ${fmt(amt)}`,sub:`剩余负债 ${fmt(Math.max(0,S.loan-amt))}`,act:{...a,amt}}:bad('没有可还的金额')}
+      case 'intel':{const c=INTEL_COST[a.kind]||0;
+        if(S.intel<c)return {ok:false,t:'动用情报',sub:`情报点数不足（需 ${c}，现有 ${Math.round(S.intel)}）`};
+        return {ok:true,t:`动用情报：${{event:'未公开消息',forecast:'价格模型',rival:'对手动向'}[a.kind]||''}`,sub:`消耗 ${c} 点 · 剩余 ${Math.round(S.intel-c)}`,act:a}}
+      case 'goto':return {ok:true,t:`打开「${(WT[a.desk]||[a.desk])[0]}」`,sub:'',act:a};
+      default:return bad('无法识别的操作');
+    }
+  }
+  function runAction(a){
+    switch(a.type){
+      case 'buy':buyGood(a.city,a.good,Math.round(+a.q||0));break;
+      case 'sell':sellGood(a.city,a.good,+a.q||0);break;
+      case 'ship':ship(a.from,a.to,a.good,+a.q||0,!!a.ins);break;
+      case 'buyStock':buyStock(a.code,Math.max(0,+a.lots||0));break;
+      case 'sellStock':sellStock(a.code,Math.max(0,+a.lots||0));break;
+      case 'deliver':deliver(+a.id);break;
+      case 'accept':acceptOffer(+a.id);break;
+      case 'borrow':borrow(+a.amt||0);break;
+      case 'repay':repay(+a.amt||0);break;
+      case 'intel':buyIntel(a.kind);break;
+      case 'goto':if(win)closeWin();openWin(a.desk==='settings'?'settings':a.desk);break;
+    }
+  }
+
+  // ---------- AI 时事：生成带真实数值的事件，进队列后再按常规规则生效 ----------
+  async function generateEvents(n=4){
+    if(!ready()||!cfg.news)return 0;
+    if(busy)return 0;
+    const ug=unlockedGoods().map(g=>g.id),uc=unlockedCities().map(c=>c.id);
+    const sys=`你在为商业模拟游戏写财经快讯。只输出 JSON：{"events":[{"title","good","mult","days","city","stock","stockMove","kind"}]}
+title 为中文快讯标题（≤28 字，像真实新闻，不要出现"游戏"字样）；good 必须取自 [${ug.join(',')}]；mult 价格倍数 0.78~1.35；days 影响天数 8~40；city 取 [${uc.join(',')}] 或 null；stock 取 [${STOCKS.map(s=>s.s).join(',')}] 或 null；stockMove -0.08~0.08；kind 为 good/bad/''。要有多样性：至少一条利多、一条利空。`;
+    const raw=await chat([{role:'system',content:sys},{role:'user',content:`当前是第 ${S.day} 天，宏观：${macro().n}。生成 ${n} 条快讯。`}],{json:true,temperature:.9,max_tokens:800,tag:'news'});
+    const j=parseJSON(raw);if(!j||!Array.isArray(j.events))return 0;
+    let added=0;
+    for(const e of j.events.slice(0,n)){
+      if(!e||!G[e.good]||!ug.includes(e.good))continue;
+      const mult=clamp(+e.mult||1,.78,1.35),days=Math.round(clamp(+e.days||20,8,40));
+      const city=e.city&&uc.includes(e.city)?e.city:null;
+      const stock=e.stock&&S.stk[e.stock]?e.stock:null;
+      const sm=clamp(+e.stockMove||0,-.08,.08);
+      S.queued.push({t:String(e.title||'市场消息').slice(0,40),city,goods:[e.good],m:mult,days,
+        stocks:stock?{[stock]:sm}:null,mkt:0,rate:0,delay:0,at:S.day+2+added,ai:1});
+      added++;
+    }
+    if(added){S.ai.generated+=added;S.ai.lastAt=S.day;lastNewsGen=S.day}
+    return added;
+  }
+  function maybeGenerate(){
+    if(!ready()||!cfg.news)return;
+    if(S.queued.length>=2)return;
+    if(S.day-lastNewsGen<22)return;
+    lastNewsGen=S.day;
+    generateEvents(4).catch(e=>{stat.lastErr=e.message});
+  }
+
+  // ---------- 对手喊话（纯氛围，失败就静默） ----------
+  async function taunt(rival,dir,good){
+    if(!ready()||!cfg.taunt)return;
+    if(S.day-lastTaunt<6)return;
+    if(rnd()>.4)return;
+    lastTaunt=S.day;
+    try{
+      const t=await chat([{role:'system',content:'用一句中文（≤26字）写商业对手的挑衅/嘲讽，口气符合人物设定，不要引号，不要解释。'},
+        {role:'user',content:`对手：${rival.co} 老板 ${rival.boss}，风格${rival.style}。他刚刚在${G[good].n}上${dir>0?'扫货拉涨':'抛售砸盘'}。玩家净资产 ${fmt(netWorth())}。`}],{temperature:1,max_tokens:80,tag:'taunt'});
+      const line=String(t||'').replace(/["“”]/g,'').trim().slice(0,40);
+      if(line)news(`${rival.boss}：「${line}」`,'rumor');
+    }catch(e){}
+  }
+
+  // ---------- 黑天鹅抉择 ----------
+  async function blackSwan(){
+    const sys=`为商业模拟游戏生成一次突发事件抉择。只输出 JSON：
+{"title":"事件名(≤8字)","body":"局势描述(≤90字，中文，具体)","options":[{"label":"选项(≤10字)","desc":"后果提示(≤28字)","fx":{...},"outcome":"事后一句结果(≤40字)"}]}
+fx 只能包含这些键（全部可选）：cashPct(-0.2~0.2) prestige(-100~150) xpPct(0~0.6) intel(0~80) debtPct(-0.4~0.4) shipDelay(0~6) shock({good:"${unlockedGoods().map(g=>g.id).join('|')}",mult:0.8~1.3,days:10~30})
+给 3 个选项，风险/收益要明显不同，其中一个必须是"什么都不做"。`;
+    const raw=await chat([{role:'system',content:sys},{role:'user',content:`第 ${S.day} 天，净资产 ${fmt(netWorth())}，宏观 ${macro().n}，现金 ${fmt(S.cash)}，负债 ${fmt(S.loan)}。`}],{json:true,temperature:.95,max_tokens:700,tag:'swan'});
+    const j=parseJSON(raw);if(!j||!Array.isArray(j.options)||!j.options.length)return null;
+    return {title:String(j.title||'突发').slice(0,12),body:String(j.body||'').slice(0,160),
+      options:j.options.slice(0,3).map(o=>({label:String(o.label||'选择').slice(0,14),desc:String(o.desc||'').slice(0,50),fx:o.fx||{},outcome:String(o.outcome||'').slice(0,60)}))};
+  }
+
+  // ---------- 合同议价 ----------
+  async function negotiate(offer,demand){
+    const t=tier(offer.prem);
+    const sys=`你是 ${offer.client} 的采购总监，正在和玩家谈一份现货采购合同。只输出 JSON：
+{"reply":"你的回应(≤60字，中文，像真人谈判)","accept":true|false,"rewardDelta":-0.2~0.25,"daysDelta":-8~8,"walkAway":true|false}
+规则：溢价已经很高(${(offer.prem*100).toFixed(0)}%)时很难再加价；玩家要求明显过分就拒绝，甚至 walkAway（掀桌，订单作废）；接受时给一个具体的 rewardDelta。`;
+    const raw=await chat([{role:'system',content:sys},{role:'user',content:`订单：${G[offer.good].n} ${Math.round(offer.q)}${G[offer.good].u} 交到${C[offer.city].n}，当前回款 ${fmt(offer.reward)}，期限 ${offer.days} 天，等级${t[1]}。我的要求：${demand}`}],{json:true,temperature:.8,max_tokens:400,tag:'nego'});
+    const j=parseJSON(raw);if(!j)return null;
+    return {reply:String(j.reply||'').slice(0,140),accept:!!j.accept,walkAway:!!j.walkAway,
+      rewardDelta:clamp(+j.rewardDelta||0,-.2,.25),daysDelta:Math.round(clamp(+j.daysDelta||0,-8,8))};
+  }
+
+  // ---------- 连通性自检 ----------
+  async function test(){
+    const t0=performance.now();
+    const txt=await chat([{role:'system',content:'你是连通性测试助手。'},{role:'user',content:'只回复两个字：在位'}],{max_tokens:12,temperature:0,timeout:20000,tag:'test'});
+    return {ms:Math.round(performance.now()-t0),text:String(txt).trim().slice(0,20)};
+  }
+
+  // ---------- 本地指令解析：没有 key 也能用自然语言下单 ----------
+  const CITY_WORDS={'上海':'sh','深圳':'sz','新加坡':'sg','迪拜':'db','圣保罗':'sp','鹿特丹':'rt'};
+  function localCommand(text){
+    const t=String(text||'');
+    let city=null,city2=null;
+    for(const k in CITY_WORDS){if(t.includes(k)){if(!city)city=CITY_WORDS[k];else if(!city2)city2=CITY_WORDS[k]}}
+    let good=null;for(const g of GOODS){if(t.includes(g.n)||t.toUpperCase().includes(g.code)){good=g.id;break}}
+    let code=null;for(const st of STOCKS)if(t.includes(st.n))code=st.s;
+    if(!code)for(const r of RIVALS)if(t.includes(r.co))code=r.s;
+    const m=t.match(/(\d+(?:\.\d+)?)\s*(万|千)?/);
+    let q=0;if(m){q=parseFloat(m[1]);if(m[2]==='万')q*=1e4;if(m[2]==='千')q*=1e3}
+    const lots=/手/.test(t)&&q?Math.max(1,Math.round(q)):0;
+    const acts=[];
+    const isShip=/(运|发|送|ship)/.test(t);
+    const isSell=/(卖|抛|清仓)/.test(t);
+    const isBuy=/(买|进|囤|收)/.test(t);
+    if(code&&lots&&(isBuy||isSell)&&!isShip){acts.push({type:isSell?'sellStock':'buyStock',code,lots})}
+    else if(isShip&&good&&city&&city2){acts.push({type:'ship',from:city,to:city2,good,q,ins:/保险/.test(t)})}
+    else if(isSell&&good){acts.push({type:'sell',city:city||ui.city,good,q})}
+    else if(isBuy&&good){acts.push({type:'buy',city:city||ui.city,good,q})}
+    else if(/(情报|内参|消息)/.test(t)){acts.push({type:'intel',kind:/对手|动向/.test(t)?'rival':/价格|预测|展望|模型/.test(t)?'forecast':'event'})}
+    else if(/(贷款|借钱|借款)/.test(t)){acts.push({type:'borrow',amt:q||50000})}
+    const reply=acts.length?'我按字面理解成这样，确认一下再执行：':'这句我没解析出可执行的操作。可以说「在深圳买 500 吨大豆」或「把上海的铜运到鹿特丹」。';
+    return {reply,actions:acts};
+  }
+
+  // ---------- 演示模式：无 key 也能完整体验交互（不消耗额度） ----------
+  const MOCK_ADVICE=[
+    '结论：先别急着加杠杆。\n1. 现金 {cash}，日开销 {cost}，够撑 {days} 天，别把现金压到 20% 以下。\n2. 当前最大价差在 {arb}，一趟毛利约够覆盖 {cover} 天开销。\n3. 研究部攒到 20 点先查一次未公开消息，比赌方向划算。',
+    '结论：仓位偏重，先减一半。\n1. 库存值 {inv}，占净资产 {ratio}，宏观一转衰退会同时缩水。\n2. 手上 {ship} 条船在途，等它们落地再开新仓。\n3. 有可交付合同立刻交付，现金流比账面利润重要。'];
+  function mockChat(messages,opt){
+    const tag=opt.tag||(opt.json?'json':'text');
+    const last=String((messages[messages.length-1]||{}).content||'');
+    return new Promise(res=>{
+      const reply=o=>setTimeout(()=>res(typeof o==='string'?o:JSON.stringify(o)),380);
+      if(tag==='cmd'){const l=localCommand(last);return reply({reply:l.reply,actions:l.actions})}
+      if(tag==='nego')return reply({reply:'这个价我最多再让两个点，期限也得压缩，不然财务那边过不了。',accept:true,rewardDelta:.06,daysDelta:-2,walkAway:false});
+      if(tag==='swan')return reply({title:'釜底抽薪',body:'合作多年的船代突然被对手收购，你的三条主力航线被要求重新议价，对方只给 48 小时。',
+        options:[{label:'接受新费率',desc:'运费长期上浮',fx:{cashPct:-.04},outcome:'你签了字，成本悄悄变重。'},
+                 {label:'改用现货舱位',desc:'短期更贵，但自主',fx:{cashPct:-.07,prestige:40},outcome:'贵了点，但你保住了主动权。'},
+                 {label:'强硬拒绝',desc:'赌对方不敢断你',fx:{cashPct:.03,prestige:-30,shipDelay:3},outcome:'两败俱伤，船期乱了三天。'}]});
+      if(tag==='taunt')return reply('听说你最近在扫货？别接最后一棒。');
+      if(tag==='test')return reply('在位');
+      if(tag==='news')return reply({events:[
+        {title:'红海航线保险费率跳涨，欧线运力吃紧',good:'coffee',mult:1.14,days:26,city:'rt',stock:'601872',stockMove:.04,kind:'good'},
+        {title:'国内钢材社会库存创三年新高',good:'steel',mult:.87,days:30,city:'sh',stock:'600019',stockMove:-.05,kind:'bad'},
+        {title:'东南亚干旱持续，稻米减产预期升温',good:'rice',mult:1.12,days:22,city:'sg',stock:'000998',stockMove:.03,kind:'good'},
+        {title:'欧洲制造业PMI跌破荣枯线，铜需求下调',good:'copper',mult:.9,days:24,city:'rt',stock:null,stockMove:0,kind:'bad'}]});
+      const nw=Math.max(1,netWorth());
+      const txt=pick(MOCK_ADVICE)
+        .replace('{cash}',fmt(S.cash)).replace('{cost}',Math.round(dailyCost()))
+        .replace('{days}',Math.max(1,Math.round(S.cash/Math.max(1,dailyCost()))))
+        .replace('{arb}',(()=>{const b=bestArb();return b?b.g.n+' '+b.a.n+'→'+b.b.n+'（'+pct(b.r,1)+'）':'不明显'})())
+        .replace('{cover}',Math.max(1,Math.round(nw*.01/Math.max(1,dailyCost()))))
+        .replace('{inv}',fmt(invValue())).replace('{ratio}',((invValue()/nw)*100).toFixed(0)+'%')
+        .replace('{ship}',S.ships.length);
+      let i=0;const iv=setInterval(()=>{
+        i+=2;opt.onDelta&&opt.onDelta(txt.slice(i-2,i),txt.slice(0,i));
+        if(i>=txt.length){clearInterval(iv);res(txt)}},14);
+    });
+  }
+
+  load();
+  return {cfg,stat,ready,chat,parseJSON,abort,ctx,advise,resetChat,command,localCommand,describe,runAction,
+    maybeGenerate,generateEvents,taunt,maybeTaunt:taunt,blackSwan,negotiate,test,saveCfg,load,
+    get busy(){return busy},set busy(v){busy=v},
+    counters(){return stat}};
+})();
 // ================= TUTORIAL =================
 const TUT=[
- {t:'在「交易所」买入一批商品',k:'buy',r:5000},{t:'在「航运」把货运到另一个港口',k:'ship',r:6000},
- {t:'在价高的港口卖出获利',k:'sellProfit',r:8000},{t:'在「合同」签下一份订单',k:'contract',r:10000},
- {t:'在「证券」买入一手股票',k:'stock',r:8000},{t:'在「珍藏」购入第一件藏品',k:'lux',r:15000},{t:'晋升至 Lv3「小老板」',k:'lv3',r:40000},
+ {t:'在「交易所」买入一批商品',k:'buy',r:5000,desk:'trade'},{t:'在「航运」把货运到另一个港口',k:'ship',r:6000,desk:'port'},
+ {t:'在价高的港口卖出获利',k:'sellProfit',r:8000,desk:'trade'},{t:'在「合同」签下一份订单',k:'contract',r:10000,desk:'deal'},
+ {t:'在「证券」买入一手股票',k:'stock',r:8000,desk:'stock'},{t:'在「珍藏」购入第一件藏品',k:'lux',r:15000,desk:'lux'},{t:'晋升至 Lv3「小老板」',k:'lv3',r:40000,desk:'hq'},
 ];
 function flag(k){S.seen['f_'+k]=1;checkTut()}
 function checkTut(){if(S.level>=3)S.seen.f_lv3=1;while(S.tut<TUT.length&&S.seen['f_'+TUT[S.tut].k]){const t=TUT[S.tut];S.cash+=t.r;toast(`任务完成 · 奖励 ${fmt(t.r)}`,'lv');floaty('+'+fmt(t.r));snd('coin');S.tut++}}
-
 // ================= CASINO =================
 const RANKS=['2','3','4','5','6','7','8','9','10','J','Q','K','A'],SUITS=['♠','♥','♦','♣'];
 function newDeck(n){const d=[];for(let k=0;k<n;k++)for(let c=0;c<52;c++)d.push(c);for(let i=d.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[d[i],d[j]]=[d[j],d[i]]}return d}
@@ -825,13 +1508,25 @@ function flyMacau(){const own=S.owned.some(o=>o.id==='j1');
     S.casino.trips++;CS.prevSpeed=speed||1;S.inMacau=true;setSpeed(0);news(`${S.company}董事长飞抵澳门`,'gold');snd('lv');openWin('macau')})}
 function leaveMacau(){if(HD)hdLeave();if(CS.phase==='bet'&&betTotal()){S.cash+=betTotal();for(const k in CS.bets)CS.bets[k]=0}
   S.inMacau=false;toast(`已返回上海 · 澳门累计 ${S.casino.net>=0?'赢':'输'} ${fmt(Math.abs(S.casino.net))}`);setSpeed(CS.prevSpeed||1)}
-
 // ================= PERSIST / MULTIPLAYER =================
 const LS='shanghai_tycoon_v1';
 let db=null,userCap=null,myId=null,canWrite=true,players=[],lastPush=0,profiles={};
-function snapshot(){S.pokerStack=tableValue();const s=JSON.stringify(S);S.pokerStack=0;return s}
+function snapshot(){S.pokerStack=tableValue();
+  // 记住上次待的港口/品种，下次打开直接接着玩
+  if(typeof ui==='object'&&ui)S.ui={city:ui.city,good:ui.good,mode:ui.mode,stock:ui.stock,smode:ui.smode,luxCat:ui.luxCat,from:ui.from,to:ui.to,sgood:ui.sgood,pct:ui.pct,spct:ui.spct,shpct:ui.shpct,bamt:ui.bamt};
+  const s=JSON.stringify(S);S.pokerStack=0;return s}
 function save(){if(!S||!S.started)return;const js=snapshot();try{localStorage.setItem(LS,js)}catch(e){}
   if(db&&myId&&canWrite)db.doc('data/users/'+myId+'/game').set({json:js,day:S.day}).catch(e=>{if(e&&e.code==='invalid_argument')canWrite=false});pushPlayer()}
+function exportSave(){
+  const blob=new Blob([snapshot()],{type:'application/json'});const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);a.download=`商海浮沉-${dateStr(S.day)}.json`;a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),2000);toast('存档已导出')}
+function importSave(file){if(!file)return;const r=new FileReader();
+  r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||!d.started)throw new Error('不是有效存档');
+    S=migrate(d);S.inMacau=false;$('#modalRoot').innerHTML='';mq.length=0;modalOpen=false;win=null;$('#winRoot').innerHTML='';
+    if(S.ui)Object.assign(ui,S.ui);setSpeed(1);refresh();save();toast('存档已导入','lv')}catch(e){toast('存档格式不对：'+e.message,'bad')}};
+  r.readAsText(file)}
+
 function pushPlayer(force){if(!db||!myId||!canWrite||!S||!S.started)return;const now=Date.now();if(!force&&now-lastPush<15000)return;lastPush=now;
   const top=S.owned.map(o=>LUXBY[o.id]).sort((a,b)=>b.p-a.p)[0];
   db.doc('players/'+myId).set({company:String(S.company).slice(0,24),nw:Math.round(netWorth()),level:S.level,day:S.day,ach:Object.keys(S.ach).length,top:top?top.n:'',ipo:!!S.ipo,at:now}).catch(e=>{if(e&&e.code==='invalid_argument')canWrite=false})}
@@ -840,16 +1535,22 @@ async function initCloud(){try{const cl=window.claude;if(!cl||!cl.use)return;use
   db.collection('players').orderBy('nw','desc').limit(50).onSnapshot(async snap=>{players=snap.docs.map(d=>({id:d.id,...d.data()}));if(userCap&&userCap.profiles){try{profiles=await userCap.profiles(players.map(p=>p.id))}catch(e){}}refresh()});
   if(myId){const snap=await db.doc('data/users/'+myId+'/game').get();if(snap.exists){const d=snap.data();if(d&&d.json){try{const cloud=JSON.parse(d.json);if(cloud.started&&(!S||!S.started||cloud.day>S.day)){S=migrate(cloud);S.inMacau=false;$('#modalRoot').innerHTML='';mq.length=0;modalOpen=false;setSpeed(speed||1);refresh();toast('已读取云端存档')}}catch(e){}}}}
 }catch(e){}}
-
 // ================= UI =================
-let speed=1,timer=null,win=null,dragging=false;
-const ui={city:'sh',good:null,mode:'b',pct:30,stock:'600831',smode:'b',spct:25,luxCat:'watch',from:null,to:null,sgood:null,shpct:100,bamt:50};
+let speed=1,timer=null,win=null,modalOpen=false,dragging=false;
+const ui={city:'sh',good:null,mode:'b',pct:30,stock:'600831',smode:'b',spct:25,luxCat:'watch',
+  from:null,to:null,sgood:null,shpct:100,bamt:50,ins:false};
 const DESKS=[
- {id:'trade',n:'交易所',en:'Commodities'},{id:'port',n:'航运',en:'Shipping'},{id:'deal',n:'合同',en:'Contracts'},
- {id:'stock',n:'证券',en:'Equities'},{id:'bank',n:'私人银行',en:'Private Bank',lv:2},{id:'hq',n:'总部',en:'Headquarters'},
- {id:'lux',n:'珍藏',en:'Collection'},{id:'macau',n:'澳门',en:'Macau · Grand Palace',wide:1},
- {id:'rank',n:'富豪榜',en:'Rich List'},{id:'wheel',n:'每日红利',en:'Daily Dividend'},{id:'ach',n:'荣誉',en:'Honours'},
+ {id:'trade',n:'交易所',en:'Commodities',k:'1'},{id:'port',n:'航运',en:'Shipping',k:'2'},
+ {id:'deal',n:'合同',en:'Contracts',k:'3'},{id:'stock',n:'证券',en:'Equities',k:'4'},
+ {id:'bank',n:'私人银行',en:'Private Bank',lv:2,k:'5'},{id:'hq',n:'总部',en:'Headquarters',k:'6'},
+ {id:'lux',n:'珍藏',en:'Collection',k:'7'},{id:'macau',n:'澳门',en:'Macau · Grand Palace',wide:1,k:'8'},
+ {id:'rank',n:'富豪榜',en:'Rich List',k:'9'},{id:'wheel',n:'每日红利',en:'Daily Dividend'},
+ {id:'ach',n:'荣誉',en:'Honours'},
 ];
+const WT={trade:['交易所','Commodities Exchange'],port:['航运','Shipping & Logistics'],deal:['合同','Contracts Desk'],
+  stock:['证券','Equities'],bank:['私人银行','Private Banking'],hq:['总部','Headquarters'],lux:['珍藏','The Collection'],
+  macau:['澳门 · 金殿娱乐场','Grand Palace Casino · Macau'],rank:['富豪榜','Rich List'],wheel:['每日红利','Daily Dividend'],
+  ach:['荣誉','Honours'],settings:['设置','Preferences']};
 const readyContracts=()=>S.contracts.filter(k=>{const i=S.inv[k.city][k.good];return i&&i.q>=k.q-1e-9}).length;
 const affordableUpg=()=>UPG.filter(u=>upgLv(u.id)<u.max&&!(u.lv&&S.level<u.lv)&&S.cash>=u.cost(upgLv(u.id))).length;
 function idx(){let v=0,p=0;for(const st of STOCKS){v+=S.stk[st.s].p/st.p;p+=S.stk[st.s].prev/st.p}return {v:v/STOCKS.length*3000,ch:p?v/p-1:0}}
@@ -865,7 +1566,7 @@ function deskStatus(id){switch(id){
  case'rank':return `当前第 <b>${myRank()}</b> 名`;
  case'wheel':return S.wheel===todayKey()?'今日已领取':'<b class="gold">今日可领取</b>';
  case'ach':return `<b>${Object.keys(S.ach).length}</b> / ${ACH.length}`}}
-function deskBadge(id){if(id==='deal')return readyContracts();if(id==='wheel')return S.wheel===todayKey()?0:1;if(id==='hq')return affordableUpg();return 0}
+function deskBadge(id){if(id==='deal')return readyContracts();if(id==='wheel')return S.wheel===todayKey()?0:1;if(id==='hq')return affordableUpg();if(id==='trade'){const b=bestArb();return b&&b.r>.03?1:0}return 0}
 function rankRows(){const rows=[{me:1,name:S.company,who:'你',nw:netWorth(),level:S.level}];
   for(const r of RIVALS){const rv=S.rivals.find(x=>x.id===r.id);rows.push({ai:1,name:r.co,who:`${r.boss} · ${r.style}`,nw:rv.nw,level:lvFromNW(rv.nw)})}
   for(const p of players){if(p.id===myId)continue;const pr=profiles[p.id];rows.push({real:1,name:p.company||'神秘商人',who:(pr&&pr.name)||'玩家',nw:+p.nw||0,level:+p.level||1,top:p.top,on:Date.now()-(+p.at||0)<120000,ipo:p.ipo})}
@@ -873,88 +1574,274 @@ function rankRows(){const rows=[{me:1,name:S.company,who:'你',nw:netWorth(),lev
 const myRank=()=>rankRows().findIndex(r=>r.me)+1;
 function lvFromNW(nw){let L=1;const t=[0,0,3e5,8e5,2e6,5e6,1.2e7,3e7,8e7,2e8,5e8,1.2e9,3e9,8e9,2e10,5e10];while(L<15&&nw>=t[L+1])L++;return L}
 
-function renderTop(){const need=xpNeed(S.level),p=S.level>=15?1:clamp(S.xp/need,0,1);
-  setHTML($('#top'),`<button class="mark" type="button" data-open="hq" aria-label="总部"><span class="mono">${esc(S.company.slice(0,1))}</span><span style="min-width:0"><span class="co" style="display:block">${esc(S.company)}</span><span class="ti">Lv${S.level} ${TITLES[S.level]}<span class="xp"><i style="width:${(p*100).toFixed(1)}%"></i></span></span></span></button>
-   <div class="figs"><div><span class="cap">Cash</span><b id="cashFig">${fmt(S.cash)}</b></div><div><span class="cap">Net Worth</span><b>${fmt(netWorth())}</b></div><div><span class="cap">Prestige</span><b>${prestigeTotal()}</b></div></div>
-   <div class="ctl"><div class="date"><div class="d">${dateStr(S.day)}</div><div class="w">${weekday(S.day)} · 第 ${S.day} 天${S.inMacau?' · 身在澳门':''}</div></div>
-   <div class="seg">${[[0,'暂停'],[1,'1×'],[2,'2×'],[4,'4×']].map(([s,l])=>`<button type="button" data-speed="${s}" class="${speed===s?'on':''}">${l}</button>`).join('')}</div>
-   <button class="ib" type="button" id="muteBtn" aria-label="${muted?'打开音效':'关闭音效'}">${ic(muted?'mute':'snd')}</button></div>`)}
-function renderMain(){const nw=netWorth();const h=S.nwHist.slice(-30);const wk=h.length>4?h[h.length-4]:h[0]||nw;
-  setHTML($('#main'),`<div class="hero"><div><div class="cap">Total Net Worth · 净资产</div><div class="big">${fmt(nw)}</div><div class="chg ${cls(nw-wk)}">${pct(wk?(nw-wk)/Math.abs(wk):0)} <span class="muted">近 7 日 · 富豪榜第 ${myRank()} 名</span></div></div><canvas data-a="${esc(JSON.stringify(h.length>1?h:[nw,nw]))}" data-mini="1"></canvas></div>
-  <div class="desks">${DESKS.map(d=>{const locked=d.lv&&S.level<d.lv;const bd=locked?0:deskBadge(d.id);
-   return `<button type="button" class="desk ${d.wide?'macau':''} ${locked?'lock':''}" data-open="${d.id}"><div class="row1">${ic(d.id)}${bd?`<span class="dot">${bd}</span>`:''}</div><div><div class="cap">${d.en}</div><h3>${d.n}</h3></div><div class="st">${locked?`Lv${d.lv} 开放`:deskStatus(d.id)}</div></button>`}).join('')}</div>`);
-  drawCharts($('#main'))}
-function renderSide(){const tut=S.tut<TUT.length;let q='';
-  if(tut){const t=TUT[S.tut];q=`<div class="quest"><b>${t.t}</b><div class="note">奖励 <span class="gold m">${fmt(t.r)}</span> · ${S.tut}/${TUT.length}</div></div><div class="bar"><i style="width:${S.tut/TUT.length*100}%"></i></div>`}
+// —— 渲染调度：一帧只刷一次，且只改动真正变了的节点 ——
+let __raf=0,__flushing=false;
+function refresh(){if(!S)return;if(!__raf)__raf=requestAnimationFrame(flush)}
+function flush(){
+  __raf=0;if(!S)return;
+  try{
+    paintTop();paintMain();paintSide();paintTicker();
+    if(win)renderWin();
+    paintAI();
+  }catch(e){console.error('paint error',e)}
+}
+
+// ---------- 顶栏 ----------
+function buildTop(){
+  const el=$('#top');if(!el||el._built)return;
+  el.innerHTML=`<button class="mark" type="button" data-open="hq" aria-label="总部"><span class="mono" id="coMon">·</span><span style="min-width:0"><span class="co" id="coName" style="display:block"></span><span class="ti">Lv<span id="lvN">1</span>&nbsp;<span id="lvT"></span><span class="xp"><i id="xpBar"></i></span></span></span></button>
+   <div class="figs"><div><span class="cap">Cash</span><b id="cashFig">—</b></div><div><span class="cap">Net Worth</span><b id="nwFig">—</b></div><div><span class="cap">Prestige</span><b id="presFig">—</b></div></div>
+   <div class="env">
+     <button class="intelp" type="button" data-intel-desk aria-label="情报点数" title="情报点数：研究部每日产出，可换取确定性信息">${ic('intel')}<span>情报</span><b id="intelN">0</b></button>
+     <span class="macro" id="macroChip"><i></i><b></b></span>
+   </div>
+   <div class="ctl"><div class="date"><div class="d" id="dateD"></div><div class="w" id="dateW"></div></div>
+   <div class="seg" id="speedSeg">${[[0,'暂停'],[1,'1×'],[2,'2×'],[4,'4×']].map(([s,l])=>`<button type="button" data-speed="${s}" class="${speed===s?'on':''}">${l}</button>`).join('')}</div>
+   <button class="ib" type="button" id="muteBtn" aria-label="音效">${ic(muted?'mute':'snd')}</button>
+   <button class="ib" type="button" data-open="settings" aria-label="设置" title="设置（S）">${ic('gear2')}</button></div>`;
+  el._built=1;
+}
+function paintTop(){
+  buildTop();const el=$('#top');if(!el)return;
+  const nw=netWorth(),need=xpNeed(S.level),p=S.level>=15?1:clamp(S.xp/need,0,1);
+  setTxt($('#coMon'),String(S.company).slice(0,1));
+  setTxt($('#coName'),S.company);
+  setTxt($('#lvN'),String(S.level));
+  setTxt($('#lvT'),TITLES[S.level]);
+  const bar=$('#xpBar');if(bar){const w=(p*100).toFixed(1)+'%';if(bar.style.width!==w)bar.style.width=w}
+  setTxt($('#cashFig'),fmt(S.cash));
+  setTxt($('#nwFig'),fmt(nw));
+  setTxt($('#presFig'),String(prestigeTotal()));
+  setTxt($('#intelN'),String(Math.round(S.intel)));
+  const ib=$('.intelp');if(ib){const on=S.intel>=INTEL_COST.event;if(ib.classList.contains('on')!==on)ib.classList.toggle('on',on);
+    const t=`情报点数 ${Math.round(S.intel)} · 研究部每日 ${upgLv('analyst')*2} 点`;if(ib.title!==t)ib.title=t}
+  const mb=macro(),chip=$('#macroChip');
+  if(chip){const cl='macro '+mb.id;if(chip.className!==cl)chip.className=cl;setTxt(chip.querySelector('b'),mb.n);
+    const t=`宏观周期：${mb.n} · ${mb.d} · 还剩 ${Math.max(0,S.macro.until-S.day)} 天`;if(chip.title!==t)chip.title=t}
+  setTxt($('#dateD'),dateStr(S.day));
+  setTxt($('#dateW'),`${weekday(S.day)} · 第 ${S.day} 天${S.inMacau?' · 身在澳门':''}`);
+  const seg=$('#speedSeg');if(seg)seg.querySelectorAll('[data-speed]').forEach(b=>{const on=+b.dataset.speed===speed;if(b.classList.contains('on')!==on)b.classList.toggle('on',on)});
+  const mb2=$('#muteBtn');if(mb2&&mb2._m!==muted){mb2.innerHTML=ic(muted?'mute':'snd');mb2._m=muted}
+}
+
+// ---------- 主区 ----------
+function buildMain(){
+  const el=$('#main');if(!el||el._built)return;
+  el.innerHTML=`<div class="hero"><div><div class="cap">Total Net Worth · 净资产</div><div class="big" id="nwBig">—</div><div class="chg" id="chgLine"></div></div><canvas id="heroCv" style="width:min(360px,100%);height:70px"></canvas></div>
+   <div class="desks" id="desks">${DESKS.map(d=>`<button type="button" class="desk ${d.wide?'macau':''}" data-open="${d.id}"><div class="row1">${ic(d.id)}<span class="dot" hidden></span></div><div><div class="cap">${d.en}</div><h3>${d.n}</h3></div><div class="st"><span class="stx"></span></div></button>`).join('')}</div>`;
+  el._built=1;
+}
+function paintMain(){
+  buildMain();const nw=netWorth(),h=S.nwHist.slice(-30),wk=h.length>4?h[h.length-4]:h[0]||nw;
+  setTxt($('#nwBig'),fmt(nw));
+  setTxt($('#chgLine'),`${pct(wk?(nw-wk)/Math.abs(wk):0)} 近 7 日 · 富豪榜第 ${myRank()} 名`);
+  const cl=$('#chgLine');if(cl)setCls(cl,'chg '+cls(nw-wk));
+  const cv=$('#heroCv');if(cv){if(cv.dataset.cid!=='hero')cv.dataset.cid='hero';CH.set('hero',h.length>1?h:[nw,nw]);cv._mini=1}
+  const desks=$('#desks');if(desks)for(const d of DESKS){
+    const btn=desks.querySelector(`[data-open="${d.id}"]`);if(!btn)continue;
+    const locked=d.lv&&S.level<d.lv;
+    const dot=btn.querySelector('.dot');const bd=locked?0:deskBadge(d.id);
+    if(dot){const show=bd>0;if(dot.hidden===show)dot.hidden=!show;if(show)setTxt(dot,String(bd))}
+    const st=btn.querySelector('.stx');
+    if(st){const html=locked?`Lv${d.lv} 开放`:deskStatus(d.id);if(st._h!==html){st.innerHTML=html;st._h=html}}
+    const want=locked?'desk lock':(d.wide?'desk macau':'desk');
+    if(btn.className!==want)btn.className=want;
+  }
+  drawCharts($('#main'));
+}
+
+// ---------- 侧栏 ----------
+const spotRefs={};
+function buildSide(){
+  const el=$('#side');if(!el||el._built)return;
+  el.innerHTML=`<div class="panel"><h4><span id="agTitle">入门指引</span><span class="cap">Agenda</span></h4><div id="agBody"></div></div>
+   <div class="panel"><h4>上海现货<span class="cap">Spot · SHA</span></h4><table class="mini-t"><tbody id="spotBody"></tbody></table></div>
+   <div class="panel"><h4>财经快讯<span class="cap" id="newsCap">Newswire</span></h4><div class="feed" id="newsFeed"></div></div>`;
+  el._built=1;
+}
+function buildSpot(){
+  const tb=$('#spotBody');if(!tb)return;
+  tb.innerHTML=GOODS.map(g=>goodUnlocked(g.id)
+    ?`<tr data-sp="${g.id}"><td><span class="code">${g.code}</span>${g.n}</td><td data-c="p"></td><td data-c="c"></td></tr>`
+    :`<tr class="lk"><td><span class="code">${g.code}</span>${g.n}</td><td colspan="2" class="note">Lv${g.lv}</td></tr>`).join('');
+  for(const k in spotRefs)delete spotRefs[k];
+  tb.querySelectorAll('tr[data-sp]').forEach(tr=>{spotRefs[tr.dataset.sp]={p:tr.querySelector('[data-c="p"]'),c:tr.querySelector('[data-c="c"]')}});
+  tb._lv=S.level;
+}
+function renderTop(){paintTop()}
+function paintSide(){
+  buildSide();
+  const tut=S.tut<TUT.length;let q='',title='本周目标';
+  if(tut){const t=TUT[S.tut];title='入门指引';q=`<div class="quest"><b>${t.t}</b><div class="note">奖励 <span class="gold m">${fmt(t.r)}</span> · ${S.tut}/${TUT.length}</div><div class="row" style="margin-top:8px"><button class="btn sm" type="button" data-open="${t.desk||'trade'}">去做</button></div></div><div class="bar"><i style="width:${S.tut/TUT.length*100}%"></i></div>`}
   else if(S.goal){const p=S.stats.tradeProfit+S.stats.stockProfit-S.goal.baseProfit;q=`<div class="quest"><b>本周实现利润 ${fmt(S.goal.target)}</b><div class="note">奖励 <span class="gold m">${fmt(S.goal.reward)}</span> · 剩 ${S.goal.end-S.day} 天 · ${S.goal.done?'已达成':'当前 '+fmt(p)}</div></div><div class="bar"><i style="width:${clamp(p/S.goal.target*100,0,100)}%"></i></div>`}
   const nx=UNLOCKS[S.level+1];
-  setHTML($('#side'),`<div class="panel"><h4>${tut?'入门指引':'本周目标'}<span class="cap">Agenda</span></h4>${q}${nx?`<div class="note" style="margin-top:12px">Lv${S.level+1} 解锁 · <span class="gold">${nx}</span></div>`:''}${S.level>=10&&!S.ipo?`<button class="btn pri" style="margin-top:12px;width:100%" type="button" data-ipo ${netWorth()<5e7?'disabled':''}>申请上市（需净资产 ¥5000万）</button>`:''}</div>
-  <div class="panel"><h4>上海现货<span class="cap">Spot · SHA</span></h4><table class="mini-t"><tbody>${unlockedGoods().map(g=>{const m=S.mkt.sh[g.id];const ch=(m.p-m.prev)/m.prev;return `<tr><td><span class="code">${g.code}</span>${g.n}</td><td>${fmtP(m.p)}</td><td class="${cls(ch)}">${pct(ch)}</td></tr>`}).join('')}</tbody></table></div>
-  <div class="panel"><h4>财经快讯<span class="cap">${isWeekend(S.day)?'Market Closed':'Newswire'}</span></h4><div class="feed">${S.news.slice(0,25).map(n=>`<div class="it ${n.k}"><span class="d">${dateStr(n.d,1)}</span>${esc(n.t)}</div>`).join('')||'<div class="note">暂无消息</div>'}</div></div>`)}
-function renderTicker(){setHTML($('#ticker'),S.news.slice(0,10).map(n=>`<span><b>${dateStr(n.d,1)}</b>${esc(n.t)}</span>`).join(''))}
+  const agHTML=`${q}${nx?`<div class="note" style="margin-top:12px">Lv${S.level+1} 解锁 · <span class="gold">${nx}</span></div>`:''}${S.level>=10&&!S.ipo?`<button class="btn pri" style="margin-top:12px;width:100%" type="button" data-ipo ${netWorth()<5e7?'disabled':''}>申请上市（需净资产 ¥5000万）</button>`:''}`;
+  setTxt($('#agTitle'),title);
+  setHTML($('#agBody'),agHTML);
+  const tb=$('#spotBody');
+  if(!tb||tb._lv!==S.level)buildSpot();
+  for(const g of GOODS){const r=spotRefs[g.id];if(!r)continue;const m=S.mkt.sh[g.id];const ch=(m.p-m.prev)/m.prev;
+    setTxt(r.p,fmtP(m.p));setTxt(r.c,pct(ch));if(r.c)setCls(r.c,cls(ch))}
+  const nf=$('#newsFeed');
+  if(nf&&nf._seq!==newsSeq){nf._seq=newsSeq;
+    nf.innerHTML=S.news.slice(0,25).map(n=>`<div class="it ${n.k}"><span class="d">${dateStr(n.d,1)}</span>${esc(n.t)}</div>`).join('')||'<div class="note">暂无消息</div>'}
+  setTxt($('#newsCap'),isWeekend(S.day)?'Market Closed':'Newswire');
+}
 
-const WT={trade:['交易所','Commodities Exchange'],port:['航运','Shipping & Logistics'],deal:['合同','Contracts Desk'],stock:['证券','Equities'],bank:['私人银行','Private Banking'],hq:['总部','Headquarters'],lux:['珍藏','The Collection'],macau:['澳门 · 金殿娱乐场','Grand Palace Casino · Macau'],rank:['富豪榜','Rich List'],wheel:['每日红利','Daily Dividend'],ach:['荣誉','Honours']};
-function openWin(id){const d=DESKS.find(x=>x.id===id);if(d&&d.lv&&S.level<d.lv){toast(`Lv${d.lv} 开放`);return}
+// ---------- 底部跑马灯：JS 位移，内容更新不跳回起点 ----------
+const tk={x:0,w:0,seq:-1,boxW:0};
+function paintTicker(){
+  const el=$('#ticker'),box=$('#tkBox');if(!el||!box)return;
+  if(tk.seq!==newsSeq){
+    tk.seq=newsSeq;
+    el.innerHTML=S.news.slice(0,10).map(n=>`<span><b>${dateStr(n.d,1)}</b>${esc(n.t)}</span>`).join('');
+    tk.w=el.scrollWidth;tk.boxW=box.clientWidth;
+    if(tk.w&&tk.x>-tk.w*2)tk.x=tk.boxW||innerWidth;
+  }
+  el.style.transform=`translateX(${Math.round(tk.x)}px)`;
+}
+function tickerStep(dt){
+  if(!tk.w)return;
+  const box=$('#tkBox');if(!tk.boxW&&box)tk.boxW=box.clientWidth;
+  tk.x-=dt*.026;
+  if(tk.x<-tk.w)tk.x=tk.boxW||innerWidth;
+  const el=$('#ticker');if(el)el.style.transform=`translateX(${Math.round(tk.x)}px)`;
+}
+
+const mq=[];
+function queueModal(fn,onAct,after){mq.push([fn,onAct,after]);if(!modalOpen)nextModal()}
+function nextModal(){const it=mq.shift();if(!it){modalOpen=false;return}modalOpen=true;const [fn,onAct,after]=it;
+  $('#modalRoot').innerHTML=`<div class="mbg"><div class="modal" role="dialog" aria-modal="true">${fn()}</div></div>`;
+  $('#modalRoot').querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>{snd('click');resolveAsk(null);closeModal()});
+  $('#modalRoot').querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{snd('click');const i=+b.dataset.act;closeModal();onAct&&onAct(i)});
+  after&&after();const f=$('#modalRoot .modal button:not([disabled])');f&&f.focus({preventScroll:true})}
+function closeModal(){$('#modalRoot').innerHTML='';modalOpen=false;setTimeout(()=>{if(!modalOpen)nextModal()},150)}
+// 文本输入弹窗（议价）
+let __ask=null;
+function resolveAsk(v){if(__ask){const r=__ask;__ask=null;r(v)}}
+function askText(o){
+  return new Promise(res=>{
+    __ask=res;
+    queueModal(()=>`<div class="cap">${o.cap||'Input'}</div><h2>${o.title}</h2><div class="rule"></div>${o.body?`<p>${o.body}</p>`:''}
+      <textarea id="askIn" rows="3" placeholder="${o.placeholder||''}" style="width:100%;background:var(--surface);border:1px solid var(--hair3);border-radius:4px;padding:10px;font:13px/1.5 var(--f-sans);color:var(--ink);resize:vertical"></textarea>
+      ${o.hint?`<div class="note" style="text-align:left">${o.hint}</div>`:''}
+      <div class="row" style="justify-content:center"><button class="btn pri" type="button" id="askGo">${o.cta||'确定'}</button><button class="btn" type="button" data-close>取消</button></div>`,null,()=>{
+      const inp=$('#askIn');inp&&inp.focus({preventScroll:true});
+      const go=$('#askGo');if(go)go.onclick=()=>{const v=(inp.value||'').trim();resolveAsk(v);closeModal()};
+    });
+  })
+}
+
+// ---------- 窗口 ----------
+function openWin(id){
+  if(id==='settings'){
+    win='settings';snd('click');
+    $('#winRoot').innerHTML=`<div class="ov" id="ov"><div class="win" role="dialog" aria-modal="true" aria-label="设置"><div class="win-h">${ic('gear2')}<div><div class="cap">Preferences</div><h2>设置</h2><div class="ws" id="ws"></div></div><button class="x" type="button" data-closew>关闭</button></div><div id="wtabs"></div><div class="wb" id="wb"></div></div></div>`;
+    renderWin(true);return}
+  const d=DESKS.find(x=>x.id===id);if(d&&d.lv&&S.level<d.lv){toast(`Lv${d.lv} 开放`);return}
   if(id==='macau'&&!S.inMacau){flyMacau();return}
   win=id;snd('click');const [n,en]=WT[id];
   $('#winRoot').innerHTML=`<div class="ov" id="ov"><div class="win" role="dialog" aria-modal="true" aria-label="${n}"><div class="win-h">${ic(id)}<div style="min-width:0"><div class="cap">${en}</div><h2>${n}</h2><div class="ws" id="ws"></div></div><button class="x" type="button" data-closew>${id==='macau'?'返回上海':'关闭'}</button></div><div id="wtabs"></div><div class="wb" id="wb"></div></div></div>`;
-  renderWin(true);const x=$('#winRoot .x');x&&x.focus({preventScroll:true})}
+  renderWin(true);const x=$('#winRoot .x');x&&x.focus({preventScroll:true})
+}
 function closeWin(){if(win==='macau'){if(CS.phase==='deal'||CS.sl.spinning)return;leaveMacau()}win=null;cancelAnimationFrame(shipRAF);$('#winRoot').innerHTML='';snd('click');refresh()}
-function renderWin(force){if(!win)return;if(!force&&(dragging||(spinning&&win==='wheel')))return;if(CS.sl.spinning&&win==='macau'&&CS.game==='slot')return;
-  const body=$('#wb');if(!body)return;const ae=document.activeElement;const rk=ae&&ae.dataset&&ae.dataset.range;const st=body.scrollTop;
-  const V=VIEWS[win]();setHTML($('#ws'),V.sub||'');setHTML($('#wtabs'),V.tabs||'');if(body._h!==V.body){body.innerHTML=V.body;body._h=V.body;drawCharts(body)}body.scrollTop=st;
+function renderWin(force){
+  if(!win)return;
+  if(!force&&(dragging||(spinning&&win==='wheel')))return;
+  if(CS.sl.spinning&&win==='macau'&&CS.game==='slot')return;
+  const body=$('#wb');if(!body)return;
+  const V=VIEWS[win]?VIEWS[win]():null;if(!V)return;
+  if(V.static&&!force){paintStaticWin();return}
+  const ae=document.activeElement;const rk=ae&&ae.dataset&&ae.dataset.range;const st=body.scrollTop;
+  setHTML($('#ws'),V.sub||'');setHTML($('#wtabs'),V.tabs||'');
+  if(body._h!==V.body){body.innerHTML=V.body;body._h=V.body;drawCharts(body)}
+  body.scrollTop=st;
   if(rk){const r=body.querySelector(`[data-range="${rk}"]`);r&&r.focus({preventScroll:true})}
-  if(win==='port')drawShips()}
-function tradeQ(){const inv=S.inv[ui.city][ui.good];if(ui.mode==='b'){const mx=maxBuy(ui.city,ui.good);let q=Math.floor(mx*ui.pct/100);if(ui.pct>0&&q<1&&mx>=1)q=1;return q}return inv?Math.round(inv.q*ui.pct/100*1000)/1000:0}
+  if(win==='port')drawShips();
+  if(win==='settings')paintStaticWin();
+}
+function paintStaticWin(){
+  if(win!=='settings')return;
+  const st=AI.stat,s=$('#aiStat');
+  if(s)s.innerHTML=AI.ready()?(AI.cfg.mock?'<span class="tagline">演示模式</span>':`<span class="tagline ok">已启用</span> ${AI.cfg.model}`):'<span class="tagline bad">未配置</span> 填入密钥后启用';
+  const u=$('#aiUse');if(u)u.textContent=`${st.calls} 次请求 · 输入 ${(st.inTok/1000).toFixed(1)}K / 输出 ${(st.outTok/1000).toFixed(1)}K`;
+  const e=$('#aiErr');if(e)e.textContent=st.lastErr||'';
+}
+
+function tradeQ(){const inv=S.inv[ui.city][ui.good];if(ui.mode==='b'){const mx=maxBuy(ui.city,ui.good);let q=Math.floor(mx*ui.pct/100);if(ui.pct>0&&q<1&&mx>=1)q=1;return q}
+  if(!inv)return 0;let q=Math.min(inv.q,Math.round(inv.q*ui.pct/100));if(ui.pct>0&&q<1&&inv.q>=1)q=1;return q}
 function stockLots(){const k=S.stk[ui.stock],h=S.hold[ui.stock];if(ui.smode==='b')return Math.round(Math.floor(S.cash/(k.p*100*1.001))*ui.spct/100);return h?Math.round(h.q/100*ui.spct/100):0}
-function shipQ(){if(!ui.from||!ui.sgood||!S.inv[ui.from][ui.sgood])return 0;const have=S.inv[ui.from][ui.sgood].q;return Math.min(have,Math.max(Math.min(have,1),Math.round(have*ui.shpct/100*100)/100))}
+function shipQ(){if(!ui.from||!ui.sgood||!S.inv[ui.from][ui.sgood])return 0;const have=S.inv[ui.from][ui.sgood].q;
+  let q=Math.min(have,Math.round(have*ui.shpct/100));if(ui.shpct>0&&q<1&&have>=1)q=1;return q}
 const bankAmt=()=>Math.round(Math.max(0,creditLimit()-S.loan)*ui.bamt/100/1000)*1000;
 const LIVE={pct:()=>`${fmtQ(tradeQ())} ${G[ui.good]?G[ui.good].u:''}`,spct:()=>`${stockLots()} 手`,shpct:()=>`${fmtQ(shipQ())} ${ui.sgood?G[ui.sgood].u:''}`,bamt:()=>fmt(bankAmt()),buyPct:()=>fmt(buyAmt())};
+// ================= VIEWS =================
 const VIEWS={
-trade(){const cap=whCap(upgLv('wh')),used=invUsed(ui.city);
+trade(){
+  const cap=whCap(upgLv('wh')),used=invUsed(ui.city);
   const tabs=`<div class="tabs">${CITIES.map(c=>`<button type="button" class="tab ${c.id===ui.city?'on':''}" data-city="${c.id}" ${cityUnlocked(c.id)?'':'disabled'}>${c.n}${cityUnlocked(c.id)?'':' · Lv'+c.lv}</button>`).join('')}</div>`;
-  const rows=GOODS.map(g=>{if(!goodUnlocked(g.id))return `<tr class="lk"><td><span class="code">${g.code}</span>${g.n}</td><td colspan="6">Lv${g.lv} 开放交易</td></tr>`;
+  const rows=GOODS.map(g=>{
+    if(!goodUnlocked(g.id))return `<tr class="lk"><td><span class="code">${g.code}</span>${g.n}</td><td colspan="6">Lv${g.lv} 开放交易</td></tr>`;
     const m=S.mkt[ui.city][g.id],ch=(m.p-m.prev)/m.prev,inv=S.inv[ui.city][g.id];let best=null;
     for(const c of unlockedCities()){if(c.id===ui.city)continue;const p=bidP(c.id,g.id);if(!best||p>best.p)best={c,p}}
     const gap=best?(best.p-askP(ui.city,g.id))/askP(ui.city,g.id):0;const E=g.base*C[ui.city].cf[g.id]*S.trend[g.id]*evMult(ui.city,g.id);const dev=(m.p-E)/E;
-    return `<tr class="cl ${ui.good===g.id?'sel':''}" data-good="${g.id}"><td><span class="code">${g.code}</span>${g.n} <span class="note">/${g.u}</span>${upgLv('analyst')>=2&&Math.abs(dev)>.04?` <span class="tag ${dev<0?'cold':'hot'}">${dev<0?'低估':'高估'}</span>`:''}</td><td class="r m">${fmtP(m.p)}</td><td class="r m ${cls(ch)}">${pct(ch)}</td><td><canvas class="spark" data-d="${esc(JSON.stringify(m.h.slice(-30)))}"></canvas></td><td>${best?`${best.c.n} <span class="m ${cls(gap)}">${pct(gap,1)}</span>`:'—'}</td><td class="r m">${inv?fmtQ(inv.q):'—'}</td><td class="r m ${inv?cls(bidP(ui.city,g.id)-inv.cost):''}">${inv?pct((bidP(ui.city,g.id)-inv.cost)/inv.cost,1):''}</td></tr>`}).join('');
-  return {sub:`${C[ui.city].n}港 · 仓库 ${fmtQ(used)} / ${fmtQ(cap)} 吨 · 买卖价差 ${(spread(upgLv('trader'))*100).toFixed(2)}%`,tabs,
-    body:`<div class="tbl"><table><thead><tr><th>品种</th><th class="r">现价</th><th class="r">日涨跌</th><th>30日</th><th>最佳卖出港 / 价差</th><th class="r">持仓</th><th class="r">浮盈</th></tr></thead><tbody>${rows}</tbody></table></div>${ui.good&&goodUnlocked(ui.good)?ticket():'<div class="empty">选择一个品种下单。「最佳卖出港」显示扣除买卖价差后，运到别的港口能多卖多少。</div>'}`}},
-port(){const al=unlockedCities();const routes=[];for(let i=0;i<al.length;i++)for(let j=i+1;j<al.length;j++)routes.push([al[i],al[j]]);
-  const fromOpts=al.filter(c=>Object.keys(S.inv[c.id]).length);if(!fromOpts.find(c=>c.id===ui.from))ui.from=fromOpts[0]?fromOpts[0].id:null;
-  if(!ui.to||ui.to===ui.from||!cityUnlocked(ui.to))ui.to=(al.find(c=>c.id!==ui.from)||{}).id;
+    return `<tr class="cl ${ui.good===g.id?'sel':''}" data-good="${g.id}"><td><span class="code">${g.code}</span>${g.n} <span class="note">/${g.u}</span>${upgLv('analyst')>=2&&Math.abs(dev)>.04?` <span class="tag ${dev<0?'cold':'hot'}">${dev<0?'低估':'高估'}</span>`:''}</td><td class="r m">${fmtP(m.p)}</td><td class="r m ${cls(ch)}">${pct(ch)}</td><td><canvas class="spark" data-cid="spark:${g.id}"></canvas></td><td>${best?`<button type="button" class="chip" data-shipfast="${g.id}:${best.c.id}" title="安排航运到${best.c.n}，预计每单位多卖 ${pct(gap,1)}">${best.c.n} <span class="m ${cls(gap)}">${pct(gap,1)}</span></button>`:'—'}</td><td class="r m">${inv?fmtQ(inv.q):'—'}</td><td class="r m ${inv?cls(bidP(ui.city,g.id)-inv.cost):''}">${inv?pct((bidP(ui.city,g.id)-inv.cost)/inv.cost,1):''}</td></tr>`}).join('');
+  for(const g of GOODS)if(goodUnlocked(g.id))CH.set('spark:'+g.id,S.mkt[ui.city][g.id].h.slice(-30));
+  return {sub:`${C[ui.city].n}港 · 仓库 ${fmtQ(used)} / ${fmtQ(cap)} 吨 · 买卖价差 ${(spread(upgLv('trader'))*100).toFixed(2)}% · 点「调货到」可直接发船`,tabs,
+    body:`<div class="tbl"><table><thead><tr><th>品种</th><th class="r">现价</th><th class="r">日涨跌</th><th>30日</th><th>调货到</th><th class="r">持仓</th><th class="r">浮盈</th></tr></thead><tbody>${rows}</tbody></table></div>${ui.good&&goodUnlocked(ui.good)?ticket():`<div class="empty"><span class="dsk-only">点一行品种下单。第五列显示「换个港口能多卖多少」，点它直接安排航运。</span><span class="mob-only">点一行品种下单；表格可左右滑动，「调货到」那一列点一下就能直接安排航运。</span></div>`}`}
+},
+port(){
+  const al=unlockedCities();
+  const fromOpts=al.filter(c=>Object.keys(S.inv[c.id]).length);
+  if(!fromOpts.find(c=>c.id===ui.from))ui.from=fromOpts[0]?fromOpts[0].id:null;
   const goods=ui.from?Object.keys(S.inv[ui.from]):[];if(!goods.includes(ui.sgood))ui.sgood=goods[0]||null;
+  let dests=[];
+  if(ui.from&&ui.sgood){const q=shipQ();
+    dests=al.filter(c=>c.id!==ui.from).map(c=>{const gain=(bidP(c.id,ui.sgood)-bidP(ui.from,ui.sgood))*q-freight(ui.from,c.id,ui.sgood,q);return {c,gain,days:shipDays(ui.from,c.id)}}).sort((a,b)=>b.gain-a.gain)}
+  if(dests.length&&(!ui.to||ui.to===ui.from||!cityUnlocked(ui.to)))ui.to=dests[0].c.id;
   let form='<div class="empty">各港口仓库暂无存货。先在交易所买入，再回来安排运输。</div>';
-  if(ui.from&&ui.sgood){const q=shipQ();const fee=freight(ui.from,ui.to,ui.sgood,q);const gain=(bidP(ui.to,ui.sgood)-bidP(ui.from,ui.sgood))*q;
+  if(ui.from&&ui.sgood){const q=shipQ();const prem=ui.ins?Math.round((S.inv[ui.from][ui.sgood]?S.inv[ui.from][ui.sgood].cost:0)*q*.016):0;
+    const fee=freight(ui.from,ui.to,ui.sgood,q)+prem;const gain=(bidP(ui.to,ui.sgood)-bidP(ui.from,ui.sgood))*q;const bestD=dests[0];
     form=`<div class="ticket" style="margin-top:0"><div class="g2"><div><div class="k">起运港</div><div class="row" style="margin-top:8px">${fromOpts.map(c=>`<button type="button" class="chip ${c.id===ui.from?'on':''}" data-from="${c.id}">${c.n}</button>`).join('')}</div></div>
-     <div><div class="k">目的港</div><div class="row" style="margin-top:8px">${al.filter(c=>c.id!==ui.from).map(c=>`<button type="button" class="chip ${c.id===ui.to?'on':''}" data-to="${c.id}">${c.n} · ${shipDays(ui.from,c.id)}天</button>`).join('')}</div></div></div>
+     <div><div class="k">目的港 <span class="note">按净收益排序</span></div><div class="row" style="margin-top:8px">${dests.map(d=>`<button type="button" class="chip ${d.c.id===ui.to?'on':''}" data-to="${d.c.id}" title="预计净收益 ${fmt(d.gain)}">${d.c.n} · ${d.days}天 <span class="${cls(d.gain)}">${d.gain>=0?'+':''}${fmt(d.gain)}</span></button>`).join('')}</div></div></div>
      <div><div class="k">货物</div><div class="row" style="margin-top:8px">${goods.map(g=>`<button type="button" class="chip ${g===ui.sgood?'on':''}" data-sgood="${g}">${G[g].n} ${fmtQ(S.inv[ui.from][g].q)}${G[g].u}</button>`).join('')}</div></div>
      <div><div class="sp"><span class="k">装船数量</span><span class="m" id="liveQ">${LIVE.shpct()}</span></div><input type="range" min="1" max="100" value="${ui.shpct}" data-range="shpct" style="--p:${ui.shpct}%" aria-label="装船比例"></div>
-     <div class="sp" style="flex-wrap:wrap"><div class="kv"><span class="muted">运费及保险</span><span>${fmt(fee)}</span><span class="muted">航程</span><span>${shipDays(ui.from,ui.to)} 天</span><span class="muted">按现价预计毛利</span><span class="${cls(gain-fee)}">${fmt(gain-fee)}</span></div>
-     <button class="btn pri lg" type="button" data-sail>确认起航</button></div></div>`}
+     <label class="ins ${ui.ins?'on':''}" style="cursor:pointer"><input type="checkbox" data-ins ${ui.ins?'checked':''}><span>投保航运险 <span class="note">保费 ${fmt(prem)} · 途中跌价或延误赔 80%</span></span></label>
+     <div class="sp" style="flex-wrap:wrap"><div class="kv"><span class="muted">运费及保险</span><span>${fmt(fee)}</span><span class="muted">航程</span><span>${shipDays(ui.from,ui.to)} 天</span><span class="muted">按现价预计净利</span><span class="${cls(gain-fee)}">${fmt(gain-fee)}</span></div>
+     <button class="btn pri lg" type="button" data-sail>确认起航${bestD&&bestD.c.id===ui.to&&gain-fee>=0?' · 最优':''}</button></div>
+     ${gain-fee<0?`<div class="note" style="border-top:1px solid var(--hair2);padding-top:8px">这一趟按现价会亏 <b class="down">${fmt(Math.abs(gain-fee))}</b>：可以少装一些、换个目的港，或者等价格回到成本之上再走 —— 运费是固定支出，走一趟就收不回。</div>`:''}</div>`}
+  const routes=[];for(let i=0;i<al.length;i++)for(let j=i+1;j<al.length;j++)routes.push([al[i],al[j]]);
   const map=`<svg viewBox="330 60 560 290" aria-label="航线图">${Array.from({length:12},(_,i)=>`<line x1="${330+i*50}" y1="60" x2="${330+i*50}" y2="350" stroke="rgba(236,230,218,.04)"/>`).join('')}${Array.from({length:7},(_,i)=>`<line x1="330" y1="${60+i*50}" x2="890" y2="${60+i*50}" stroke="rgba(236,230,218,.04)"/>`).join('')}
    ${CONT}${routes.map(([a,b])=>`<path d="${routePath(a,b)}" fill="none" stroke="rgba(200,169,106,.22)" stroke-width=".8" stroke-dasharray="2 4"/>`).join('')}
    ${ui.from&&ui.to?`<path d="${routePath(C[ui.from],C[ui.to])}" fill="none" stroke="#e4cb93" stroke-width="1.4"/>`:''}<g id="shipLayer"></g>
    ${CITIES.map(c=>{const ok=cityUnlocked(c.id);const n=Object.keys(S.inv[c.id]).length;return `<g opacity="${ok?1:.35}"><circle cx="${c.x}" cy="${c.y}" r="4" fill="${ok?'#c8a96a':'#5f5c56'}"/><circle cx="${c.x}" cy="${c.y}" r="8" fill="none" stroke="${ok?'rgba(200,169,106,.4)':'transparent'}"/><text x="${c.x}" y="${c.y-13}" text-anchor="middle">${c.n}${ok?'':' · Lv'+c.lv}</text>${n?`<text x="${c.x}" y="${c.y+21}" text-anchor="middle" style="font-size:10px;fill:#c8a96a">${n} 种存货</text>`:''}</g>`}).join('')}</svg>`;
-  const list=S.ships.length?S.ships.map(s=>{const tot=s.eta-s.dep,done=S.day-s.dep;return `<div class="box"><div class="sp"><span>${C[s.from].n} → ${C[s.to].n}</span><span class="tag g">${s.eta-S.day} 天</span></div><div class="note" style="margin-top:4px">${G[s.good].n} ${fmtQ(s.q)}${G[s.good].u} · 到港估值 ${fmt(s.q*bidP(s.to,s.good))}</div><div class="bar"><i style="width:${clamp(done/tot*100,0,100)}%"></i></div></div>`}).join(''):'<div class="note">暂无在途货船</div>';
-  return {sub:`运力 ${fmtQ(shipUsed())} / ${fmtQ(fleetCap(upgLv('fleet')))} 吨 · ${S.ships.length} 艘在途`,body:`<div class="map">${map}</div><div style="margin-top:14px">${form}</div><div class="sec">船队动态</div><div class="g3">${list}</div>`}},
-stock(){const all=[...STOCKS.map(s=>({s:s.s,n:s.n,sec:s.sec})),...RIVALS.map(r=>({s:r.s,n:r.co,sec:'对手'}))];const k=S.stk[ui.stock],h=S.hold[ui.stock],wk=isWeekend(S.day);const i=idx();const lots=stockLots();
+  const list=S.ships.length?S.ships.map(s=>{const tot=s.eta-s.dep,done=S.day-s.dep;return `<div class="box"><div class="sp"><span>${C[s.from].n} → ${C[s.to].n}</span><span class="tag ${s.ins?'g':''}">${s.eta-S.day} 天${s.ins?' · 已投保':''}</span></div><div class="note" style="margin-top:4px">${G[s.good].n} ${fmtQ(s.q)}${G[s.good].u} · 到港估值 ${fmt(s.q*bidP(s.to,s.good))}</div><div class="bar"><i style="width:${clamp(done/tot*100,0,100)}%"></i></div></div>`}).join(''):'<div class="note">暂无在途货船</div>';
+  return {sub:`运力 ${fmtQ(shipUsed())} / ${fmtQ(fleetCap(upgLv('fleet')))} 吨 · ${S.ships.length} 艘在途`,body:`<div class="map">${map}</div><div style="margin-top:14px">${form}</div><div class="sec">船队动态</div><div class="g3">${list}</div>`}
+},
+stock(){
+  const all=[...STOCKS.map(s=>({s:s.s,n:s.n,sec:s.sec})),...RIVALS.map(r=>({s:r.s,n:r.co,sec:'对手'}))];
+  const k=S.stk[ui.stock],h=S.hold[ui.stock],wk=isWeekend(S.day);const i=idx();const lots=stockLots();
+  CH.set('kline',k.c.slice(-60));
   return {sub:`沪深综指 ${i.v.toFixed(1)} <span class="${cls(i.ch)}">${pct(i.ch)}</span> · ${wk?'周末休市':'交易中'} · 持仓市值 ${fmt(stockValue())}`,
   body:`<div class="g2" style="grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)"><div><div class="sp"><div><span class="code">${ui.stock}</span><b style="font-family:var(--f-serif);font-size:20px;font-weight:600">${stockName(ui.stock)}</b></div><div style="text-align:right"><div class="v ${cls(k.p-k.prev)}">${k.p.toFixed(2)}</div><div class="m ${cls(k.p-k.prev)}" style="font-size:12px">${pct((k.p-k.prev)/k.prev)}</div></div></div>
-   <canvas class="chart" data-k="${esc(JSON.stringify(k.c.slice(-60)))}"></canvas><div class="note">日 K 线 · 金线为 5 日均线</div>
+   <canvas class="chart" data-cid="kline"></canvas><div class="note">日 K 线 · 金线为 5 日均线</div>
    ${h?`<div class="row" style="margin-top:8px"><span class="tag g">持有 ${h.q} 股</span><span class="tag">成本 ${h.cost.toFixed(2)}</span><span class="tag ${k.p>=h.cost?'hot':'cold'}">${fmt((k.p-h.cost)*h.q)}</span></div>`:''}
    <div class="ticket"><div class="sp"><div class="seg2"><button type="button" class="b ${ui.smode==='b'?'on':''}" data-smode="b">买入</button><button type="button" class="s ${ui.smode==='s'?'on':''}" data-smode="s">卖出</button></div><span class="m" id="liveQ">${lots} 手</span></div>
     <input type="range" min="0" max="100" value="${ui.spct}" data-range="spct" style="--p:${ui.spct}%" aria-label="仓位比例"><div class="quick">${[10,25,50,100].map(v=>`<button type="button" data-pctset="spct:${v}">${v===100?'全部':v+'%'}</button>`).join('')}</div>
     <div class="sp" style="flex-wrap:wrap"><span class="note">1 手 = 100 股 · 佣金万 2.5 · 卖出印花税 0.05% · 涨跌停 ±10%</span><button class="btn ${ui.smode==='b'?'buy':'sell'}" type="button" data-strade ${wk||!lots?'disabled':''}>${wk?'休市':ui.smode==='b'?'买入':'卖出'}</button></div></div></div>
-   <div class="tbl"><table><thead><tr><th>证券</th><th class="r">现价</th><th class="r">涨跌</th><th class="r">持仓</th></tr></thead><tbody>${all.map(a=>{const q=S.stk[a.s],hh=S.hold[a.s],ch=(q.p-q.prev)/q.prev;return `<tr class="cl ${a.s===ui.stock?'sel':''}" data-stk="${a.s}"><td>${a.n}<div class="note m">${a.s} · ${a.sec}</div></td><td class="r m">${q.p.toFixed(2)}</td><td class="r m ${cls(ch)}">${pct(ch)}</td><td class="r m">${hh?hh.q:''}</td></tr>`}).join('')}</tbody></table></div></div>`}},
-deal(){const slots=3+upgLv('office');const cd=(o,active)=>{const t=tier(o.prem);const inv=S.inv[o.city][o.good];const have=inv?inv.q:0;const mv=o.q*S.mkt[o.city][o.good].p;const left=active?o.due-S.day:o.exp-S.day;
+   <div class="tbl"><table><thead><tr><th>证券</th><th class="r">现价</th><th class="r">涨跌</th><th class="r">持仓</th></tr></thead><tbody>${all.map(a=>{const q=S.stk[a.s],hh=S.hold[a.s],ch=(q.p-q.prev)/q.prev;return `<tr class="cl ${a.s===ui.stock?'sel':''}" data-stk="${a.s}"><td>${a.n}<div class="note m">${a.s} · ${a.sec}</div></td><td class="r m">${q.p.toFixed(2)}</td><td class="r m ${cls(ch)}">${pct(ch)}</td><td class="r m">${hh?hh.q:''}</td></tr>`}).join('')}</tbody></table></div></div>`}
+},
+deal(){
+  const slots=3+upgLv('office');
+  const cd=(o,active)=>{const t=tier(o.prem);const inv=S.inv[o.city][o.good];const have=inv?inv.q:0;const mv=o.q*S.mkt[o.city][o.good].p;const left=active?o.due-S.day:o.exp-S.day;
    return `<div class="ct" style="--rc:${t[3]}"><div class="sp"><span class="tier">${t[2]} · ${t[1]}</span><span class="tag ${left<=(active?5:2)?'hot':''}">${active?'剩 '+left+' 天':left+' 天内签约'}</span></div><div class="cl">${o.client}</div>
     <div class="note">${G[o.good].n} <span class="m" style="color:var(--ink)">${fmtQ(o.q)}</span> ${G[o.good].u} · 交付 ${C[o.city].n}港 · 期限 ${o.days} 天</div>
     <div class="sp"><span class="v gold">${fmt(o.reward)}</span><span class="note">溢价 ${pct(o.reward/mv-1,0)}</span></div>
     ${active?`<div class="note">当地库存 <span class="m ${have>=o.q?'up':''}">${fmtQ(have)}</span> / ${fmtQ(o.q)}</div><div class="bar" style="margin-top:0"><i style="width:${clamp(have/o.q*100,0,100)}%"></i></div><button class="btn ${have>=o.q?'pri':''}" type="button" data-deliver="${o.id}" ${have>=o.q?'':'disabled'}>${have>=o.q?'交付结算':'备货中'}</button>`
-     :`<button class="btn pri" type="button" data-accept="${o.id}">签约</button>`}</div>`};
+     :`<div class="row"><button class="btn pri" type="button" data-accept="${o.id}">签约</button><button class="btn" type="button" data-nego="${o.id}" title="和对方采购总监谈条件">议价</button></div>`}</div>`};
   return {sub:`执行中 ${S.contracts.length} / ${slots} · 声望溢价 +${Math.round((rewardMul()-1)*100)}% · 逾期未签的订单会被对手拿走`,body:`<div class="sec">执行中</div>${S.contracts.length?`<div class="g3">${S.contracts.map(k=>cd(k,1)).join('')}</div>`:'<div class="note">暂无执行中的合同</div>'}
-   <div class="sec">新订单</div>${S.offers.length?`<div class="g3">${S.offers.map(o=>cd(o,0)).join('')}</div>`:'<div class="note">新订单会陆续到来。升级总部大楼可增加栏位。</div>'}`}},
+   <div class="sec">新订单 <span class="note">「议价」可以要求对方加价或放宽期限</span></div>${S.offers.length?`<div class="g3">${S.offers.map(o=>cd(o,0)).join('')}</div>`:'<div class="note">新订单会陆续到来。升级总部大楼可增加栏位。</div>'}`}
+},
 bank(){const lim=creditLimit();const amt=bankAmt();
   return {sub:`年利率 ${(S.rate*100).toFixed(2)}% · 随央行政策调整`,body:`<div class="g3" style="grid-template-columns:repeat(auto-fill,minmax(170px,1fr))">${[['贷款余额',fmt(S.loan)],['授信额度',fmt(lim)],['可用额度',fmt(Math.max(0,lim-S.loan))],['每日利息',fmt(S.loan*S.rate/365)]].map(([a,b])=>`<div class="box"><div class="k">${a}</div><div class="v">${b}</div></div>`).join('')}</div>
    <div class="bar" style="margin:16px 0"><i style="width:${lim?clamp(S.loan/lim*100,0,100):0}%"></i></div>
@@ -967,15 +1854,22 @@ lux(){const tabs=`<div class="tabs">${Object.entries(LUXCAT).map(([k,v])=>`<butt
   return {sub:`声望 ${prestigeTotal()} · 合同溢价 +${Math.round((rewardMul()-1)*100)}% · 新购藏品转手约有 8% 损耗`,tabs,body:`<div class="g3">${LUX.filter(l=>l.cat===ui.luxCat).map(l=>{const own=S.owned.filter(o=>o.id===l.id).length;const ok=S.cash>=l.p;const n=LUX.indexOf(l)+1;
    return `<div class="lot">${own?`<span class="tag g own">已藏 ×${own}</span>`:''}<span class="ln">LOT ${String(n).padStart(3,'0')}</span>${ic(l.cat)}<div class="nm">${l.n}</div><div class="note">${l.spec}</div><div class="pr">${fmt(l.p)}</div><div class="note">声望 +${l.pr} · 年${l.ap>=0?'升值':'折旧'}约 ${Math.abs(l.ap*100).toFixed(0)}%${l.up?' · 日养护 '+fmt(l.up):''}</div>
     <button class="btn ${ok?'pri':''}" type="button" data-lbuy="${l.id}" ${ok?'':'disabled'}>${ok?'购入':'尚差 '+fmt(l.p-S.cash)}</button></div>`}).join('')}</div>`}},
-hq(){const nw=netWorth();return {sub:`${TITLES[S.level]} · 经营第 ${S.day} 天 · 日常开支 ${fmt(dailyCost())}`,
+hq(){const nw=netWorth();
+  CH.set('nw',S.nwHist.length>1?S.nwHist:[nw,nw]);
+  return {sub:`${TITLES[S.level]} · 经营第 ${S.day} 天 · 日常开支 ${fmt(dailyCost())}`,
   body:`<div class="g3" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">${[['净资产',fmt(nw)],['现金',fmt(S.cash)],['库存与在途',fmt(invValue()+shipValue())],['股票',fmt(stockValue())],['藏品',fmt(luxValue())],['负债',fmt(S.loan)]].map(([a,b])=>`<div class="box"><div class="k">${a}</div><div class="v" style="font-size:21px">${b}</div></div>`).join('')}</div>
-  <div class="box" style="margin-top:14px"><div class="sp" style="flex-wrap:wrap"><span class="k">净资产走势</span><span class="note">贸易利润 ${fmt(S.stats.tradeProfit)} · 股票利润 ${fmt(S.stats.stockProfit)} · 澳门 ${fmt(S.casino.net)}</span></div><canvas class="chart" style="height:180px" data-a="${esc(JSON.stringify(S.nwHist.length>1?S.nwHist:[nw,nw]))}"></canvas></div>
+  <div class="box" style="margin-top:14px"><div class="sp" style="flex-wrap:wrap"><span class="k">净资产走势</span><span class="note">贸易利润 ${fmt(S.stats.tradeProfit)} · 股票利润 ${fmt(S.stats.stockProfit)} · 澳门 ${fmt(S.casino.net)}</span></div><canvas class="chart" id="nwChart" style="height:180px" data-cid="nw"></canvas></div>
+  <div class="sec">研究部 · 情报</div>
+  <div class="box"><div class="sp" style="flex-wrap:wrap;gap:12px"><div><b style="font-family:var(--f-serif);font-weight:600">情报点数 ${Math.round(S.intel)}</b><div class="note">研究部每日产出 ${upgLv('analyst')*2} 点${upgLv('analyst')?'':'（先在下方建设研究部）'} · 上限 ${INTEL_MAX}</div></div>
+    <div class="row"><button class="btn sm ${S.intel>=INTEL_COST.event?'pri':''}" type="button" data-intelbuy="event" ${S.intel>=INTEL_COST.event?'':'disabled'} title="查一条还没公开的事件">未公开消息 · ${INTEL_COST.event}</button>
+    <button class="btn sm ${S.intel>=INTEL_COST.forecast&&ui.good?'pri':''}" type="button" data-intelbuy="forecast" ${S.intel>=INTEL_COST.forecast&&ui.good?'':'disabled'} title="${ui.good?'当前品种：'+G[ui.good].n:'先在交易所选中品种'}">价格模型 · ${INTEL_COST.forecast}</button>
+    <button class="btn sm ${S.intel>=INTEL_COST.rival&&S.rivalIntent?'pri':''}" type="button" data-intelbuy="rival" ${S.intel>=INTEL_COST.rival&&S.rivalIntent?'':'disabled'} title="侦查对手下一步动作">对手动向 · ${INTEL_COST.rival}</button></div></div></div>
   <div class="sec">公司建设</div><div class="g2">${UPG.map(u=>{const l=upgLv(u.id),max=l>=u.max,lock=u.lv&&S.level<u.lv,c=u.cost(l);
    return `<div class="box up-r">${ic(u.ic)}<div style="flex:1;min-width:0"><div class="sp"><b style="font-family:var(--f-serif);font-weight:600">${u.n}</b><span class="m note">${l} / ${u.max}</span></div><div class="pips">${Array.from({length:u.max},(_,i)=>`<i class="${i<l?'on':''}"></i>`).join('')}</div><div class="note">${u.d(l)}${max?'':` → <span class="gold">${u.d(l+1)}</span>`}</div>
     <div class="sp" style="margin-top:8px"><span class="note">${max?'':'日薪 +'+fmt(u.sal)}</span><button class="btn sm ${!max&&!lock&&S.cash>=c?'pri':''}" type="button" data-upg="${u.id}" ${max||lock||S.cash<c?'disabled':''}>${max?'已满级':lock?`Lv${u.lv} 开放`:fmt(c)}</button></div></div></div>`}).join('')}</div>
-  <div class="row" style="margin-top:18px"><button class="btn sm" type="button" data-rename>更改公司名称</button><button class="btn sm" type="button" data-reset>重新开局</button></div>`}},
-rank(){const rows=rankRows();return {sub:players.length?`${players.length} 位真人玩家 · 4 家 AI 财团`:db?'分享链接，邀请朋友同榜竞争':'真人榜单需在 Claude 中打开',
-  body:rows.map((r,i)=>`<div class="rl ${i<3?'top3':''} ${r.me?'me':''}"><span class="no">${i+1}</span><span class="av">${esc(String(r.name).slice(0,1))}</span><div style="flex:1;min-width:0"><div><b style="font-family:var(--f-serif);font-weight:600">${esc(r.name)}</b> ${r.ai?'<span class="tag">AI</span>':''}${r.real?`<span class="tag ${r.on?'g':''}">${r.on?'在线':'玩家'}</span>`:''}${r.me?'<span class="tag g">你</span>':''}${r.ipo?' <span class="tag g">已上市</span>':''}</div><div class="note">${esc(r.who)} · Lv${r.level} ${TITLES[r.level]||''}${r.top?' · '+esc(r.top):''}</div></div><span class="v" style="font-size:22px">${fmt(r.nw)}</span></div>`).join('')+'<p class="note" style="margin-top:12px">AI 财团会在各港口扫货抛售、抢夺订单；它们也在证券所挂牌交易。</p>'}},
+  <div class="row" style="margin-top:18px"><button class="btn sm" type="button" data-rename>更改公司名称</button><button class="btn sm" type="button" data-open="settings">设置</button><button class="btn sm" type="button" data-reset>重新开局</button></div>`}},
+rank(){const rows=rankRows();return {sub:players.length?`${players.length} 位真人玩家 · 4 家 AI 财团`:db?'分享链接，邀请朋友同榜竞争':'本地模式：榜单上只有 AI 财团',
+  body:rows.map((r,i)=>`<div class="rl ${i<3?'top3':''} ${r.me?'me':''}"><span class="no">${i+1}</span><span class="av">${esc(String(r.name).slice(0,1))}</span><div style="flex:1;min-width:0"><div><b style="font-family:var(--f-serif);font-weight:600">${esc(r.name)}</b> ${r.ai?'<span class="tag">AI</span>':''}${r.real?`<span class="tag ${r.on?'g':''}">${r.on?'在线':'玩家'}</span>`:''}${r.me?'<span class="tag g">你</span>':''}${r.ipo?' <span class="tag g">已上市</span>':''}</div><div class="note">${esc(r.who)} · Lv${r.level} ${TITLES[r.level]||''}${r.top?' · '+esc(r.top):''}</div></div><span class="v" style="font-size:22px">${fmt(r.nw)}</span></div>`).join('')+'<p class="note" style="margin-top:12px">AI 财团会在各港口扫货抛售、抢夺订单；它们也在证券所挂牌交易。研究部可以侦查它们的下一步。</p>'}},
 wheel(){const done=S.wheel===todayKey();
   const segs=WHEEL.map((w,i)=>{const a0=(i*45-90-22.5)*Math.PI/180,a1=(i*45-90+22.5)*Math.PI/180,mid=(i*45-90)*Math.PI/180;const tx=100+64*Math.cos(mid),ty=100+64*Math.sin(mid);
    return `<path d="M100 100L${(100+92*Math.cos(a0)).toFixed(1)} ${(100+92*Math.sin(a0)).toFixed(1)}A92 92 0 0 1 ${(100+92*Math.cos(a1)).toFixed(1)} ${(100+92*Math.sin(a1)).toFixed(1)}z" fill="${i%2?'#13161b':'#1d2128'}" stroke="rgba(200,169,106,.5)" stroke-width=".8"/><text x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" fill="${w[1]==='l'?'#e4cb93':'#ece6da'}" font-size="12" font-family="Noto Serif SC,serif" text-anchor="middle" dominant-baseline="middle" transform="rotate(${i*45} ${tx.toFixed(1)} ${ty.toFixed(1)})">${w[0]}</text>`}).join('');
@@ -984,9 +1878,129 @@ wheel(){const done=S.wheel===todayKey();
 ach(){return {sub:`${Object.keys(S.ach).length} / ${ACH.length}`,body:`<div class="g3">${ACH.map(a=>{const ok=S.ach[a.id]!=null;return `<div class="hon ${ok?'got':''}"><span class="md">${a.n.slice(0,1)}</span><div><b style="font-family:var(--f-serif);font-weight:600">${a.n}</b><div class="note">${a.d}${ok?' · '+dateStr(S.ach[a.id],1):''}</div></div></div>`}).join('')}</div>`}},
 macau(){const r=room();const busy=HD||CS.phase==='deal'||CS.sl.spinning||betTotal();
   const tabs=`<div class="tabs">${[['bacc','百家乐'],['hd','德州扑克'],['slot','老虎机']].map(([k,v])=>`<button type="button" class="tab ${CS.game===k?'on':''}" data-game="${k}">${v}</button>`).join('')}<span style="flex:1"></span>${ROOMS.map(x=>`<button type="button" class="tab ${x.id===CS.room?'on':''}" data-room="${x.id}" ${roomOpen(x)&&(!busy||x.id===CS.room)?'':'disabled'}>${x.n}${roomOpen(x)?'':' · Lv'+x.lv}</button>`).join('')}</div>`;
-  const sub=`${r.n} · ${r.en} · 限红 ${fmt(r.min)} – ${fmt(r.max)} · 在澳门期间商业时间暂停`;
-  return {sub,tabs,body:CS.game==='bacc'?baccView():CS.game==='hd'?hdView():slotView()}},
+  return {sub:`${r.n} · ${r.en} · 限红 ${fmt(r.min)} – ${fmt(r.max)} · 在澳门期间商业时间暂停`,tabs,body:CS.game==='bacc'?baccView():CS.game==='hd'?hdView():slotView()}},
+settings(){
+  const c=AI.cfg,st=AI.stat;
+  return {static:true,sub:'数据只存在本机浏览器；密钥不写进存档，也不会随排行榜上传',body:`
+   <div class="sec">DeepSeek · AI 智囊</div>
+   <div class="box">
+     <div class="set-row"><div><div class="lab">API 密钥</div><div class="hint">sk- 开头；只存在本机。也可以先开演示模式看交互</div></div>
+       <input type="password" id="aiKey" value="${esc(c.key)}" placeholder="sk-..." autocomplete="off" spellcheck="false"></div>
+     <div class="set-row"><div><div class="lab">模型</div><div class="hint">deepseek-chat 便宜快；reasoner 思考更久更贵</div></div>
+       <select id="aiModel"><option value="deepseek-chat"${c.model==='deepseek-chat'?' selected':''}>deepseek-chat</option><option value="deepseek-reasoner"${c.model==='deepseek-reasoner'?' selected':''}>deepseek-reasoner</option></select></div>
+     <div class="set-row"><div><div class="lab">启用 AI 功能</div><div class="hint">关闭后不产生任何请求</div></div><button class="sw ${c.enabled?'on':''}" type="button" data-toggle="enabled" aria-label="启用 AI"></button></div>
+     <div class="set-row"><div><div class="lab">演示模式</div><div class="hint">不调用 API，用内置脚本模拟回复</div></div><button class="sw ${c.mock?'on':''}" type="button" data-toggle="mock" aria-label="演示模式"></button></div>
+     <div class="set-row"><div><div class="lab">AI 时事</div><div class="hint">自动生成会真实影响价格的财经事件</div></div><button class="sw ${c.news?'on':''}" type="button" data-toggle="news" aria-label="AI 时事"></button></div>
+     <div class="set-row"><div><div class="lab">对手喊话</div><div class="hint">AI 财团会就你的动作发表评论</div></div><button class="sw ${c.taunt?'on':''}" type="button" data-toggle="taunt" aria-label="对手喊话"></button></div>
+     <div class="set-row"><div><div class="lab">状态</div><div class="hint" id="aiErr">${esc(st.lastErr||'')}</div></div><span id="aiStat"></span></div>
+     <div class="row" style="margin-top:12px;justify-content:flex-end"><span class="note" id="aiUse"></span><button class="btn sm" type="button" id="aiTest">测试连接</button><button class="btn sm pri" type="button" id="aiSaveBtn">保存</button></div>
+   </div>
+   <div class="sec">玩法</div>
+   <div class="box">
+     <div class="set-row"><div><div class="lab">音效</div><div class="hint">操作与结算提示音</div></div><button class="sw ${muted?'':'on'}" type="button" data-toggle="sound" aria-label="音效"></button></div>
+     <div class="set-row"><div><div class="lab">时间流速</div><div class="hint">空格暂停 / 继续</div></div><div class="seg">${[[0,'暂停'],[1,'1×'],[2,'2×'],[4,'4×']].map(([s,l])=>`<button type="button" data-speed="${s}" class="${speed===s?'on':''}">${l}</button>`).join('')}</div></div>
+     <div class="set-row"><div><div class="lab">存档</div><div class="hint">导出 JSON 备份，或从备份恢复</div></div><div class="row"><button class="btn sm" type="button" data-export>导出</button><button class="btn sm" type="button" data-import>导入</button><input type="file" id="impFile" accept=".json" hidden></div></div>
+     <div class="set-row"><div><div class="lab">重开</div><div class="hint">清空当前进度，重新创办公司</div></div><button class="btn sm" type="button" data-reset>重新开局</button></div>
+   </div>
+   <div class="sec">快捷键</div>
+   <div class="box"><div class="sc-grid">
+     ${[['1 – 9','打开对应交易所 / 窗口'],['空格','暂停 / 继续'],['A','唤起 AI 智囊'],['S','设置'],['M','静音'],['Esc','关闭窗口'],['?','这份帮助']].map(([k,v])=>`<span class="k2"><span class="kbd">${k}</span></span><span>${v}</span>`).join('')}
+   </div></div>
+   <p class="note" style="margin-top:14px">商海浮沉 v4 · 单文件网页游戏 · 存档键 ${LS} · 密钥键 ${AI_LS}</p>`}
+},
 };
+// ================= CHARTS =================
+// 图表数据走 CH 注册表（不再把数组 JSON 塞进 data-* 属性），并带签名跳过无变化重绘
+const CH_SIG=new WeakMap();
+function drawCharts(root){
+  if(!root)return;
+  const up='#d8604e',down='#4f9f80',muted='#8f8a80',gold='#c8a96a';
+  const prep=cv=>{const dpr=Math.min(2,devicePixelRatio||1),w=cv.clientWidth,h=cv.clientHeight;if(!w||!h)return [null];
+    const W=Math.round(w*dpr),H=Math.round(h*dpr);
+    if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H}
+    const x=cv.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);x.clearRect(0,0,w,h);return [x,w,h]};
+  root.querySelectorAll('canvas.spark').forEach(cv=>{
+    const d=CH.get(cv.dataset.cid);if(!d||d.length<2)return;
+    const sig='s'+d.length+'|'+d[0]+'|'+d[d.length-1];
+    if(CH_SIG.get(cv)===sig)return;CH_SIG.set(cv,sig);
+    const [x,w,h]=prep(cv);if(!x)return;
+    let mn=Infinity,mx=-Infinity;for(const v of d){if(v<mn)mn=v;if(v>mx)mx=v}
+    const r=(mx-mn)||1,col=d[d.length-1]>=d[0]?up:down;
+    x.beginPath();for(let i=0;i<d.length;i++){const X=i/(d.length-1)*w,Y=2+(1-(d[i]-mn)/r)*(h-4);i?x.lineTo(X,Y):x.moveTo(X,Y)}
+    x.strokeStyle=col;x.lineWidth=1.1;x.stroke()});
+  root.querySelectorAll('canvas.chart,canvas[data-cid]').forEach(cv=>{
+    if(cv.classList.contains('spark'))return;
+    const cid=cv.dataset.cid;const d=cid?CH.get(cid):null;if(!d||d.length<2)return;
+    const isK=Array.isArray(d[0]);
+    const sig=(isK?'k':'l')+d.length+'|'+(isK?d[d.length-1][3]:d[d.length-1])+'|'+cv.clientWidth+'x'+cv.clientHeight;
+    if(CH_SIG.get(cv)===sig)return;CH_SIG.set(cv,sig);
+    const [x,w,h]=prep(cv);if(!x)return;
+    if(isK){
+      const pad={l:4,r:54,t:8,b:8};let mn=Infinity,mx=-Infinity;
+      for(const c of d){if(c[2]<mn)mn=c[2];if(c[1]>mx)mx=c[1]}
+      const rr=(mx-mn)||1;mn-=rr*.05;mx+=rr*.05;
+      const cw=(w-pad.l-pad.r)/d.length,Y=v=>pad.t+(1-(v-mn)/(mx-mn))*(h-pad.t-pad.b);
+      x.font='10.5px "IBM Plex Mono", monospace';x.fillStyle=muted;x.strokeStyle='rgba(236,230,218,.05)';
+      for(let i=0;i<=3;i++){const v=mn+(mx-mn)*i/3,y=Y(v);x.beginPath();x.moveTo(pad.l,y);x.lineTo(w-pad.r,y);x.stroke();x.fillText(v.toFixed(2),w-pad.r+8,y+4)}
+      for(let i=0;i<d.length;i++){const [o,hi,lo,cl]=d[i];const col=cl>=o?up:down;const cx=pad.l+i*cw+cw/2;
+        x.strokeStyle=col;x.fillStyle=col;x.lineWidth=1;x.beginPath();x.moveTo(cx,Y(hi));x.lineTo(cx,Y(lo));x.stroke();
+        const y1=Y(Math.max(o,cl)),y2=Y(Math.min(o,cl));x.fillRect(cx-cw*.32,y1,cw*.64,Math.max(1,y2-y1))}
+      x.beginPath();let s=0;for(let i=0;i<d.length;i++){s+=d[i][3];if(i>=5)s-=d[i-5][3];if(i>=4){const cx=pad.l+i*cw+cw/2;i===4?x.moveTo(cx,Y(s/5)):x.lineTo(cx,Y(s/5))}}
+      x.strokeStyle=gold;x.lineWidth=1.2;x.stroke();
+      return;
+    }
+    const mini=cv._mini;const pad=mini?{l:2,r:2,t:6,b:6}:{l:4,r:70,t:10,b:10};
+    let mn=Infinity,mx=-Infinity;for(const v of d){if(v<mn)mn=v;if(v>mx)mx=v}
+    if(mx===mn){mx+=1;mn-=1}
+    const rr=mx-mn;mn-=rr*.08;mx+=rr*.08;
+    const X=i=>pad.l+i/(d.length-1)*(w-pad.l-pad.r),Y=v=>pad.t+(1-(v-mn)/(mx-mn))*(h-pad.t-pad.b);
+    const col=mini?gold:(d[d.length-1]>=d[0]?up:down);
+    const money=Math.max(Math.abs(mx),Math.abs(mn))>1e5;
+    if(!mini){x.font='10.5px "IBM Plex Mono", monospace';x.fillStyle=muted;x.strokeStyle='rgba(236,230,218,.05)';
+      for(let i=0;i<=3;i++){const v=mn+(mx-mn)*i/3,y=Y(v);x.beginPath();x.moveTo(pad.l,y);x.lineTo(w-pad.r,y);x.stroke();x.fillText(money?fmt(v):fmtP(v),w-pad.r+8,y+4)}}
+    const gr=x.createLinearGradient(0,pad.t,0,h);gr.addColorStop(0,col+'33');gr.addColorStop(1,col+'00');
+    x.beginPath();for(let i=0;i<d.length;i++){i?x.lineTo(X(i),Y(d[i])):x.moveTo(X(i),Y(d[i]))}
+    x.strokeStyle=col;x.lineWidth=mini?1.3:1.4;x.stroke();
+    x.lineTo(X(d.length-1),h-pad.b);x.lineTo(X(0),h-pad.b);x.closePath();x.fillStyle=gr;x.fill();
+    if(!mini){x.beginPath();x.arc(X(d.length-1),Y(d[d.length-1]),2.8,0,7);x.fillStyle=col;x.fill()}
+  });
+}
+
+// ================= TRADE TICKET =================
+function ticket(){const g=G[ui.good],c=ui.city,inv=S.inv[c][ui.good];const q=tradeQ();
+  const qt=q>0?(ui.mode==='b'?quoteBuy(c,ui.good,q):quoteSell(c,ui.good,q)):null;const profit=ui.mode==='s'&&inv&&qt?qt.total-inv.cost*q:null;const m=S.mkt[c][ui.good];
+  CH.set('ticket',m.h);
+  // 跨港套利提示：直接给出扣运费后净利最高的目的地
+  let hint='';if(ui.mode==='b'){
+    let best=null;
+    for(const t of unlockedCities()){if(t.id===c)continue;
+      const qq=Math.max(1,q||1);const gain=(bidP(t.id,ui.good)-askP(c,ui.good))*qq-freight(c,t.id,ui.good,qq);
+      if(!best||gain>best.gain)best={c:t,gain}}
+    if(best&&best.gain>0)hint=`运到${best.c.n}卖，扣运费后净赚 <span class="gold">${fmt(best.gain)}</span> <button class="chip" type="button" data-shipfast="${ui.good}:${best.c.id}">安排</button>`}
+  return `<div class="ticket"><div class="sp" style="flex-wrap:wrap"><div><span class="code">${g.code}</span><b style="font-family:var(--f-serif);font-size:18px;font-weight:600">${g.n} · ${C[c].n}</b><div class="note" style="margin-top:4px">买价 <span class="m">${fmtP(askP(c,g.id))}</span> · 卖价 <span class="m">${fmtP(bidP(c,g.id))}</span> / ${g.u}${inv?` · 持仓 <span class="m">${fmtQ(inv.q)}</span> · 成本 <span class="m">${fmtP(inv.cost)}</span>`:''}</div></div>
+   <div class="seg2"><button type="button" class="b ${ui.mode==='b'?'on':''}" data-mode="b">买入</button><button type="button" class="s ${ui.mode==='s'?'on':''}" data-mode="s">卖出</button></div></div>
+   ${hint?`<div class="note">${hint}</div>`:''}
+   <canvas class="chart" style="height:150px" data-cid="ticket"></canvas>
+   <div><div class="sp"><span class="k">${ui.mode==='b'?'买入数量（受现金与仓容限制）':'卖出数量'}</span><span class="m" style="font-size:15px" id="liveQ">${fmtQ(q)} ${g.u}</span></div><input type="range" min="0" max="100" value="${ui.pct}" data-range="pct" style="--p:${ui.pct}%" aria-label="数量比例"><div class="quick">${[10,25,50,100].map(v=>`<button type="button" data-pctset="pct:${v}">${v===100?'最大':v+'%'}</button>`).join('')}</div></div>
+   <div class="sp" style="flex-wrap:wrap"><div class="kv">${qt?`<span class="muted">成交均价</span><span>${fmtP(qt.unit)}</span><span class="muted">${ui.mode==='b'?'成交金额':'成交收入'}</span><span>${fmt(qt.total)}</span><span class="muted">价格冲击 <span class="tip" data-t="你这一单占该港该品种深度的比例，越大越吃亏">?</span></span><span>${pct(qt.impact,1)}</span>${profit!=null?`<span class="muted">本笔盈亏</span><span class="${cls(profit)}">${fmt(profit)}</span>`:''}`:`<span class="muted">${ui.mode==='b'?'现金或仓容不足':'本港无持仓'}</span><span></span>`}</div>
+   <button class="btn lg ${ui.mode==='b'?'buy':'sell'}" type="button" data-gtrade ${q>0?'':'disabled'}>${ui.mode==='b'?'确认买入':'确认卖出'}</button></div></div>`}
+
+// ================= MAP =================
+const CONT=`<g fill="rgba(236,230,218,.035)" stroke="rgba(236,230,218,.12)" stroke-width=".7">
+ <path d="M470 70 Q520 60 560 80 L600 70 Q680 60 760 75 Q840 85 880 110 L880 140 Q850 150 845 175 L830 200 Q810 215 795 210 L780 235 Q770 228 760 210 L735 205 Q715 215 700 200 L680 210 Q660 205 650 190 L630 175 Q600 160 585 145 L560 140 Q530 150 515 140 L500 125 Q480 115 470 100 Z"/>
+ <path d="M500 150 Q530 145 560 160 L600 170 Q625 200 610 240 L590 290 Q570 310 555 300 L540 260 Q520 230 505 200 Q490 180 500 150 Z"/>
+ <path d="M790 260 Q820 255 850 265 L870 300 Q850 320 820 312 L795 290 Z"/>
+ <path d="M340 230 Q360 220 395 235 L420 260 Q410 300 390 330 L375 345 Q360 330 362 300 L345 265 Z"/></g>`;
+function routePath(a,b){const mx=(a.x+b.x)/2,my=(a.y+b.y)/2,dx=b.x-a.x,dy=b.y-a.y,k=.18;return `M${a.x} ${a.y} Q${(mx-dy*k).toFixed(1)} ${(my+dx*k).toFixed(1)} ${b.x} ${b.y}`}
+function qpt(a,b,t){const mx=(a.x+b.x)/2,my=(a.y+b.y)/2,dx=b.x-a.x,dy=b.y-a.y,k=.18;const cx=mx-dy*k,cy=my+dx*k;const u=1-t;return {x:u*u*a.x+2*u*t*cx+t*t*b.x,y:u*u*a.y+2*u*t*cy+t*t*b.y}}
+let shipRAF=0;
+function drawShips(){cancelAnimationFrame(shipRAF);const layer=document.getElementById('shipLayer');if(!layer||win!=='port')return;
+  const frac=speed&&!modalOpen?clamp((performance.now()-lastTick)/(3000/speed),0,1):0;
+  layer.innerHTML=S.ships.map(s=>{const t=clamp((S.day+frac-s.dep)/(s.eta-s.dep),0,1);const a=C[s.from],b=C[s.to];const p=qpt(a,b,t),p2=qpt(a,b,Math.min(1,t+.01)),p0=qpt(a,b,Math.max(0,t-.01));const ang=Math.atan2(p2.y-p0.y,p2.x-p0.x)*180/Math.PI;
+    return `<g transform="translate(${p.x.toFixed(1)} ${p.y.toFixed(1)}) rotate(${ang.toFixed(0)})"><path d="M-8 -3h11l4 3-4 3h-11z" fill="#e4cb93"/></g>`}).join('');
+  if(!reduce)shipRAF=requestAnimationFrame(drawShips)}
+
+// ================= CASINO VIEWS（沿用原实现） =================
 function chipsRow(vals,cur,attr){return `<div class="chips">${vals.map((v,i)=>`<button type="button" class="tok ${v===cur?'on':''}" style="--cc:${CHIPCOL[i%CHIPCOL.length]}" data-${attr}="${v}" aria-label="筹码 ${fmt(v)}"><span>${chipLbl(v)}</span></button>`).join('')}</div>`}
 function baccView(){const r=room();if(!r.chips.includes(CS.chip))CS.chip=r.chips[0];const w=CS.win||{};const done=CS.phase==='done';
   const spot=(k,n,po)=>`<button type="button" class="spot ${k} ${done&&((k===w.res)||(k==='PP'&&w.pp)||(k==='BP'&&w.bp))?'win':''}" data-bet="${k}"><span class="sn">${n}</span><span class="po">${po}</span><span class="amt">${CS.bets[k]?chipLbl(CS.bets[k]):''}</span></button>`;
@@ -1022,97 +2036,244 @@ function hdView(){const r=room();
   return `<div class="felt"><div class="lgd">NO-LIMIT HOLD'EM · 盲注 ${chipLbl(HD.blinds[0])}/${chipLbl(HD.blinds[1])}</div><div class="pk" style="margin-top:12px">${seat(2)}${seat(1)}<div class="mid" style="grid-area:mid"><div class="cards">${HD.board.map(c=>card(c)).join('')||'<span class="note" style="align-self:center">翻牌前</span>'}</div><div class="cap" style="margin-top:6px">Pot</div><div class="pot fig">${fmt(pot)}</div><div class="note" style="min-height:18px;color:var(--gold-hi)">${HD.res?esc(HD.res):''}</div></div>${seat(3)}${seat(0)}</div></div>
    <div class="row" style="justify-content:center;margin-top:14px">${ctl}</div>
    <div class="sec">牌局记录</div><div class="feed" style="max-height:160px">${HD.log.map(l=>`<div class="it">${esc(l)}</div>`).join('')}</div>`}
-function ticket(){const g=G[ui.good],c=ui.city,inv=S.inv[c][ui.good];const q=tradeQ();
-  const qt=q>0?(ui.mode==='b'?quoteBuy(c,ui.good,q):quoteSell(c,ui.good,q)):null;const profit=ui.mode==='s'&&inv&&qt?qt.total-inv.cost*q:null;const m=S.mkt[c][ui.good];
-  return `<div class="ticket"><div class="sp" style="flex-wrap:wrap"><div><span class="code">${g.code}</span><b style="font-family:var(--f-serif);font-size:18px;font-weight:600">${g.n} · ${C[c].n}</b><div class="note" style="margin-top:4px">买价 <span class="m">${fmtP(askP(c,g.id))}</span> · 卖价 <span class="m">${fmtP(bidP(c,g.id))}</span> / ${g.u}${inv?` · 持仓 <span class="m">${fmtQ(inv.q)}</span> · 成本 <span class="m">${fmtP(inv.cost)}</span>`:''}</div></div>
-   <div class="seg2"><button type="button" class="b ${ui.mode==='b'?'on':''}" data-mode="b">买入</button><button type="button" class="s ${ui.mode==='s'?'on':''}" data-mode="s">卖出</button></div></div>
-   <canvas class="chart" style="height:150px" data-a="${esc(JSON.stringify(m.h))}"></canvas>
-   <div><div class="sp"><span class="k">${ui.mode==='b'?'买入数量（受现金与仓容限制）':'卖出数量'}</span><span class="m" style="font-size:15px" id="liveQ">${fmtQ(q)} ${g.u}</span></div><input type="range" min="0" max="100" value="${ui.pct}" data-range="pct" style="--p:${ui.pct}%" aria-label="数量比例"><div class="quick">${[10,25,50,100].map(v=>`<button type="button" data-pctset="pct:${v}">${v===100?'最大':v+'%'}</button>`).join('')}</div></div>
-   <div class="sp" style="flex-wrap:wrap"><div class="kv">${qt?`<span class="muted">成交均价</span><span>${fmtP(qt.unit)}</span><span class="muted">${ui.mode==='b'?'成交金额':'成交收入'}</span><span>${fmt(qt.total)}</span><span class="muted">价格冲击</span><span>${pct(ui.mode==='b'?qt.impact:-qt.impact,1)}</span>${profit!=null?`<span class="muted">本笔盈亏</span><span class="${cls(profit)}">${fmt(profit)}</span>`:''}`:`<span class="muted">${ui.mode==='b'?'现金或仓容不足':'本港无持仓'}</span><span></span>`}</div>
-   <button class="btn lg ${ui.mode==='b'?'buy':'sell'}" type="button" data-gtrade ${q>0?'':'disabled'}>${ui.mode==='b'?'确认买入':'确认卖出'}</button></div></div>`}
-const CONT=`<g fill="rgba(236,230,218,.035)" stroke="rgba(236,230,218,.12)" stroke-width=".7">
- <path d="M470 70 Q520 60 560 80 L600 70 Q680 60 760 75 Q840 85 880 110 L880 140 Q850 150 845 175 L830 200 Q810 215 795 210 L780 235 Q770 228 760 210 L735 205 Q715 215 700 200 L680 210 Q660 205 650 190 L630 175 Q600 160 585 145 L560 140 Q530 150 515 140 L500 125 Q480 115 470 100 Z"/>
- <path d="M500 150 Q530 145 560 160 L600 170 Q625 200 610 240 L590 290 Q570 310 555 300 L540 260 Q520 230 505 200 Q490 180 500 150 Z"/>
- <path d="M790 260 Q820 255 850 265 L870 300 Q850 320 820 312 L795 290 Z"/>
- <path d="M340 230 Q360 220 395 235 L420 260 Q410 300 390 330 L375 345 Q360 330 362 300 L345 265 Z"/></g>`;
-function routePath(a,b){const mx=(a.x+b.x)/2,my=(a.y+b.y)/2,dx=b.x-a.x,dy=b.y-a.y,k=.18;return `M${a.x} ${a.y} Q${(mx-dy*k).toFixed(1)} ${(my+dx*k).toFixed(1)} ${b.x} ${b.y}`}
-function qpt(a,b,t){const mx=(a.x+b.x)/2,my=(a.y+b.y)/2,dx=b.x-a.x,dy=b.y-a.y,k=.18;const cx=mx-dy*k,cy=my+dx*k;const u=1-t;return {x:u*u*a.x+2*u*t*cx+t*t*b.x,y:u*u*a.y+2*u*t*cy+t*t*b.y}}
-let shipRAF=0;
-function drawShips(){cancelAnimationFrame(shipRAF);const layer=document.getElementById('shipLayer');if(!layer||win!=='port')return;
-  const frac=speed&&!modalOpen?clamp((performance.now()-lastTick)/(3000/speed),0,1):0;
-  layer.innerHTML=S.ships.map(s=>{const t=clamp((S.day+frac-s.dep)/(s.eta-s.dep),0,1);const a=C[s.from],b=C[s.to];const p=qpt(a,b,t),p2=qpt(a,b,Math.min(1,t+.01)),p0=qpt(a,b,Math.max(0,t-.01));const ang=Math.atan2(p2.y-p0.y,p2.x-p0.x)*180/Math.PI;
-    return `<g transform="translate(${p.x.toFixed(1)} ${p.y.toFixed(1)}) rotate(${ang.toFixed(0)})"><path d="M-8 -3h11l4 3-4 3h-11z" fill="#e4cb93"/></g>`}).join('');
-  if(!reduce)shipRAF=requestAnimationFrame(drawShips)}
+// ================= AI DRAWER =================
+const CHAT={open:false,mode:'ask',msgs:[],pending:null,busy:false};
+const AI_CHIPS={ask:['现在该干什么？','解读一下今天的盘面','我的风险在哪？','怎么快点赚到 1000 万'],
+  cmd:['在深圳买 500 吨大豆','把上海的铜运到鹿特丹','买入 20 手华信科技','查一条内参']};
+function aiSubText(){
+  if(!AI.cfg.enabled)return '已关闭 · 设置里打开';
+  if(AI.cfg.mock)return '演示模式 · 不调用 API';
+  if(!AI.cfg.key)return '未配置密钥 · 仍可用本地指令';
+  return AI.cfg.model;
+}
+function openAI(prefill,mode){
+  if(!S)return;
+  if(CHAT.open&&!prefill){return}
+  if(mode)CHAT.mode=mode;
+  CHAT.open=true;
+  document.body.classList.add('aiopen');
+  $('#aiRoot').innerHTML=`<div class="drawer" id="aiDrawer"><div class="dw">
+    <div class="dw-h">${ic('ai','width:22px;height:22px;color:var(--gold)')}<div><div class="t">AI 智囊</div><div class="s" id="aiSub">${esc(aiSubText())}</div></div><button class="x" type="button" data-closeai aria-label="关闭">×</button></div>
+    <div class="dw-b" id="aiBody"></div>
+    <div class="dw-f">
+      <div class="row" style="gap:6px"><div class="seg2" id="aiModeSeg"><button type="button" class="b ${CHAT.mode==='ask'?'on':''}" data-aimode="ask" style="padding:4px 12px">咨询</button><button type="button" class="s ${CHAT.mode==='cmd'?'on':''}" data-aimode="cmd" style="padding:4px 12px">下令</button></div><span class="note" id="aiHint" style="margin-left:auto">${CHAT.mode==='ask'?'用你的真实持仓分析':'说人话就行，会先让你确认'}</span></div>
+      <div class="qchips" id="aiChips"></div>
+      <div class="composer"><textarea id="aiIn" rows="1" placeholder="${CHAT.mode==='ask'?'问策略、问风险、问下一步…':'例如：在深圳买 500 吨大豆'}"></textarea><button class="send" id="aiSend" type="button" aria-label="发送">${ic('send')}</button></div>
+    </div></div></div>`;
+  paintAI(true);
+  const inp=$('#aiIn');if(inp){inp.focus({preventScroll:true});inp.oninput=()=>{inp.style.height='auto';inp.style.height=Math.min(110,inp.scrollHeight)+'px'};
+    inp.onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendAI()}}}
+  $('#aiSend').onclick=sendAI;
+  if(prefill){const i2=$('#aiIn');if(i2)i2.value=prefill;sendAI()}
+  if(!CHAT.msgs.length)pushMsg('a','我是你的家族办公室顾问，看得到你的现金、仓位、在途和行情。\n想问什么直接说；想让我动手，就切到「下令」。');
+}
+function closeAI(){CHAT.open=false;document.body.classList.remove('aiopen');$('#aiRoot').innerHTML=''}
+function pushMsg(who,text,silent){
+  CHAT.msgs.push({who,text});
+  if(CHAT.msgs.length>40)CHAT.msgs.splice(0,CHAT.msgs.length-40);
+  if(silent)return null;
+  return appendMsg(CHAT.msgs[CHAT.msgs.length-1]);
+}
+function mdLite(s){
+  return esc(String(s)).replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>').replace(/\n/g,'<br>');
+}
+function appendMsg(m){
+  const box=$('#aiBody');if(!box)return null;
+  const el=document.createElement('div');el.className='msg '+(m.who==='u'?'u':m.who==='e'?'e':'a');
+  el.innerHTML=mdLite(m.text);box.appendChild(el);box.scrollTop=box.scrollHeight;return el;
+}
+function paintAI(force){
+  if(!CHAT.open)return;
+  const sub=$('#aiSub');if(sub)setTxt(sub,aiSubText());
+  if(force){const box=$('#aiBody');if(box){box.innerHTML='';for(const m of CHAT.msgs){if(!String(m.text||'').trim())continue;appendMsg(m)}}
+    const c=$('#aiChips');if(c)c.innerHTML=AI_CHIPS[CHAT.mode].map(t=>`<button type="button" data-chip="${esc(t)}">${esc(t)}</button>`).join('');
+    const seg=$('#aiModeSeg');if(seg)seg.querySelectorAll('[data-aimode]').forEach(b=>{const on=b.dataset.aimode===CHAT.mode;if(b.classList.contains('on')!==on)b.classList.toggle('on',on)});
+    const h=$('#aiHint');if(h)setTxt(h,CHAT.mode==='ask'?'用你的真实持仓分析':'说人话就行，会先让你确认');
+    const inp=$('#aiIn');if(inp)inp.placeholder=CHAT.mode==='ask'?'问策略、问风险、问下一步…':'例如：在深圳买 500 吨大豆'}
+}
+async function sendAI(){
+  const inp=$('#aiIn');if(!inp||CHAT.busy)return;
+  const text=(inp.value||'').trim();if(!text)return;
+  inp.value='';inp.style.height='auto';
+  pushMsg('u',text);
+  if(CHAT.mode==='cmd')return runCommand(text);
+  CHAT.busy=true;AI.busy=true;snd('ai');
+  const bubble=pushMsg('a','');
+  const el=bubble;let acc='';
+  const finish=txt=>{CHAT.busy=false;AI.busy=false;if(el)el.innerHTML=mdLite(txt||'没拿到回复');const b=$('#aiBody');if(b)b.scrollTop=b.scrollHeight};
+  if(!AI.ready()){
+    CHAT.busy=false;AI.busy=false;
+    return finish('还没配置 DeepSeek 密钥，我目前只能用内置的本地规则：\n1. 想让我真正读懂盘面，去「设置 → API 密钥」填一个。\n2. 现在可以直接在「下令」里说人话，本地解析也能下单。\n3. 想先看效果，就在设置里开「演示模式」。');
+  }
+  try{
+    await AI.advise(text,(d,all)=>{acc=all;if(el){el.innerHTML=mdLite(all)+'<span class="cur"></span>';const b=$('#aiBody');if(b)b.scrollTop=b.scrollHeight}});
+    grant('ai');
+    finish(acc);
+    if(el){el.dataset.text=acc}
+  }catch(e){
+    pushMsg('e',e.message||'请求失败');
+    if(el)el.remove();
+  }finally{CHAT.busy=false;AI.busy=false}
+}
+// 下令 → 确认 → 执行
+async function runCommand(text){
+  CHAT.busy=true;
+  const think=pushMsg('a','解析中…');
+  let res=null;
+  try{
+    res=AI.ready()?await AI.command(text):AI.localCommand(text);
+  }catch(e){
+    res=AI.localCommand(text);
+  }
+  CHAT.busy=false;
+  if(think)think.remove();
+  if(!res||!res.actions||!res.actions.length){
+    return pushMsg('a',(res&&res.reply)||'这句我听不出要做什么。可以说「在深圳买 500 吨大豆」「把上海的铜运到鹿特丹」「买入 20 手华信科技」。');
+  }
+  const items=res.actions.map(a=>({a,d:AI.describe(a)}));
+  CHAT.pending=items;
+  const box=$('#aiBody');
+  const el=document.createElement('div');el.className='msg a';el.id='aiConfirm';
+  el.innerHTML=mdLite(res.reply||'确认一下：')+'<div style="margin-top:8px;display:flex;flex-direction:column;gap:6px">'+
+    items.map((it,i)=>`<div style="border:1px solid var(--hair2);border-radius:3px;padding:7px 9px;${it.d.ok?'':'opacity:.55'}"><div>${i+1}. ${esc(it.d.t)}</div>${it.d.sub?`<div class="note">${esc(it.d.sub)}</div>`:''}</div>`).join('')+
+    `</div><div class="row" style="margin-top:10px">${items.some(i=>i.d.ok)?'<button class="btn pri sm" type="button" data-run>确认执行</button>':''}<button class="btn sm" type="button" data-cancelrun>取消</button></div>`;
+  box.appendChild(el);box.scrollTop=box.scrollHeight;
+}
+function execPending(){
+  const items=CHAT.pending;if(!items)return;
+  let n=0;
+  for(const it of items){if(!it.d.ok)continue;try{AI.runAction(it.d.act||it.a);n++}catch(e){toast('执行失败：'+e.message,'bad')}}
+  CHAT.pending=null;
+  const el=$('#aiConfirm');if(el){el.innerHTML=mdLite(n?`已执行 ${n} 项操作。`:'这些操作当前没法执行（现金/库存不足）。')}
+  snd(n?'coin':'bad');toast(n?`已执行 ${n} 项操作`:'没有可执行的操作',n?'lv':'bad');refresh();
+}
+// 合同议价
+async function negotiateOffer(id){
+  const o=S.offers.find(x=>x.id===id);if(!o)return;
+  const demand=await askText({cap:'Negotiation',title:`与 ${o.client} 谈条件`,
+    body:`当前回款 <b class="gold">${fmt(o.reward)}</b> · 期限 ${o.days} 天 · 交付 ${C[o.city].n}。`,
+    placeholder:'例如：价格再上浮 10%，期限给我 20 天',
+    cta:AI.ready()?'发出去':'用内置模型谈',
+    hint:AI.ready()?'':'未配置密钥：使用内置议价模型（规则式，不消耗 API）'});
+  if(!demand)return;
+  toast('谈判中…');snd('click');
+  let r=null;
+  if(AI.ready()){try{r=await AI.negotiate(o,demand)}catch(e){toast('AI 谈判失败，改用内置模型','bad')}}
+  if(!r)r=negotiateLocal(id);
+  if(!r){toast('谈判没结果');return}
+  if(r.walkAway){
+    S.offers=S.offers.filter(x=>x.id!==id);S.prestige=Math.max(0,S.prestige-5);
+    news(`${o.client}中止了与${S.company}的谈判`,'bad');snd('bad');
+    queueModal(()=>`<div class="cap">Negotiation</div><h2>谈崩了</h2><div class="rule"></div><p>${esc(r.reply||'对方直接结束了会谈。')}</p><button class="btn pri lg" type="button" data-close>回去干活</button>`);
+    refresh();return;
+  }
+  if(r.accept){
+    const nr=Math.max(1000,Math.round(o.reward*(1+r.rewardDelta)/100)*100);
+    o.reward=nr;o.days=Math.max(4,o.days+(r.daysDelta||0));
+    o.prem=Math.max(.02,o.prem+r.rewardDelta);
+    S.stats.nego++;grant('nego');snd('coin');
+    news(`${o.client}接受新条款，回款调整为 ${fmt(nr)}`,'good');
+  }else snd('bad');
+  queueModal(()=>`<div class="cap">Negotiation</div><h2>${r.accept?'谈成了':'没谈成'}</h2><div class="rule"></div>
+    <p style="text-align:left">${esc(r.reply||'')}</p>
+    ${r.accept?`<div class="kv" style="text-align:left"><span class="muted">新回款</span><span class="gold">${fmt(o.reward)}</span><span class="muted">新期限</span><span>${o.days} 天</span></div>`:''}
+    <button class="btn pri lg" type="button" data-close>${r.accept?'签下':'知道了'}</button>`);
+  refresh();
+}
+// 黑天鹅
+async function aiBlackSwan(){
+  toast('突发状况…才怪，是意外');snd('ai');
+  let e=null;
+  try{e=await AI.blackSwan()}catch(err){}
+  if(!e||!e.options.length){decisionTemplate();return}
+  grant('blk');
+  queueModal(()=>`<div class="cap">Black Swan</div><h2>${esc(e.title)}</h2><div class="rule"></div>
+    <p style="text-align:left">${esc(e.body)}</p>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px">${e.options.map((o,i)=>`<button class="opt" type="button" data-act="${i}"><span><b>${esc(o.label)}</b>${o.desc?`<br><span class="note">${esc(o.desc)}</span>`:''}</span></button>`).join('')}</div>`,
+    i=>{const o=e.options[i];const eff=applyFx(o.fx);
+      news(`${S.company}·${e.title}：${o.label}`,'gold');
+      queueModal(()=>`<div class="cap">Outcome</div><h2>${esc(o.label)}</h2><div class="rule"></div>
+        <p style="text-align:left">${esc(o.outcome||'')}</p>
+        ${eff.length?`<div class="kv" style="text-align:left">${eff.map(([a,v])=>`<span class="muted">${a}</span><span class="${cls(typeof v==='number'?v:1)}">${typeof v==='number'?fmt(v):v}</span>`).join('')}</div>`:''}
+        <button class="btn pri lg" type="button" data-close>继续</button>`);
+      snd('lv');refresh()});
+}
 
-function drawCharts(root){const up='#d8604e',down='#4f9f80',muted='#8f8a80',gold='#c8a96a';
-  const prep=cv=>{const dpr=devicePixelRatio||1,w=cv.clientWidth,h=cv.clientHeight;if(!w||!h)return [null];cv.width=w*dpr;cv.height=h*dpr;const x=cv.getContext('2d');x.scale(dpr,dpr);return [x,w,h]};
-  root.querySelectorAll('canvas.spark').forEach(cv=>{const d=JSON.parse(cv.dataset.d);if(d.length<2)return;const [x,w,h]=prep(cv);if(!x)return;const mn=Math.min(...d),r=(Math.max(...d)-mn)||1;const col=d[d.length-1]>=d[0]?up:down;
-    x.beginPath();d.forEach((v,i)=>{const X=i/(d.length-1)*w,Y=2+(1-(v-mn)/r)*(h-4);i?x.lineTo(X,Y):x.moveTo(X,Y)});x.strokeStyle=col;x.lineWidth=1.1;x.stroke()});
-  root.querySelectorAll('canvas[data-a]').forEach(cv=>{const d=JSON.parse(cv.dataset.a);if(d.length<2)return;const [x,w,h]=prep(cv);if(!x)return;const mini=!!cv.dataset.mini;const pad=mini?{l:2,r:2,t:6,b:6}:{l:4,r:66,t:10,b:10};let mn=Math.min(...d),mx=Math.max(...d);if(mx===mn){mx+=1;mn-=1}const rr=mx-mn;mn-=rr*.08;mx+=rr*.08;
-    const X=i=>pad.l+i/(d.length-1)*(w-pad.l-pad.r),Y=v=>pad.t+(1-(v-mn)/(mx-mn))*(h-pad.t-pad.b);const col=mini?gold:(d[d.length-1]>=d[0]?up:down);const money=Math.max(...d.map(Math.abs))>1e5;
-    if(!mini){x.font='10.5px "IBM Plex Mono", monospace';x.fillStyle=muted;x.strokeStyle='rgba(236,230,218,.05)';for(let i=0;i<=3;i++){const v=mn+(mx-mn)*i/3,y=Y(v);x.beginPath();x.moveTo(pad.l,y);x.lineTo(w-pad.r,y);x.stroke();x.fillText(money?fmt(v):fmtP(v),w-pad.r+8,y+4)}}
-    const gr=x.createLinearGradient(0,pad.t,0,h);gr.addColorStop(0,col+'33');gr.addColorStop(1,col+'00');
-    x.beginPath();d.forEach((v,i)=>i?x.lineTo(X(i),Y(v)):x.moveTo(X(i),Y(v)));x.strokeStyle=col;x.lineWidth=1.4;x.stroke();x.lineTo(X(d.length-1),h-pad.b);x.lineTo(X(0),h-pad.b);x.closePath();x.fillStyle=gr;x.fill();
-    x.beginPath();x.arc(X(d.length-1),Y(d[d.length-1]),2.8,0,7);x.fillStyle=col;x.fill()});
-  root.querySelectorAll('canvas[data-k]').forEach(cv=>{const d=JSON.parse(cv.dataset.k);if(!d.length)return;const [x,w,h]=prep(cv);if(!x)return;const pad={l:4,r:54,t:8,b:8};let mn=Math.min(...d.map(c=>c[2])),mx=Math.max(...d.map(c=>c[1]));const rr=mx-mn||1;mn-=rr*.05;mx+=rr*.05;
-    const cw=(w-pad.l-pad.r)/d.length,Y=v=>pad.t+(1-(v-mn)/(mx-mn))*(h-pad.t-pad.b);x.font='10.5px "IBM Plex Mono", monospace';x.fillStyle=muted;x.strokeStyle='rgba(236,230,218,.05)';
-    for(let i=0;i<=3;i++){const v=mn+(mx-mn)*i/3,y=Y(v);x.beginPath();x.moveTo(pad.l,y);x.lineTo(w-pad.r,y);x.stroke();x.fillText(v.toFixed(2),w-pad.r+8,y+4)}
-    d.forEach((c,i)=>{const [o,hi,lo,cl]=c;const col=cl>=o?up:down;const cx=pad.l+i*cw+cw/2;x.strokeStyle=col;x.fillStyle=col;x.lineWidth=1;x.beginPath();x.moveTo(cx,Y(hi));x.lineTo(cx,Y(lo));x.stroke();const y1=Y(Math.max(o,cl)),y2=Y(Math.min(o,cl));x.fillRect(cx-cw*.32,y1,cw*.64,Math.max(1,y2-y1))});
-    x.beginPath();let s=0;d.forEach((c,i)=>{s+=c[3];if(i>=5)s-=d[i-5][3];if(i>=4){const cx=pad.l+i*cw+cw/2;i===4?x.moveTo(cx,Y(s/5)):x.lineTo(cx,Y(s/5))}});x.strokeStyle=gold;x.lineWidth=1.2;x.stroke()})}
-
-const mq=[];let modalOpen=false;
-function queueModal(fn,onAct,after){mq.push([fn,onAct,after]);if(!modalOpen)nextModal()}
-function nextModal(){const it=mq.shift();if(!it){modalOpen=false;return}modalOpen=true;const [fn,onAct,after]=it;$('#modalRoot').innerHTML=`<div class="mbg"><div class="modal" role="dialog" aria-modal="true">${fn()}</div></div>`;
-  $('#modalRoot').querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>{snd('click');closeModal()});
-  $('#modalRoot').querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{snd('click');const i=+b.dataset.act;closeModal();onAct&&onAct(i)});
-  after&&after();const f=$('#modalRoot .modal button:not([disabled])');f&&f.focus({preventScroll:true})}
-function closeModal(){$('#modalRoot').innerHTML='';modalOpen=false;setTimeout(()=>{if(!modalOpen)nextModal()},150)}
-function gameOver(){setSpeed(0);queueModal(()=>`<div class="cap">Liquidation</div><h2>${esc(S.company)} 破产清算</h2><div class="rule"></div><p>经营 ${S.day} 天，最高净资产 <span class="gold">${fmt(S.stats.maxNW)}</span>。</p><button class="btn pri lg" type="button" data-act="0">重新创业</button>`,()=>{try{localStorage.removeItem(LS)}catch(e){}startScreen()})}
-function startScreen(rename){if(!rename)setSpeed(0);
-  queueModal(()=>`<div class="cap">${rename?'Company':'Shanghai · January 2026'}</div><h2>${rename?'更改公司名称':'创办你的贸易公司'}</h2><div class="rule"></div>${rename?'':'<p>启动资金 ¥15 万。在六大港口之间低买高卖大宗商品，承接大客户合同，投资 A 股，与四家 AI 财团及其他真人玩家角逐富豪榜。闲暇时，可以飞往澳门。</p>'}
-   <input type="text" id="nameIn" maxlength="16" aria-label="公司名称" value="${rename?esc(S.company):esc(pick(['恒远','金帆','瑞丰','鸿运','华兴','万和'])+'贸易有限公司')}" style="text-align:center;font-size:16px;font-family:var(--f-serif)">
-   <button class="btn pri lg" type="button" id="startBtn">${rename?'保存':'注册开业'}</button>`,null,()=>{
-  $('#startBtn').onclick=()=>{const n=($('#nameIn').value||'').trim()||'无名贸易行';
-    if(rename){S.company=n;closeModal();save();pushPlayer(true);refresh();return}
-    S=newGame(n);S.started=true;news(`${n}在上海正式开业`,'gold');news('提示：交易所「最佳卖出港」一栏会显示跨港价差','');for(let i=0;i<3;i++)genOffer();
-    closeModal();snd('lv');setSpeed(1);save();pushPlayer(true);refresh()}})}
-
-function refresh(){if(!S)return;renderTop();renderMain();renderSide();renderTicker();if(win)renderWin()}
-
-document.addEventListener('pointerdown',e=>{if(e.target.matches&&e.target.matches('input[type=range]'))dragging=true});
+// ================= EVENTS =================
+document.addEventListener('pointerdown',e=>{if(e.target.matches&&e.target.matches('input[type=range]'))dragging=true},{passive:true});
 const endDrag=()=>{if(dragging){dragging=false;renderWin(true)}};
 document.addEventListener('pointerup',endDrag);document.addEventListener('pointercancel',endDrag);
-document.addEventListener('input',e=>{const t=e.target;if(!t.dataset||!t.dataset.range)return;const k=t.dataset.range;if(k==='buyPct')CS.buyPct=+t.value;else ui[k]=+t.value;t.style.setProperty('--p',t.value+'%');
+document.addEventListener('input',e=>{const t=e.target;if(!t.dataset||!t.dataset.range)return;const k=t.dataset.range;
+  if(k==='buyPct')CS.buyPct=+t.value;else ui[k]=+t.value;t.style.setProperty('--p',t.value+'%');
   if(dragging){const l=$('#liveQ');if(l&&LIVE[k])l.textContent=LIVE[k]()}else renderWin(true)});
-document.addEventListener('click',e=>{if(!S)return;if(e.target.id==='ov'){if(win!=='macau')closeWin();return}
-  const t=e.target.closest('button,tr[data-stk],tr[data-good]');if(!t||t.disabled)return;if(t.closest('#modalRoot'))return;const d=t.dataset||{};
-  if(t.id==='muteBtn'){muted=!muted;try{localStorage.setItem('sh_mute',muted?'1':'0')}catch(e){}renderTop();snd('click');return}
-  if(d.speed!=null){if(S.started){if(S.inMacau){toast('身在澳门，商业时间暂停');return}setSpeed(+d.speed);snd('click')}return}
-  if(d.open){if(win)return;openWin(d.open);return}
+document.addEventListener('change',e=>{
+  const t=e.target;
+  if(t.dataset&&'ins' in t.dataset){ui.ins=!!t.checked;renderWin(true);return}
+  if(t.id==='aiModel'){AI.cfg.model=t.value;AI.saveCfg();paintStaticWin()}
+  if(t.id==='impFile'&&t.files&&t.files[0])importSave(t.files[0]);
+});
+document.addEventListener('click',e=>{
+  if(!S)return;
+  if(e.target.id==='aiDrawer'){closeAI();return}
+  if(e.target.id==='ov'){if(win!=='macau')closeWin();return}
+  const t=e.target.closest('button,tr[data-stk],tr[data-good]');
+  if(!t||t.disabled)return;
+  if(t.closest('#modalRoot'))return;
+  const d=t.dataset||{};
+  // AI 抽屉
+  if('closeai' in d){closeAI();return}
+  if(d.aimode){CHAT.mode=d.aimode;snd('click');paintAI(true);return}
+  if(d.chip){const i2=$('#aiIn');if(i2){i2.value=d.chip;CHAT.mode==='ask'?sendAI():sendAI()}return}
+  if('run' in d){execPending();return}
+  if('cancelrun' in d){CHAT.pending=null;const el=$('#aiConfirm');if(el)el.innerHTML='<span class="note">已取消。</span>';return}
+  // 设置
+  if(d.toggle){const k=d.toggle;
+    const inp=$('#aiKey');if(inp&&AI.cfg.key!==inp.value)AI.cfg.key=inp.value;   // 别把刚输入的密钥弄丢
+    if(k==='sound'){muted=!muted;try{localStorage.setItem('sh_mute',muted?'1':'0')}catch(e){}}
+    else{AI.cfg[k]=!AI.cfg[k];AI.saveCfg()}
+    snd('click');renderWin(true);return}
+  if(t.id==='aiSaveBtn'){AI.cfg.key=($('#aiKey')||{}).value||'';AI.cfg.model=($('#aiModel')||{}).value||AI.cfg.model;
+    if(!AI.cfg.key)AI.cfg.mock=false;AI.saveCfg();toast('已保存','lv');renderWin(true);return}
+  if(t.id==='aiTest'){
+    const inp0=$('#aiKey');if(inp0&&inp0.value)AI.cfg.key=inp0.value;
+    if(!AI.ready()){toast('先填密钥或打开演示模式','bad');return}
+    toast('测试连通性…');AI.test().then(r=>toast(`连通正常 · ${r.ms}ms · ${r.text}`,'lv')).catch(err=>toast(err.message,'bad'));return}
+  if('export' in d){exportSave();return}
+  if('import' in d){const f=$('#impFile');f&&f.click();return}
+  // 顶栏
+  if(t.id==='muteBtn'){muted=!muted;try{localStorage.setItem('sh_mute',muted?'1':'0')}catch(e){}paintTop();snd('click');return}
+  if('speed' in d){if(S.started){if(S.inMacau){toast('身在澳门，商业时间暂停');return}setSpeed(+d.speed);snd('click')}return}
+  if('open' in d){if(win&&d.open===win)return;if(win)closeWin();openWin(d.open);return}
+  if('intel-desk' in d){if(win&&win==='hq')return;if(win)closeWin();openWin('hq');return}
   if('closew' in d){closeWin();return}
   if('ipo' in d){doIPO();return}
   if(!win)return;
   const rw=()=>renderWin(true);
+  // 通用
   if(d.city){ui.city=d.city;snd('click');rw();return}
-  if(d.good){ui.good=d.good;ui.pct=ui.mode==='b'?30:100;snd('click');rw();setTimeout(()=>{const dr=$('#wb .ticket');dr&&dr.scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'})},30);return}
+  if(d.good){ui.good=d.good;ui.pct=ui.mode==='b'?30:100;snd('click');rw();setTimeout(()=>{const tr=document.querySelector(`tr[data-good="${d.good}"]`);tr&&tr.scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'})},30);return}
   if(d.mode){ui.mode=d.mode;ui.pct=d.mode==='b'?30:100;snd('click');rw();return}
   if(d.pctset){const [k,v]=d.pctset.split(':');ui[k]=+v;snd('click');rw();return}
   if('gtrade' in d){const q=tradeQ();if(ui.mode==='b')buyGood(ui.city,ui.good,q);else sellGood(ui.city,ui.good,q);return}
+  if(d.shipfast){const [g,city]=d.shipfast.split(':');ui.from=ui.city;ui.sgood=g;ui.to=city;ui.shpct=100;ui.ins=false;
+    toast(`已选好：${C[ui.city].n} → ${C[city].n} · ${G[g].n}`);rw();openWin('port');return}
   if(d.from){ui.from=d.from;snd('click');rw();return}
   if(d.to){ui.to=d.to;snd('click');rw();return}
   if(d.sgood){ui.sgood=d.sgood;snd('click');rw();return}
-  if('sail' in d){ship(ui.from,ui.to,ui.sgood,shipQ());return}
+  if('sail' in d){ship(ui.from,ui.to,ui.sgood,shipQ(),ui.ins);return}
   if(d.stk){ui.stock=d.stk;snd('click');rw();return}
   if(d.smode){ui.smode=d.smode;ui.spct=d.smode==='b'?25:100;snd('click');rw();return}
   if('strade' in d){const l=stockLots();if(ui.smode==='b')buyStock(ui.stock,l);else sellStock(ui.stock,l);return}
   if(d.accept){acceptOffer(+d.accept);return}
   if(d.deliver){deliver(+d.deliver);return}
+  if(d.nego){negotiateOffer(+d.nego);return}
   if('borrow' in d){borrow(bankAmt());return}
   if('repayall' in d){repay(S.loan);return}
   if(d.lcat){ui.luxCat=d.lcat;snd('click');rw();return}
   if(d.lbuy){buyLux(d.lbuy);return}
   if(d.lsell){sellLux(+d.lsell);return}
   if(d.upg){buyUpg(d.upg);return}
+  if(d.intelbuy){buyIntel(d.intelbuy);return}
   if('spin' in d){spin();return}
   if('rename' in d){startScreen(true);return}
   if('reset' in d){queueModal(()=>'<h2>确定重新开局？</h2><div class="rule"></div><p>当前进度将被清空。</p><div class="row" style="justify-content:center"><button class="btn buy" type="button" data-act="0">清空重来</button><button class="btn" type="button" data-close>取消</button></div>',()=>{try{localStorage.removeItem(LS)}catch(e){}win=null;$('#winRoot').innerHTML='';startScreen()});return}
@@ -1130,25 +2291,107 @@ document.addEventListener('click',e=>{if(!S)return;if(e.target.id==='ov'){if(win
   if('hdnext' in d){hdNewHand();return}
   if(d.hda){if(!HD||HD.toAct!==0)return;hdAct(0,d.hda,+d.to||0);return}
 });
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&win&&!modalOpen&&win!=='macau')closeWin()});
-function setSpeed(s){speed=s;clearInterval(timer);if(s>0)timer=setInterval(()=>{if(!document.hidden&&!modalOpen&&S&&S.started&&!S.inMacau)tick()},3000/s);if(S)renderTop()}
-window.addEventListener('beforeunload',()=>{if(S&&S.started)try{localStorage.setItem(LS,snapshot())}catch(e){}});
-document.addEventListener('visibilitychange',()=>{if(document.hidden)save()});
-(function dayLoop(){const f=$('#dayFill');if(f&&S){const p=speed&&!modalOpen&&!S.inMacau?clamp((performance.now()-lastTick)/(3000/speed),0,1):0;f.style.width=(p*100).toFixed(1)+'%'}requestAnimationFrame(dayLoop)})();
+document.addEventListener('click',e=>{const tr=e.target.closest&&e.target.closest('tr[data-sp]');if(!tr||!S)return;
+  if(win||modalOpen)return;
+  if(!goodUnlocked(tr.dataset.sp))return;
+  ui.good=tr.dataset.sp;ui.mode='b';ui.pct=30;openWin('trade');snd('click')});
 
+// AI 悬浮按钮
+if($('#aiFab'))$('#aiFab').onclick=()=>{if(!S||!S.started)return;snd('click');CHAT.open?closeAI():openAI()};
+
+// ================= KEYBOARD =================
+function togglePause(){if(!S||!S.started)return;if(S.inMacau){toast('身在澳门，商业时间暂停');return}setSpeed(speed?0:1);snd('click')}
+document.addEventListener('keydown',e=>{
+  const tag=(e.target.tagName||'').toLowerCase();
+  if(tag==='input'||tag==='textarea'||tag==='select')return;
+  if(e.metaKey||e.ctrlKey||e.altKey)return;
+  const k=e.key;
+  if(k==='Escape'){
+    if(modalOpen)return;
+    if(CHAT.open){closeAI();return}
+    if(win&&win!=='macau')closeWin();
+    return}
+  if(!S||!S.started)return;
+  if(k===' '){e.preventDefault();togglePause();return}
+  if(k==='a'||k==='A'){e.preventDefault();CHAT.open?closeAI():openAI();return}
+  if(k==='s'||k==='S'){if(win==='settings')closeWin();else{if(win)closeWin();openWin('settings')}return}
+  if(k==='m'||k==='M'){muted=!muted;try{localStorage.setItem('sh_mute',muted?'1':'0')}catch(err){}paintTop();return}
+  if(k==='?'){if(win)closeWin();openWin('settings');return}
+  if(/^[1-9]$/.test(k)){const d=DESKS.find(x=>x.k===k);if(!d)return;if(win)closeWin();openWin(d.id)}
+});
+
+// ================= BOOT =================
+function setSpeed(s){speed=s;clearInterval(timer);if(s>0)timer=setInterval(()=>{if(!document.hidden&&!modalOpen&&S&&S.started&&!S.inMacau)tick()},3000/s);
+  try{localStorage.setItem('sh_speed',String(s))}catch(e){}
+  if(S){const seg=$('#speedSeg');if(seg)seg.querySelectorAll('[data-speed]').forEach(b=>{const on=+b.dataset.speed===s;if(b.classList.contains('on')!==on)b.classList.toggle('on',on)})}}
+function gameOver(){setSpeed(0);queueModal(()=>`<div class="cap">Liquidation</div><h2>${esc(S.company)} 破产清算</h2><div class="rule"></div><p>经营 ${S.day} 天，最高净资产 <span class="gold">${fmt(S.stats.maxNW)}</span>。</p><button class="btn pri lg" type="button" data-act="0">重新创业</button>`,()=>{try{localStorage.removeItem(LS)}catch(e){}startScreen()})}
+function startScreen(rename){if(!rename)setSpeed(0);
+  queueModal(()=>`<div class="cap">${rename?'Company':'Shanghai · January 2026'}</div><h2>${rename?'更改公司名称':'创办你的贸易公司'}</h2><div class="rule"></div>${rename?'':'<p>启动资金 ¥15 万。在六大港口之间低买高卖大宗商品，承接大客户合同，投资 A 股，与四家 AI 财团及其他真人玩家角逐富豪榜。闲暇时，可以飞往澳门。</p><p class="note">按 A 唤起 AI 智囊；按 ? 看快捷键。</p>'}
+   <input type="text" id="nameIn" maxlength="16" aria-label="公司名称" value="${rename?esc(S.company):esc(pick(['恒远','金帆','瑞丰','鸿运','华兴','万和'])+'贸易有限公司')}" style="text-align:center;font-size:16px;font-family:var(--f-serif)">
+   <button class="btn pri lg" type="button" id="startBtn">${rename?'保存':'注册开业'}</button>`,null,()=>{
+  $('#startBtn').onclick=()=>{const n=($('#nameIn').value||'').trim()||'无名贸易行';
+    if(rename){S.company=n;closeModal();save();pushPlayer(true);refresh();return}
+    S=newGame(n);S.started=true;news(`${n}在上海正式开业`,'gold');news('提示：交易所「调货到」一列会显示跨港价差','');for(let i=0;i<3;i++)genOffer();
+    S.month={start:0,nw:netWorth(),trade0:0,stock0:0,cas0:0,cost0:0,intr0:0};
+    closeModal();snd('lv');setSpeed(1);save();pushPlayer(true);refresh()}})}
+
+// 背景：静态绘制一次（resize 才重画），不参与每帧
 const bgc=$('#bgc');
-function drawBG(){const W=innerWidth,H=innerHeight,dpr=Math.min(2,devicePixelRatio||1);bgc.width=W*dpr;bgc.height=H*dpr;const x=bgc.getContext('2d');x.scale(dpr,dpr);
+function drawBG(){if(!bgc)return;const W=innerWidth,H=innerHeight,dpr=Math.min(2,devicePixelRatio||1);
+  bgc.width=W*dpr;bgc.height=H*dpr;const x=bgc.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);
   const g=x.createRadialGradient(W*.7,-H*.1,0,W*.7,-H*.1,Math.max(W,H)*1.1);g.addColorStop(0,'#1a1712');g.addColorStop(.5,'#0e1013');g.addColorStop(1,'#0a0b0d');x.fillStyle=g;x.fillRect(0,0,W,H);
   x.strokeStyle='rgba(200,169,106,.05)';x.lineWidth=.6;const cx=W*.82,cy=H*.18,R=Math.min(W,H)*.42;
   for(let k=0;k<26;k++){x.beginPath();for(let t=0;t<=Math.PI*2+.01;t+=.02){const r=R*(.55+.45*Math.cos(7*t+k*.24))*(.7+k*.012);const px=cx+r*Math.cos(t+k*.03),py=cy+r*Math.sin(t+k*.03);t?x.lineTo(px,py):x.moveTo(px,py)}x.stroke()}}
-drawBG();window.addEventListener('resize',()=>{drawBG();if(win){const b=$('#wb');if(b){b._h='';renderWin(true)}}const m=$('#main');if(m){m._h='';renderMain()}});
+drawBG();
 
-function start(data){let loaded=data&&data.state;
+let __rz=0;
+window.addEventListener('resize',()=>{clearTimeout(__rz);__rz=setTimeout(()=>{
+  drawBG();
+  if(win){const b=$('#wb');if(b){b._h='';renderWin(true)}}
+  const m=$('#main');if(m){m._h='';paintMain()}
+  tk.boxW=0;tk.x=0},160)});
+
+// 常驻帧循环：进度条 + 跑马灯（统一带宽高控制，只有一处 rAF）
+let __lastFrame=performance.now();
+(function loop(t){
+  const dt=Math.min(120,t-__lastFrame);__lastFrame=t;
+  if(S){
+    const f=$('#dayFill');
+    if(f){const p=speed&&!modalOpen&&!S.inMacau&&S.started?clamp((performance.now()-lastTick)/(3000/speed),0,1):0;const w=(p*100).toFixed(1)+'%';if(f.style.width!==w)f.style.width=w}
+    tickerStep(dt);
+  }
+  requestAnimationFrame(loop);
+})(performance.now());
+
+function start(data){
+  let loaded=data&&data.state;
   if(!loaded){try{const raw=localStorage.getItem(LS);if(raw)loaded=JSON.parse(raw)}catch(e){}}
-  if(loaded&&loaded.started){S=migrate(loaded);S.inMacau=false;if(data&&data.ui)Object.assign(ui,data.ui);refresh();setSpeed(1);if(data&&data.win&&data.win!=='macau')openWin(data.win)}
-  else{S=newGame('商海浮沉');for(let i=0;i<3;i++)genOffer();refresh();startScreen()}
-  initCloud()}
+  if(loaded&&loaded.started){
+    S=migrate(loaded);S.inMacau=false;
+    if(data&&data.ui)Object.assign(ui,data.ui);
+    else if(S.ui)Object.assign(ui,S.ui);
+    refresh();setSpeed(1);
+    if(data&&data.win&&data.win!=='macau')openWin(data.win);
+  }else{
+    S=newGame('商海浮沉');for(let i=0;i<3;i++)genOffer();refresh();startScreen();
+  }
+  initCloud();
+}
+// 调试/自动化钩子（不影响正常玩法）
+Object.defineProperty(window,'__S',{get:()=>S});
+window.__nw=()=>netWorth();
+window.__tick=()=>{tick();return S.day};
+window.__AI=AI;
+window.__ui=ui;
+window.__T={clearModals(){mq.length=0;modalOpen=false;const m=$('#modalRoot');if(m)m.innerHTML=''},
+  open:openWin,close:closeWin,isModal:()=>modalOpen,
+  modalText(){const m=$('#modalRoot .modal');return m?m.textContent:''},
+  addDay(n){for(let i=0;i<(n||1);i++)tick()},refresh(){refresh()},ui,speed:()=>speed,winId:()=>win,modalOpen:()=>modalOpen,mqLen:()=>mq.length,
+  flush(){flush()},frame(){tick();flush()},toast:(t,k)=>toast(t,k)};
+
 window.claude?.hot?.snapshot?.(()=>({state:JSON.parse(snapshot()),ui,win}));
 window.claude?.hot?.ready?window.claude.hot.ready(start):start(window.claude?.hot?.data??{});
 })();
 </script>
+</body>
+</html>
