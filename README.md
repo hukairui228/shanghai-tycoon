@@ -4,7 +4,10 @@
 
 `index.html` 一份文件跑完全部逻辑：不需要构建、没有依赖、不联网也能玩。接上 DeepSeek 之后，会多出一个看得懂你账本的「AI 智囊」——能回答问题、能照着人话下单、能生成时事和黑天鹅。
 
-在线版（claude.ai，带云存档）：https://claude.ai/artifact/DRRXzfp75RrVdKegdW1ViT
+在线版：
+
+- GitHub Pages（存档只在本机）：https://hukairui228.github.io/shanghai-tycoon/
+- claude.ai artifact（带云存档）：https://claude.ai/artifact/DRRXzfp75RrVdKegdW1ViT
 
 ## 文件
 
