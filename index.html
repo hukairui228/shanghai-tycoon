@@ -1,0 +1,1154 @@
+<title>商海浮沉</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Cormorant+Garamond:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Private-office terminal: ink ground, champagne hairlines, banknote guilloche. Desks open as framed windows. Red up / green down (A-share). Single deliberate dark look. */
+:root{
+  color-scheme:dark;
+  --bg:#0b0d10; --surface:#13161b; --surface2:#181c22; --raise:#1e232a;
+  --hair:rgba(200,169,106,.22); --hair2:rgba(236,230,218,.08); --hair3:rgba(236,230,218,.14);
+  --ink:#ece6da; --muted:#8f8a80; --faint:#5f5c56; --gold:#c8a96a; --gold-hi:#e4cb93;
+  --up:#d8604e; --down:#4f9f80; --felt:#0d3528; --felt2:#082219;
+  --f-serif:"Noto Serif SC","Songti SC",serif; --f-fig:"Cormorant Garamond","Noto Serif SC",serif;
+  --f-sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif; --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-sans);font-size:14px;line-height:1.5;overflow:hidden}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+.m{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.fig{font-family:var(--f-fig);font-variant-numeric:lining-nums tabular-nums;font-weight:600}
+.up{color:var(--up)} .down{color:var(--down)} .muted{color:var(--muted)} .gold{color:var(--gold)}
+.cap{font-family:var(--f-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+#bgc{position:fixed;inset:0;width:100%;height:100%;z-index:0}
+#app{position:fixed;inset:0;z-index:1;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1240px;margin:0 auto;width:100%}
+svg.ic{fill:none;stroke:currentColor;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+
+.top{border-bottom:1px solid var(--hair2);background:rgba(11,13,16,.82);backdrop-filter:blur(10px);flex:none}
+.top .wrap{display:flex;align-items:center;gap:18px;padding-block:12px;flex-wrap:wrap}
+.mark{display:flex;align-items:center;gap:12px;min-width:0;background:none;border:0;padding:0;text-align:left}
+.mono{width:44px;height:44px;border:1px solid var(--gold);display:grid;place-items:center;font-family:var(--f-serif);font-size:20px;color:var(--gold);flex:none;position:relative}
+.mono::after{content:"";position:absolute;inset:3px;border:1px solid var(--hair)}
+.mark .co{font-family:var(--f-serif);font-weight:600;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:240px}
+.mark .ti{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
+.xp{width:90px;height:2px;background:var(--hair2);position:relative}
+.xp i{position:absolute;inset:0 auto 0 0;background:var(--gold)}
+.figs{display:flex;gap:26px;margin-left:12px}
+.figs div{display:flex;flex-direction:column}
+.figs b{font-family:var(--f-fig);font-size:22px;font-weight:600;line-height:1.1;font-variant-numeric:lining-nums}
+.ctl{margin-left:auto;display:flex;align-items:center;gap:10px}
+.date{text-align:right}
+.date .d{font-family:var(--f-mono);font-size:13px}
+.date .w{font-size:11px;color:var(--muted)}
+.seg{display:flex;border:1px solid var(--hair3);border-radius:3px;overflow:hidden}
+.seg button{border:0;background:none;padding:6px 10px;font:500 11px var(--f-mono);color:var(--muted);letter-spacing:.06em}
+.seg button+button{border-left:1px solid var(--hair2)}
+.seg button.on{background:var(--gold);color:#16120a}
+.ib{width:32px;height:32px;border:1px solid var(--hair3);border-radius:3px;background:none;display:grid;place-items:center;color:var(--muted)}
+.ib svg{width:16px;height:16px}
+.dayline{height:1px;background:var(--hair2);position:relative;overflow:hidden}
+.dayline i{position:absolute;inset:0 auto 0 0;background:var(--gold);opacity:.7}
+
+.hub{flex:1;overflow:auto;padding-block:22px 28px}
+.hub .wrap{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:22px}
+.hero{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;padding-bottom:18px;border-bottom:1px solid var(--hair2);margin-bottom:18px;flex-wrap:wrap}
+.hero .big{font-family:var(--f-fig);font-size:clamp(40px,6vw,64px);font-weight:600;line-height:1;letter-spacing:-.01em;font-variant-numeric:lining-nums}
+.hero .chg{font-family:var(--f-mono);font-size:13px;margin-top:6px}
+.hero canvas{width:min(360px,100%);height:70px}
+.desks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.desk{position:relative;text-align:left;background:linear-gradient(180deg,var(--surface2),var(--surface));border:1px solid var(--hair2);border-radius:4px;padding:16px 16px 14px;min-height:136px;display:flex;flex-direction:column;gap:6px;transition:border-color .2s,transform .2s}
+.desk:hover{border-color:var(--hair);transform:translateY(-1px)}
+.desk .row1{display:flex;justify-content:space-between;align-items:flex-start}
+.desk svg.ic{width:30px;height:30px;color:var(--gold)}
+.desk h3{font-family:var(--f-serif);font-weight:600;font-size:18px;margin:6px 0 0;letter-spacing:.02em}
+.desk .st{font-size:12.5px;color:var(--muted);margin-top:auto}
+.desk .st b{color:var(--ink);font-weight:500}
+.desk .dot{font:500 11px var(--f-mono);color:#16120a;background:var(--gold);border-radius:2px;padding:0 6px;line-height:18px}
+.desk.lock{opacity:.5}
+.desk.macau{grid-column:span 2;background:radial-gradient(120% 140% at 85% 0%,rgba(122,30,40,.5),transparent 60%),linear-gradient(180deg,#1b1417,#131013);border-color:rgba(200,169,106,.3)}
+.desk.macau h3{font-size:22px}
+.side{display:flex;flex-direction:column;gap:14px;min-width:0}
+.panel{background:rgba(19,22,27,.9);border:1px solid var(--hair2);border-radius:4px;padding:16px;min-width:0}
+.panel h4{margin:0 0 12px;display:flex;justify-content:space-between;align-items:baseline;font-family:var(--f-serif);font-weight:600;font-size:15px}
+.mini-t{width:100%;border-collapse:collapse;font-size:12.5px}
+.mini-t td{padding:5px 0;border-bottom:1px solid var(--hair2)}
+.mini-t td:nth-child(2),.mini-t td:nth-child(3){text-align:right;font-family:var(--f-mono)}
+.feed{display:flex;flex-direction:column;gap:9px;max-height:300px;overflow:auto}
+.feed .it{font-size:12.5px;line-height:1.5;padding-left:10px;border-left:1px solid var(--hair3);color:#cfc9bd}
+.feed .it.good{border-color:var(--up)} .feed .it.bad{border-color:var(--down)} .feed .it.gold{border-color:var(--gold)} .feed .it.rumor{border-color:var(--gold);color:var(--gold-hi);font-style:italic}
+.feed .d{font:500 10px var(--f-mono);color:var(--faint);margin-right:6px}
+.quest b{font-weight:500}
+.bar{height:2px;background:var(--hair2);margin-top:10px}
+.bar i{display:block;height:100%;background:var(--gold);transition:width .4s}
+.ticker{flex:none;border-top:1px solid var(--hair2);background:rgba(8,10,12,.92);height:30px;overflow:hidden;position:relative;white-space:nowrap;font-size:12px}
+.ticker .tk{position:absolute;top:0;line-height:30px;animation:mq 80s linear infinite;padding-left:100%}
+.ticker .tk span{margin-right:48px;color:#cfc9bd}
+.ticker .tk b{font:500 11px var(--f-mono);color:var(--gold);margin-right:8px}
+@keyframes mq{to{transform:translateX(-100%)}}
+
+.ov{position:fixed;inset:0;z-index:20;background:rgba(5,6,8,.72);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:max(14px,env(safe-area-inset-top,0px)) max(14px,env(safe-area-inset-right,0px)) max(14px,env(safe-area-inset-bottom,0px)) max(14px,env(safe-area-inset-left,0px))}
+.win{width:min(1140px,100%);height:min(880px,100%);display:flex;flex-direction:column;background:var(--bg);border:1px solid var(--hair);border-radius:4px;overflow:hidden;box-shadow:0 40px 100px -30px #000;animation:rise .25s ease-out}
+@keyframes rise{from{transform:translateY(12px);opacity:0}}
+.win-h{display:flex;align-items:center;gap:14px;padding:16px 20px;border-bottom:1px solid var(--hair2);flex:none;background:linear-gradient(180deg,var(--surface2),var(--bg))}
+.win-h svg.ic{width:30px;height:30px;color:var(--gold);flex:none}
+.win-h h2{font-family:var(--f-serif);font-weight:600;font-size:22px;margin:0;line-height:1.1;letter-spacing:.03em}
+.win-h .ws{font-size:12px;color:var(--muted);margin-top:2px}
+.win-h .x{margin-left:auto;border:1px solid var(--hair3);background:none;border-radius:3px;height:34px;padding:0 12px;color:var(--muted);font-size:12px;letter-spacing:.08em;flex:none}
+.win-h .x:hover{color:var(--ink);border-color:var(--hair)}
+.tabs{display:flex;padding:0 20px;border-bottom:1px solid var(--hair2);overflow-x:auto;flex:none}
+.tab{border:0;background:none;padding:12px 14px;color:var(--muted);font-size:13px;white-space:nowrap;border-bottom:1px solid transparent;margin-bottom:-1px}
+.tab.on{color:var(--ink);border-bottom-color:var(--gold)}
+.tab:disabled{opacity:.4;cursor:not-allowed}
+.wb{flex:1;overflow:auto;padding:18px 20px 24px;min-height:0}
+.sec{font-family:var(--f-serif);font-weight:600;font-size:16px;margin:22px 0 10px;display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.sec:first-child{margin-top:0}
+
+.btn{border:1px solid var(--hair3);background:none;color:var(--ink);border-radius:3px;padding:8px 16px;font-size:13px;letter-spacing:.04em;white-space:nowrap;transition:border-color .15s,background .15s}
+.btn:hover{border-color:var(--gold)}
+.btn.pri{background:var(--gold);border-color:var(--gold);color:#16120a;font-weight:500}
+.btn.pri:hover{background:var(--gold-hi)}
+.btn.buy{background:#a8412f;border-color:#a8412f;color:#fff}
+.btn.sell{background:#357a5f;border-color:#357a5f;color:#fff}
+.btn.sm{padding:5px 10px;font-size:12px}
+.btn.lg{padding:11px 24px;font-size:14px}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+button:focus-visible,input:focus-visible{outline:1px solid var(--gold-hi);outline-offset:2px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:2px;background:linear-gradient(90deg,var(--gold) var(--p,0%),var(--hair3) var(--p,0%));outline:none;touch-action:none;margin:12px 0}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--bg);border:1px solid var(--gold);box-shadow:0 0 0 3px rgba(200,169,106,.15)}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--bg);border:1px solid var(--gold)}
+input[type=text]{background:var(--surface);border:1px solid var(--hair3);border-radius:3px;padding:10px 12px;min-width:0}
+.quick{display:flex;gap:6px;flex-wrap:wrap}
+.quick button{border:1px solid var(--hair2);background:none;border-radius:2px;padding:3px 10px;font:500 11px var(--f-mono);color:var(--muted)}
+.quick button:hover{color:var(--ink);border-color:var(--hair3)}
+.seg2{display:inline-flex;border:1px solid var(--hair3);border-radius:3px;overflow:hidden}
+.seg2 button{border:0;background:none;padding:6px 16px;font-size:13px;color:var(--muted)}
+.seg2 button.on.b{background:#a8412f;color:#fff} .seg2 button.on.s{background:#357a5f;color:#fff}
+.chip{border:1px solid var(--hair3);background:none;border-radius:2px;padding:5px 12px;font-size:12.5px;white-space:nowrap;color:var(--muted)}
+.chip.on{border-color:var(--gold);color:var(--gold-hi)}
+
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.g3{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sp{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.box{background:var(--surface);border:1px solid var(--hair2);border-radius:4px;padding:14px;min-width:0}
+.k{font-size:11px;color:var(--muted);letter-spacing:.04em}
+.v{font-family:var(--f-fig);font-size:24px;font-weight:600;line-height:1.15;font-variant-numeric:lining-nums}
+.tag{display:inline-block;font:500 10.5px var(--f-mono);padding:1px 7px;border:1px solid var(--hair3);border-radius:2px;color:var(--muted);white-space:nowrap;letter-spacing:.04em}
+.tag.hot{border-color:var(--up);color:var(--up)} .tag.cold{border-color:var(--down);color:var(--down)} .tag.g{border-color:var(--hair);color:var(--gold)}
+.note{font-size:12px;color:var(--muted)}
+.empty{padding:34px 10px;text-align:center;color:var(--muted)}
+.kv{display:grid;grid-template-columns:auto auto;gap:4px 18px;font-size:13px}
+.kv span:nth-child(even){text-align:right;font-family:var(--f-mono)}
+
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th{font-weight:400;color:var(--muted);text-align:left;font-size:11px;letter-spacing:.06em;padding:8px 10px;border-bottom:1px solid var(--hair3);white-space:nowrap}
+td{padding:10px;border-bottom:1px solid var(--hair2);white-space:nowrap;vertical-align:middle}
+td.r,th.r{text-align:right}
+tr.cl{cursor:pointer}
+tr.cl:hover td{background:rgba(236,230,218,.025)}
+tr.sel td{background:rgba(200,169,106,.07)}
+tr.lk td{color:var(--faint)}
+.code{font:500 11px var(--f-mono);color:var(--gold);border:1px solid var(--hair);padding:1px 5px;border-radius:2px;margin-right:8px;display:inline-block;min-width:38px;text-align:center}
+canvas.spark{width:90px;height:24px;display:block}
+canvas.chart{width:100%;height:230px;display:block}
+.ticket{border:1px solid var(--hair);border-radius:4px;padding:16px;margin-top:16px;background:linear-gradient(180deg,var(--surface2),var(--surface));display:flex;flex-direction:column;gap:12px}
+
+.map{border:1px solid var(--hair2);border-radius:4px;background:radial-gradient(ellipse at 60% 40%,#121a22,#0b0d10 70%);overflow:hidden}
+.map svg{display:block;width:100%;height:auto;max-height:min(44vh,420px)}
+.map text{font-family:var(--f-serif);fill:var(--ink);font-size:13px;paint-order:stroke;stroke:#0b0d10;stroke-width:4px}
+
+.ct{border:1px solid var(--hair2);border-left:2px solid var(--rc);border-radius:4px;padding:16px;background:var(--surface);display:flex;flex-direction:column;gap:9px}
+.ct .tier{font:500 10px var(--f-mono);letter-spacing:.2em;color:var(--rc)}
+.ct .cl{font-family:var(--f-serif);font-weight:600;font-size:17px}
+
+.lot{border:1px solid var(--hair2);border-radius:4px;padding:18px;background:linear-gradient(180deg,var(--surface2),var(--surface));display:flex;flex-direction:column;gap:8px;position:relative}
+.lot:hover{border-color:var(--hair)}
+.lot .ln{font:500 10px var(--f-mono);letter-spacing:.2em;color:var(--faint)}
+.lot svg.ic{width:56px;height:56px;color:var(--gold);stroke-width:1;margin:8px 0}
+.lot .nm{font-family:var(--f-serif);font-weight:600;font-size:17px}
+.lot .pr{font-family:var(--f-fig);font-size:26px;font-weight:600;color:var(--gold-hi);font-variant-numeric:lining-nums}
+.lot .own{position:absolute;top:16px;right:16px}
+
+.up-r{display:flex;gap:14px;align-items:flex-start}
+.up-r svg.ic{width:30px;height:30px;color:var(--gold);flex:none;margin-top:2px}
+.pips{display:flex;gap:3px;margin:6px 0;flex-wrap:wrap}
+.pips i{width:14px;height:3px;background:var(--hair3)}
+.pips i.on{background:var(--gold)}
+
+.rl{display:flex;align-items:center;gap:14px;padding:12px 6px;border-bottom:1px solid var(--hair2)}
+.rl .no{font-family:var(--f-fig);font-size:26px;width:36px;text-align:center;color:var(--faint);flex:none}
+.rl.top3 .no{color:var(--gold)}
+.rl.me{background:rgba(200,169,106,.06)}
+.av{width:34px;height:34px;border:1px solid var(--hair);display:grid;place-items:center;font-family:var(--f-serif);color:var(--gold);flex:none}
+
+.hon{border:1px solid var(--hair2);border-radius:4px;padding:14px;display:flex;gap:12px;align-items:center;background:var(--surface)}
+.hon .md{width:38px;height:38px;border-radius:50%;border:1px solid var(--hair3);display:grid;place-items:center;font-family:var(--f-serif);color:var(--faint);flex:none}
+.hon.got .md{border-color:var(--gold);color:var(--gold);box-shadow:0 0 0 3px rgba(200,169,106,.1)}
+.hon:not(.got){opacity:.55}
+
+.dial{position:relative;width:min(320px,76vw);aspect-ratio:1;margin:0 auto}
+.dial svg{width:100%;height:100%;transition:transform 4.2s cubic-bezier(.12,.75,.12,1)}
+.dial .ptr{position:absolute;left:50%;top:-4px;transform:translateX(-50%);width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:16px solid var(--gold);z-index:2}
+
+.felt{position:relative;border-radius:180px/120px;background:radial-gradient(ellipse at 50% 40%,#14503c,var(--felt) 55%,var(--felt2));border:1px solid rgba(200,169,106,.45);box-shadow:inset 0 0 0 8px #1a1410,inset 0 0 0 9px rgba(200,169,106,.35),inset 0 0 60px rgba(0,0,0,.6);padding:30px 28px}
+.felt .lgd{text-align:center;font:500 10px var(--f-mono);letter-spacing:.3em;color:rgba(228,203,147,.55)}
+.hands{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:16px 0}
+.hand{text-align:center}
+.hand .who{font-family:var(--f-serif);font-size:15px;letter-spacing:.2em}
+.hand .pts{font-family:var(--f-fig);font-size:34px;line-height:1;color:var(--gold-hi);min-height:34px}
+.cards{display:flex;justify-content:center;gap:6px;min-height:86px;margin-top:8px;flex-wrap:wrap}
+.pc{width:58px;height:84px;border-radius:4px;background:#f6f1e6;color:#1b1b1b;position:relative;box-shadow:0 4px 12px rgba(0,0,0,.45);font-family:var(--f-serif);animation:flip .35s ease-out;flex:none}
+.pc.red{color:#a8262a}
+.pc .r{position:absolute;top:4px;left:6px;font-size:16px;font-weight:700;line-height:1}
+.pc .s{position:absolute;top:21px;left:6px;font-size:12px;line-height:1}
+.pc .b{position:absolute;right:7px;bottom:6px;font-size:26px;line-height:1}
+.pc.back{background:repeating-linear-gradient(45deg,#4a1a20 0 4px,#5a2128 4px 8px);border:3px solid #f6f1e6}
+.pc.back::after{content:"";position:absolute;inset:4px;border:1px solid rgba(228,203,147,.6)}
+.pc.sm{width:44px;height:64px} .pc.sm .b{font-size:20px} .pc.sm .r{font-size:14px} .pc.sm .s{top:18px}
+.pc.dim{filter:brightness(.55)}
+@keyframes flip{from{transform:rotateY(90deg) translateY(-6px);opacity:.3}}
+.spots{display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:10px}
+.spots2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.spot{border:1px solid rgba(228,203,147,.45);border-radius:6px;background:rgba(0,0,0,.12);padding:12px 8px;text-align:center;color:var(--ink);min-height:84px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:background .15s}
+.spot:hover{background:rgba(228,203,147,.08)}
+.spot .sn{font-family:var(--f-serif);font-size:20px;letter-spacing:.25em}
+.spot .po{font:500 10px var(--f-mono);color:rgba(228,203,147,.7);letter-spacing:.1em}
+.spot .amt{font-family:var(--f-fig);font-size:18px;color:var(--gold-hi);min-height:22px}
+.spot.P .sn{color:#8fb4e8} .spot.B .sn{color:#e8908a} .spot.T .sn{color:#9fd8b6}
+.spot.win{background:rgba(228,203,147,.16);border-color:var(--gold-hi)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.tok{width:52px;height:52px;border-radius:50%;border:0;padding:0;display:grid;place-items:center;font:600 11px var(--f-mono);background:repeating-conic-gradient(var(--cc) 0 20deg,#f4eee2 20deg 40deg);box-shadow:0 3px 8px rgba(0,0,0,.5);transition:transform .15s}
+.tok span{background:var(--cc);border-radius:50%;width:38px;height:38px;display:grid;place-items:center;border:1px dashed rgba(255,255,255,.55);color:#fff}
+.tok.on{transform:translateY(-5px);box-shadow:0 0 0 2px var(--gold-hi),0 8px 14px rgba(0,0,0,.5)}
+.road{display:grid;grid-template-rows:repeat(6,16px);grid-auto-flow:column;grid-auto-columns:16px;gap:2px;overflow-x:auto;padding:6px;border:1px solid var(--hair2);border-radius:3px;background:#f3eee3;min-height:118px}
+.road i{width:16px;height:16px;border-radius:50%;display:grid;place-items:center;font:700 9px var(--f-sans);font-style:normal;color:#fff}
+.road i.B{background:#b3332b} .road i.P{background:#2a59a8} .road i.T{background:#2f8a5c}
+.pk{display:grid;grid-template-columns:1fr 1.6fr 1fr;grid-template-areas:". s2 ." "s1 mid s3" ". s0 .";gap:10px;align-items:center}
+.seat{border:1px solid var(--hair2);border-radius:6px;padding:10px;background:rgba(0,0,0,.25);text-align:center;min-width:0;transition:box-shadow .2s}
+.seat.act{box-shadow:0 0 0 1px var(--gold-hi),0 0 18px rgba(228,203,147,.25)}
+.seat.out{opacity:.45}
+.seat .nm{font-family:var(--f-serif);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.seat .stk{font-family:var(--f-fig);font-size:18px;color:var(--gold-hi)}
+.seat .la{font:500 10.5px var(--f-mono);color:var(--muted);min-height:15px}
+.seat .cards{min-height:66px;margin-top:4px}
+.dbtn{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#f4eee2;color:#16120a;font:700 10px var(--f-mono);margin-left:4px;vertical-align:1px}
+.mid{text-align:center}
+.mid .pot{font-size:26px;color:var(--gold-hi)}
+.reels{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:420px;margin:0 auto;padding:14px;border:1px solid rgba(200,169,106,.45);border-radius:8px;background:linear-gradient(180deg,#0e0f12,#17191d);box-shadow:inset 0 0 30px rgba(0,0,0,.8)}
+.reel{height:240px;overflow:hidden;border-radius:4px;background:linear-gradient(180deg,#d8d1c2,#f6f1e6 30%,#f6f1e6 70%,#d8d1c2);position:relative}
+.reel::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(168,38,42,.5)}
+.strip{display:flex;flex-direction:column}
+.sym{height:80px;display:grid;place-items:center;font-family:var(--f-serif);font-size:40px;color:#1b1b1b;flex:none}
+.sym.s7{color:#a8262a;font-family:var(--f-fig);font-size:58px;font-weight:600}
+.sym.sD{color:#2a59a8} .sym.sB{font:600 20px var(--f-mono);letter-spacing:.1em}
+.sym.sB span{border:2px solid #1b1b1b;padding:2px 8px}
+.sym.sC{color:#8a6a2c}
+.jp{text-align:center;margin-bottom:14px}
+.jp .v{font-size:40px;color:var(--gold-hi)}
+.pay td{padding:5px 8px}
+
+.mbg{position:fixed;inset:0;z-index:40;background:rgba(5,6,8,.78);display:grid;place-items:center;padding:16px;backdrop-filter:blur(4px)}
+.modal{width:min(460px,100%);max-height:90vh;overflow:auto;background:var(--bg);border:1px solid var(--hair);border-radius:4px;padding:28px;display:flex;flex-direction:column;gap:14px;animation:rise .25s ease-out;text-align:center}
+.modal h2{font-family:var(--f-serif);font-weight:600;font-size:24px;margin:0;letter-spacing:.03em}
+.modal p{margin:0;color:#cfc9bd}
+.modal .rule{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:2px 0}
+.lvn{font-family:var(--f-fig);font-size:84px;line-height:1;color:var(--gold-hi);font-weight:600}
+.opt{display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid var(--hair2);border-radius:3px;padding:12px 14px;background:var(--surface);text-align:left;width:100%}
+.opt:hover{border-color:var(--gold)}
+.opt:disabled{opacity:.4;cursor:not-allowed}
+.toasts{position:fixed;right:max(16px,env(safe-area-inset-right,0px));top:calc(78px + env(safe-area-inset-top,0px));z-index:50;display:flex;flex-direction:column;gap:6px;align-items:flex-end;pointer-events:none;max-width:min(360px,90vw)}
+.toast{background:rgba(19,22,27,.97);border:1px solid var(--hair3);border-left:2px solid var(--gold);padding:8px 14px;border-radius:3px;font-size:12.5px;animation:tin .25s ease-out}
+.toast.bad{border-left-color:var(--down)}
+@keyframes tin{from{transform:translateX(10px);opacity:0}}
+.floaty{position:fixed;z-index:60;font:600 22px var(--f-fig);pointer-events:none;animation:fly 1.4s ease-out forwards}
+@keyframes fly{to{transform:translateY(-40px);opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+@media (max-width:1040px){.hub .wrap{grid-template-columns:minmax(0,1fr)} .figs{margin-left:0}}
+@media (max-width:720px){
+  .desks{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .figs{gap:16px;order:3;width:100%} .figs b{font-size:19px}
+  .date{display:none}
+  .g2{grid-template-columns:minmax(0,1fr)!important}
+  .ov{padding:0} .win{border-radius:0;height:100%;border:0}
+  .win-h{padding:12px 14px} .wb{padding:14px} .tabs{padding:0 10px}
+  .pc{width:46px;height:66px} .pc .b{font-size:20px}
+  .pk{grid-template-columns:1fr 1fr;grid-template-areas:"s2 s2" "s1 s3" "mid mid" "s0 s0"}
+  .felt{border-radius:28px;padding:18px 12px}
+  .reel{height:180px} .sym{height:60px;font-size:30px} .sym.s7{font-size:44px}
+  .tok{width:44px;height:44px} .tok span{width:32px;height:32px;font-size:10px}
+}
+</style>
+
+<canvas id="bgc" aria-hidden="true"></canvas>
+<div id="app">
+  <header class="top gut"><div class="wrap" id="top"></div><div class="dayline"><i id="dayFill"></i></div></header>
+  <div class="hub gut"><div class="wrap"><main id="main"></main><aside class="side" id="side"></aside></div></div>
+  <div class="ticker"><div class="tk" id="ticker"></div></div>
+</div>
+<div id="winRoot"></div>
+<div id="modalRoot"></div>
+<div class="toasts" id="toasts"></div>
+
+<script>
+(function(){
+"use strict";
+// ================= DATA =================
+const GOODS=[
+ {id:'rice',n:'大米',code:'RR',u:'吨',base:3800,vol:.012,depth:3000,sz:1,lv:1},
+ {id:'soy',n:'大豆',code:'A',u:'吨',base:4500,vol:.015,depth:2500,sz:1,lv:1},
+ {id:'steel',n:'螺纹钢',code:'RB',u:'吨',base:3700,vol:.015,depth:4000,sz:1,lv:1},
+ {id:'cotton',n:'棉花',code:'CF',u:'吨',base:15500,vol:.015,depth:1200,sz:1,lv:1},
+ {id:'oil',n:'原油',code:'SC',u:'吨',base:4300,vol:.022,depth:5000,sz:1,lv:3},
+ {id:'copper',n:'电解铜',code:'CU',u:'吨',base:72000,vol:.017,depth:400,sz:1,lv:4},
+ {id:'chip',n:'芯片',code:'IC',u:'箱',base:15000,vol:.02,depth:500,sz:.02,lv:5},
+ {id:'coffee',n:'咖啡豆',code:'KC',u:'吨',base:32000,vol:.022,depth:300,sz:1,lv:7},
+ {id:'gold',n:'黄金',code:'AU',u:'千克',base:760000,vol:.009,depth:60,sz:.001,lv:8},
+];
+const G=Object.fromEntries(GOODS.map(g=>[g.id,g]));
+const CITIES=[
+ {id:'sh',n:'上海',lv:1,depth:1.5,x:848,y:158,cf:{rice:1.02,soy:1.05,steel:.92,cotton:.97,oil:1.05,copper:1,chip:1,coffee:1.15,gold:1}},
+ {id:'sz',n:'深圳',lv:1,depth:1.2,x:804,y:206,cf:{rice:1,soy:1.06,steel:.98,cotton:1.02,oil:1.06,copper:1.02,chip:.86,coffee:1.12,gold:1}},
+ {id:'sg',n:'新加坡',lv:3,depth:1.2,x:789,y:250,cf:{rice:.94,soy:1,steel:1.05,cotton:1.03,oil:.97,copper:1,chip:1.05,coffee:1,gold:.995}},
+ {id:'db',n:'迪拜',lv:5,depth:1.1,x:653,y:181,cf:{rice:1.18,soy:1.12,steel:1.1,cotton:1.08,oil:.82,copper:1.04,chip:1.1,coffee:1.08,gold:.985}},
+ {id:'sp',n:'圣保罗',lv:7,depth:1,x:371,y:315,cf:{rice:1,soy:.82,steel:1.08,cotton:.94,oil:1,copper:.95,chip:1.22,coffee:.72,gold:1}},
+ {id:'rt',n:'鹿特丹',lv:9,depth:1.3,x:512,y:106,cf:{rice:1.1,soy:1.08,steel:1,cotton:1.1,oil:1.02,copper:1.06,chip:1.12,coffee:1.25,gold:1.01}},
+];
+const C=Object.fromEntries(CITIES.map(c=>[c.id,c]));
+const DIST={'sh-sz':3,'sh-sg':6,'sz-sg':5,'sh-db':14,'sz-db':13,'sg-db':9,'sh-sp':30,'sz-sp':29,'sg-sp':26,'db-sp':22,'sh-rt':28,'sz-rt':27,'sg-rt':22,'db-rt':16,'rt-sp':14};
+const dist=(a,b)=>DIST[a+'-'+b]||DIST[b+'-'+a]||0;
+const STOCKS=[
+ {s:'600831',n:'华信科技',sec:'科技',p:48.2,beta:1.4,vol:.022},
+ {s:'601872',n:'远洋航运',sec:'航运',p:12.5,beta:1.1,vol:.019},
+ {s:'600028',n:'中石能源',sec:'能源',p:7.8,beta:.8,vol:.014,good:'oil'},
+ {s:'000998',n:'金穗农业',sec:'农业',p:15.2,beta:.6,vol:.016,good:'soy'},
+ {s:'600019',n:'宏钢集团',sec:'钢铁',p:5.6,beta:1,vol:.017,good:'steel'},
+ {s:'300750',n:'云帆电商',sec:'科技',p:86.4,beta:1.5,vol:.028},
+ {s:'600276',n:'瑞康医药',sec:'医药',p:33.1,beta:.7,vol:.018},
+ {s:'601398',n:'万通银行',sec:'银行',p:6.2,beta:.9,vol:.01},
+ {s:'601899',n:'赤金矿业',sec:'有色',p:17.4,beta:1.1,vol:.02,good:'gold'},
+];
+const RIVALS=[
+ {id:'ds',co:'鼎盛贸易',boss:'王建国',style:'激进',nw:650000,mu:.0022,sig:.028,s:'603588'},
+ {id:'hq',co:'环球商贸',boss:'陈琳达',style:'稳健',nw:900000,mu:.0016,sig:.012,s:'002345'},
+ {id:'hc',co:'海川国际',boss:'赵海川',style:'投机',nw:420000,mu:.0024,sig:.04,s:'300456'},
+ {id:'bc',co:'北辰实业',boss:'李北辰',style:'大宗',nw:1200000,mu:.0015,sig:.016,s:'600789'},
+];
+const TITLES=['','街头小贩','个体户','小老板','贸易新秀','进出口商','区域大亨','跨国贸易商','商界精英','财团董事','上市公司董事长','商业巨头','财阀','全球富豪','商业帝国','商界传奇'];
+const UNLOCKS={2:'银行贷款',3:'新加坡港 · 原油',4:'电解铜',5:'迪拜港 · 芯片 · 澳门贵宾厅',6:'研究部内参',7:'圣保罗港 · 咖啡豆',8:'黄金',9:'鹿特丹港 · 澳门至尊厅',10:'公司上市 IPO'};
+const LUX=[
+ {id:'w1',cat:'watch',n:'天梭 力洛克',spec:'自动机械 · 39.3mm',p:4800,pr:2,ap:-.06,up:0},
+ {id:'w2',cat:'watch',n:'欧米茄 海马300',spec:'同轴擒纵 · 42mm',p:52000,pr:12,ap:-.03,up:0},
+ {id:'w3',cat:'watch',n:'劳力士 潜航者',spec:'蚝式钢 · 41mm',p:98000,pr:28,ap:.04,up:0},
+ {id:'w4',cat:'watch',n:'百达翡丽 鹦鹉螺',spec:'5811/1G · 41mm',p:1650000,pr:160,ap:.07,up:0},
+ {id:'w5',cat:'watch',n:'理查德米勒 RM 011',spec:'飞返计时 · 钛金属',p:6200000,pr:420,ap:.03,up:0},
+ {id:'c1',cat:'car',n:'比亚迪 汉EV',spec:'纯电 · 610km',p:209800,pr:10,ap:-.15,up:30},
+ {id:'c2',cat:'car',n:'宝马 5系',spec:'2.0T · 长轴距',p:439900,pr:30,ap:-.14,up:60},
+ {id:'c3',cat:'car',n:'保时捷 911 Carrera',spec:'3.0T 水平对置六缸',p:1458000,pr:110,ap:-.08,up:180},
+ {id:'c4',cat:'car',n:'劳斯莱斯 库里南',spec:'6.75L V12',p:7050000,pr:420,ap:-.07,up:900},
+ {id:'c5',cat:'car',n:'布加迪 Chiron',spec:'8.0L W16 · 1500匹',p:32000000,pr:1500,ap:.02,up:3500},
+ {id:'h1',cat:'house',n:'郊区两居室',spec:'89㎡ · 精装',p:2800000,pr:60,ap:.025,up:120},
+ {id:'h2',cat:'house',n:'陆家嘴江景大平层',spec:'320㎡ · 一线江景',p:16800000,pr:380,ap:.035,up:600},
+ {id:'h3',cat:'house',n:'佘山独栋别墅',spec:'占地 1.2 亩 · 私家园林',p:52000000,pr:1100,ap:.04,up:1800},
+ {id:'h4',cat:'house',n:'太平山顶豪宅',spec:'维港全景 · 独立泳池',p:280000000,pr:4200,ap:.045,up:8000},
+ {id:'a1',cat:'art',n:'当代油画 限量版',spec:'布面油画 · 120×90cm',p:850000,pr:70,ap:.05,up:20},
+ {id:'a2',cat:'art',n:'清乾隆 粉彩瓷瓶',spec:'春拍成交 · 附证书',p:36000000,pr:1300,ap:.06,up:200},
+ {id:'y1',cat:'yacht',n:'圣汐 42米游艇',spec:'5 间套房 · 12 名船员',p:88000000,pr:2200,ap:-.06,up:9000},
+ {id:'j1',cat:'jet',n:'湾流 G700',spec:'航程 13,890km · 19 座',p:560000000,pr:9000,ap:-.05,up:40000},
+];
+const LUXBY=Object.fromEntries(LUX.map(l=>[l.id,l]));
+const LUXCAT={watch:'腕表',car:'座驾',house:'物业',art:'艺术品',yacht:'游艇',jet:'公务机'};
+const UPG=[
+ {id:'wh',n:'仓储中心',d:l=>`每港仓容 ${fmtQ(whCap(l))} 吨`,cost:l=>20000*Math.pow(2.6,l),max:12,sal:60,ic:'crate'},
+ {id:'fleet',n:'远洋船队',d:l=>`在途运力 ${fmtQ(fleetCap(l))} 吨`,cost:l=>30000*Math.pow(2.6,l),max:12,sal:80,ic:'ship'},
+ {id:'speed',n:'新型主机',d:l=>`航程缩短 ${Math.round((1-1/(1+.15*l))*100)}%`,cost:l=>80000*Math.pow(3,l),max:5,sal:120,ic:'gear'},
+ {id:'trader',n:'交易团队',d:l=>`价差 ${(spread(l)*100).toFixed(2)}% · 深度 +${l*25}%`,cost:l=>50000*Math.pow(2.8,l),max:6,sal:150,ic:'people'},
+ {id:'analyst',n:'研究部',d:l=>['未设立','提前收到行业内参','内参更准 · 显示高估低估','内参几乎必中'][l]||'',cost:l=>120000*Math.pow(3,l),max:3,sal:300,lv:6,ic:'eye'},
+ {id:'office',n:'总部大楼',d:l=>`声望 +${l*40} · 合同栏位 ${3+l}`,cost:l=>200000*Math.pow(3,l),max:5,sal:400,ic:'hq'},
+];
+const CLIENTS=['华润粮油','中远物流','金龙鱼食品','长江钢构','南方电网','海天集团','迪拜国家石油','淡马锡贸易','嘉吉亚洲','路易达孚','鹿特丹港务局','星巴克供应链','比亚迪采购部','台积电南京','万科建设','新加坡航空配餐'];
+const ACH=[
+ {id:'t1',n:'第一桶金',d:'完成第一笔盈利交易'},{id:'p100k',n:'十万元户',d:'单笔交易盈利超 ¥10万'},
+ {id:'nw1m',n:'百万富翁',d:'净资产 ¥100万'},{id:'nw10m',n:'千万身家',d:'净资产 ¥1000万'},
+ {id:'nw100m',n:'亿万富豪',d:'净资产 ¥1亿'},{id:'nw1b',n:'十亿俱乐部',d:'净资产 ¥10亿'},
+ {id:'k1',n:'守信商人',d:'完成第一份合同'},{id:'k10',n:'金字招牌',d:'完成 10 份合同'},
+ {id:'leg',n:'至尊订单',d:'完成一份至尊级合同'},{id:'s1',n:'股民',d:'第一次买入股票'},
+ {id:'s50',n:'股神',d:'股票累计盈利 ¥50万'},{id:'lw',n:'腕上乾坤',d:'购入第一枚腕表'},
+ {id:'lc',n:'有车一族',d:'购入第一辆座驾'},{id:'lh',n:'置业安家',d:'购入第一处物业'},
+ {id:'ly',n:'海天之间',d:'拥有游艇或公务机'},{id:'cAll',n:'环球航线',d:'解锁全部六座港口'},
+ {id:'tr100',n:'贸易老手',d:'累计 100 笔商品交易'},{id:'beat',n:'力压群雄',d:'净资产超过全部 AI 对手'},
+ {id:'mac',n:'濠江初访',d:'第一次在澳门下注'},{id:'god',n:'一掷千金',d:'在澳门单局赢下 ¥100万'},
+ {id:'jp',n:'累积大奖',d:'老虎机击中累积奖池'},{id:'ipo',n:'敲钟',d:'公司成功上市'},
+];
+const ROOMS=[
+ {id:'main',n:'中场',en:'MAIN FLOOR',lv:1,min:100,max:100000,chips:[100,500,1000,5000,10000,50000],blinds:[100,200],buy:[10000,60000],slot:[10,50,100,500,1000],seed:300000},
+ {id:'vip',n:'贵宾厅',en:'VIP SALON',lv:5,min:5000,max:3000000,chips:[5000,10000,50000,100000,500000,1000000],blinds:[2500,5000],buy:[250000,1500000],slot:[1000,5000,10000,50000],seed:8000000},
+ {id:'pr',n:'至尊厅',en:'PRIVÉ',lv:9,min:100000,max:50000000,chips:[100000,500000,1000000,5000000,10000000],blinds:[50000,100000],buy:[5000000,30000000],slot:[50000,100000,500000,1000000],seed:120000000},
+];
+const CHIPCOL=['#2f5fa8','#a8262a','#2f7a55','#2a2a2a','#7a3fa0','#b8892b','#c46a2c'];
+
+// ================= UTIL =================
+const $=s=>document.querySelector(s);
+const rnd=Math.random;
+const randn=()=>{let u=0,v=0;while(!u)u=rnd();while(!v)v=rnd();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)};
+const pick=a=>a[Math.floor(rnd()*a.length)];
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function fmt(n,dec){if(n==null||isNaN(n))return '—';const s=n<0?'-':'';n=Math.abs(n);
+  if(n>=1e8)return s+'¥'+(n/1e8).toFixed(2)+'亿';if(n>=1e4)return s+'¥'+(n/1e4).toFixed(n>=1e6?0:1)+'万';return s+'¥'+n.toFixed(dec??(n<100&&n%1?2:0))}
+const chipLbl=v=>v>=1e8?(v/1e8)+'亿':v>=1e4?(+(v/1e4).toFixed(1))+'万':v>=1000?(v/1000)+'K':String(v);
+const fmtP=n=>n>=1000?Math.round(n).toLocaleString('zh-CN'):n.toFixed(2);
+const fmtQ=n=>n>=1e4?(n/1e4).toFixed(1)+'万':(Math.round(n*100)/100).toLocaleString('zh-CN');
+const pct=(x,d=2)=>(x>=0?'+':'')+(x*100).toFixed(d)+'%';
+const cls=x=>x>0?'up':x<0?'down':'';
+const START=new Date(2026,0,5);
+function dateOf(day){const d=new Date(START);d.setDate(d.getDate()+day);return d}
+function dateStr(day,short){const d=dateOf(day);return short?`${d.getMonth()+1}/${d.getDate()}`:`${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`}
+const weekday=day=>'周'+'日一二三四五六'[dateOf(day).getDay()];
+const isWeekend=day=>{const w=dateOf(day).getDay();return w===0||w===6};
+const whCap=l=>100*Math.pow(2,l);
+const fleetCap=l=>60*Math.pow(2,l);
+const spread=l=>Math.max(.0015,.006-.0008*l);
+const xpNeed=L=>Math.round(60*Math.pow(1.75,L-1));
+const todayKey=()=>{const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()};
+function setHTML(el,h){if(el&&el._h!==h){el.innerHTML=h;el._h=h}}
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ================= ICONS =================
+const P={
+trade:'<path d="M4 12 16 5l12 7M6 12h20M8 14v10M13 14v10M19 14v10M24 14v10M4 27h24"/>',
+port:'<path d="M3 20h26l-3 6H7zM7 20v-5h9v5M16 20v-8h6v8M10 15v-4h4v4M24 12V6"/><path d="M2 29.5c2.5 0 2.5-1 5-1s2.5 1 5 1 2.5-1 5-1 2.5 1 5 1 2.5-1 5-1"/>',
+deal:'<path d="M8 3h12l5 5v21H8zM20 3v5h5M12 13h9M12 17h9M12 21h5"/><circle cx="21" cy="24" r="3"/>',
+stock:'<path d="M5 4v23h23"/><rect x="9" y="14" width="3" height="7"/><path d="M10.5 11v3M10.5 21v3"/><rect x="15" y="10" width="3" height="8"/><path d="M16.5 7v3M16.5 18v3"/><rect x="21" y="7" width="3" height="6"/><path d="M22.5 4v3M22.5 13v3"/>',
+bank:'<rect x="4" y="5" width="24" height="22" rx="1.5"/><circle cx="16" cy="16" r="6"/><circle cx="16" cy="16" r="1.5"/><path d="M16 10v2M16 20v2M10 16h2M20 16h2M28 10v3M28 19v3"/>',
+hq:'<path d="M9 29V6l10-3v26M19 11h6v18M5 29h23M12.5 9h3M12.5 13h3M12.5 17h3M12.5 21h3M21.5 15h1.5M21.5 19h1.5M21.5 23h1.5"/>',
+lux:'<path d="M5 12 10.5 5h11L27 12 16 27zM5 12h22M10.5 5l5.5 7 5.5-7M12.5 12 16 27l3.5-15"/>',
+macau:'<rect x="4" y="6" width="13" height="19" rx="1.5" transform="rotate(-10 10.5 15.5)"/><circle cx="22" cy="19" r="7"/><circle cx="22" cy="19" r="3.5"/><path d="M22 12v2M22 24v2M15 19h2M27 19h2"/>',
+rank:'<path d="M5 28h22M8 28V19h5v9M13.5 28V13h5v15M19 28v-6h5v6M16 4l1.1 2.3 2.5.4-1.8 1.7.4 2.5-2.2-1.2-2.2 1.2.4-2.5-1.8-1.7 2.5-.4z"/>',
+wheel:'<circle cx="16" cy="16" r="11.5"/><circle cx="16" cy="16" r="2"/><path d="M16 4.5V14M16 18v9.5M4.5 16H14M18 16h9.5M7.9 7.9l6.7 6.7M17.4 17.4l6.7 6.7M24.1 7.9l-6.7 6.7M14.6 17.4l-6.7 6.7"/>',
+ach:'<circle cx="16" cy="20" r="7"/><path d="M11 3l5 9.5L21 3M12.5 3h7"/><path d="M16 16.4l1.1 2.2 2.4.3-1.7 1.6.4 2.4-2.2-1.2-2.2 1.2.4-2.4-1.7-1.6 2.4-.3z"/>',
+watch:'<rect x="12" y="2.5" width="8" height="6"/><rect x="12" y="23.5" width="8" height="6"/><circle cx="16" cy="16" r="8"/><circle cx="16" cy="16" r="6"/><path d="M16 12v4l2.5 1.5M24.5 15v2"/>',
+car:'<path d="M3 21l1.5-4.5C5.5 14 7 13 9.5 13h13c2.5 0 4 1 5 3.5L29 21v4H3zM8 13l3-4.5h10L24 13"/><circle cx="9" cy="25" r="2.5"/><circle cx="23" cy="25" r="2.5"/>',
+house:'<path d="M3 15 16 5l13 10M6.5 12.5V27h19V12.5M13 27v-7h6v7M22 9V5h2.5v6"/>',
+art:'<path d="M12 4h8M13 4v3.5C9 9.5 7 13.5 7 18c0 5.5 4 9.5 9 9.5s9-4 9-9.5c0-4.5-2-8.5-6-10.5V4"/><path d="M8.5 17c3-2 5 2 7.5 0s4.5-2 7.5 0"/>',
+yacht:'<path d="M3 21h26l-4 6H7zM8 21l3-6h12l3 6M12 15l2-4h7l2 4M15 11V6"/>',
+jet:'<path d="M3 17h19c3.5 0 6-1 7-2-1-1-3.5-2-7-2H3zM12.5 13 8.5 5h3l7 8M12.5 17l-4 9h3l7-9M4 13 2 8h2l4 5"/>',
+crate:'<rect x="5" y="9" width="22" height="18"/><path d="M5 15h22M5 21h22M12 9v18M20 9v18"/>',
+ship:'<path d="M3 21h26l-3 6H7zM8 21v-6h8v6M16 21v-9h6v9"/>',
+gear:'<circle cx="16" cy="16" r="5"/><path d="M16 3v4M16 25v4M3 16h4M25 16h4M6.8 6.8l2.8 2.8M22.4 22.4l2.8 2.8M25.2 6.8l-2.8 2.8M9.6 22.4l-2.8 2.8"/>',
+people:'<circle cx="11" cy="11" r="4"/><circle cx="22" cy="12" r="3.2"/><path d="M3 27c0-5 3.5-8 8-8s8 3 8 8M19 20c4 0 7 2.5 7 7"/>',
+eye:'<path d="M3 16s5-8 13-8 13 8 13 8-5 8-13 8S3 16 3 16z"/><circle cx="16" cy="16" r="4"/>',
+snd:'<path d="M5 12h4l6-5v18l-6-5H5zM20 11.5a6 6 0 0 1 0 9M23 8a10.5 10.5 0 0 1 0 16"/>',
+mute:'<path d="M5 12h4l6-5v18l-6-5H5zM20 13l6 6M26 13l-6 6"/>',
+};
+const ic=(k,st='')=>`<svg class="ic" viewBox="0 0 32 32" aria-hidden="true" style="${st}">${P[k]||''}</svg>`;
+
+// ================= STATE =================
+let S=null;
+function mkCandles(p0,vol,n){const out=[];let p=p0;for(let i=0;i<n;i++){const o=p;p=p*(1+randn()*vol);const hi=Math.max(o,p)*(1+Math.abs(randn())*vol*.5),lo=Math.min(o,p)*(1-Math.abs(randn())*vol*.5);out.push([o,hi,lo,p])}
+  const k=p0/p;return out.map(c=>c.map(v=>+(v*k).toFixed(2)))}
+function newGame(company){
+  const s={v:3,company:company||'未命名贸易行',day:0,cash:150000,xp:0,level:1,prestige:0,loan:0,rate:.055,
+    mkt:{},trend:{},inv:{},ships:[],stk:{},hold:{},owned:[],upg:{wh:0,fleet:0,speed:0,trader:0,analyst:0,office:0},
+    offers:[],contracts:[],rivals:RIVALS.map(r=>({id:r.id,nw:r.nw,shares:Math.round(r.nw/(12+rnd()*10))})),
+    events:[],queued:[],news:[],nwHist:[],stats:{tradeProfit:0,stockProfit:0,trades:0,contracts:0,maxNW:0,spins:0},
+    ach:{},tut:0,goal:null,ipo:false,nextDecision:16,pendingInv:[],shipId:1,offerId:1,seen:{},wheel:'',wheelAng:0,
+    casino:{net:0,wagered:0,trips:0},jackpot:{},pokerStack:0};
+  for(const g of GOODS)s.trend[g.id]=1;
+  for(const c of CITIES){s.mkt[c.id]={};s.inv[c.id]={};
+    for(const g of GOODS){const p=g.base*c.cf[g.id]*(1+randn()*.02);s.mkt[c.id][g.id]={p,prev:p,h:[]};
+      for(let i=0;i<30;i++)s.mkt[c.id][g.id].h.push(+(p*(1+randn()*g.vol*1.5)).toPrecision(5))}}
+  for(const st of STOCKS){const c=mkCandles(st.p,st.vol,50);s.stk[st.s]={p:st.p,prev:c[c.length-1][0],c,earn:Math.floor(rnd()*80)+20}}
+  for(const r of RIVALS){const rv=s.rivals.find(x=>x.id===r.id);const p=+(rv.nw/rv.shares).toFixed(2);const c=mkCandles(p,.02,50);s.stk[r.s]={p,prev:c[c.length-1][0],c,earn:1e9}}
+  return s}
+function migrate(s){s.seen=s.seen||{};s.pendingInv=s.pendingInv||[];s.stats.spins=s.stats.spins||0;s.wheel=s.wheel||'';s.wheelAng=s.wheelAng||0;
+  s.casino=s.casino||{net:0,wagered:0,trips:0};s.jackpot=s.jackpot||{};
+  if(s.pokerStack){s.cash+=s.pokerStack;s.pokerStack=0}
+  for(const k in s.stk){const q=s.stk[k];if(!q.c){q.c=(q.h||[q.p]).map((v,i,a)=>{const o=i?a[i-1]:v;return [o,Math.max(o,v),Math.min(o,v),v]});delete q.h}}
+  return s}
+const upgLv=id=>S.upg[id]||0;
+const cityUnlocked=c=>S.level>=C[c].lv;
+const goodUnlocked=g=>S.level>=G[g].lv;
+const unlockedCities=()=>CITIES.filter(c=>cityUnlocked(c.id));
+const unlockedGoods=()=>GOODS.filter(g=>goodUnlocked(g.id));
+function invUsed(city){let t=0;for(const k in S.inv[city])t+=S.inv[city][k].q*G[k].sz;return t}
+const shipUsed=()=>S.ships.reduce((a,x)=>a+x.q*G[x.good].sz,0);
+const bidP=(c,g)=>S.mkt[c][g].p*(1-spread(upgLv('trader')));
+const askP=(c,g)=>S.mkt[c][g].p*(1+spread(upgLv('trader')));
+const depthOf=(c,g)=>G[g].depth*C[c].depth*(1+.25*upgLv('trader'));
+function invValue(){let t=0;for(const c in S.inv)for(const g in S.inv[c])t+=S.inv[c][g].q*bidP(c,g);return t}
+const shipValue=()=>S.ships.reduce((a,x)=>a+x.q*bidP(x.to,x.good),0);
+function stockValue(){let t=0;for(const s in S.hold)t+=S.hold[s].q*S.stk[s].p;return t}
+const luxValue=()=>S.owned.reduce((a,o)=>a+o.val,0);
+const pendingInvValue=()=>S.pendingInv.reduce((a,x)=>a+x.amt,0);
+const tableValue=()=>(HD?HD.players[0].stack:0)+(CS.phase==='bet'?betTotal():0);
+const netWorth=()=>S.cash+invValue()+shipValue()+stockValue()+luxValue()+pendingInvValue()+tableValue()-S.loan;
+const creditLimit=()=>Math.max(0,(netWorth()+S.loan)*.5+S.level*60000)*(1+Math.min(S.prestige,3000)/3000);
+const prestigeTotal=()=>S.prestige+upgLv('office')*40+S.owned.reduce((a,o)=>a+LUXBY[o.id].pr,0);
+function dailyCost(){let c=150+S.level*60;for(const u of UPG)c+=upgLv(u.id)*u.sal;return c+S.owned.reduce((a,o)=>a+LUXBY[o.id].up,0)}
+const rewardMul=()=>1+Math.min(prestigeTotal(),6000)/12000;
+const shipDays=(a,b)=>Math.max(1,Math.round(dist(a,b)/(1+.15*upgLv('speed'))));
+const freight=(a,b,g,q)=>Math.round(1500+q*G[g].sz*shipDays(a,b)*9+q*bidP(a,g)*.002);
+function quoteBuy(city,g,q){const f=q/depthOf(city,g);const u=askP(city,g)*(1+f/2);return {unit:u,total:u*q,impact:f}}
+function quoteSell(city,g,q){const f=q/depthOf(city,g);const u=bidP(city,g)*(1-f/2);return {unit:u,total:u*q,impact:f}}
+function maxBuy(city,g){const room=(whCap(upgLv('wh'))-invUsed(city))/G[g].sz;let lo=0,hi=Math.max(0,Math.floor(room+1e-9));if(hi<=0)return 0;
+  if(quoteBuy(city,g,hi).total<=S.cash)return hi;while(hi-lo>1){const m=Math.floor((lo+hi)/2);if(quoteBuy(city,g,m).total<=S.cash)lo=m;else hi=m}return lo}
+const TIERS=[[.3,'至尊','PLATINUM','#d9d4c7'],[.22,'尊享','GOLD','#c8a96a'],[.15,'优选','SILVER','#9aa3ad'],[0,'标准','BRONZE','#9a6f4f']];
+const tier=p=>TIERS.find(t=>p>=t[0]);
+function bestArb(){let best=null;for(const g of unlockedGoods())for(const a of unlockedCities())for(const b of unlockedCities()){if(a.id===b.id)continue;const r=(bidP(b.id,g.id)-askP(a.id,g.id))/askP(a.id,g.id);if(!best||r>best.r)best={g,a,b,r}}return best}
+
+// ================= FX =================
+function toast(t,k){const el=document.createElement('div');el.className='toast'+(k?' '+k:'');el.textContent=t;const box=$('#toasts');box.appendChild(el);setTimeout(()=>el.remove(),k==='lv'?4200:2800);if(box.children.length>4)box.children[0].remove()}
+let actx=null,muted=false;try{muted=localStorage.getItem('sh_mute')==='1'}catch(e){}
+function snd(type){if(muted)return;try{actx=actx||new (window.AudioContext||window.webkitAudioContext)()}catch(e){return}if(!actx)return;
+  const seq={click:[[880,.025,'sine']],coin:[[1175,.06,'sine'],[1568,.14,'sine']],buy:[[660,.05,'sine'],[880,.07,'sine']],bad:[[196,.16,'triangle']],lv:[[523,.12,'sine'],[784,.12,'sine'],[1047,.32,'sine']],card:[[2200,.02,'triangle']],chip:[[1800,.025,'square'],[2400,.02,'square']],tick:[[1400,.012,'square']]}[type]||[[700,.04,'sine']];
+  let t=actx.currentTime;for(const [f,d,w] of seq){const o=actx.createOscillator(),g=actx.createGain();o.type=w;o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(type==='chip'||type==='tick'?.04:.09,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g).connect(actx.destination);o.start(t);o.stop(t+d+.02);t+=d*.85}}
+function floaty(txt,color){const ref=win?$('#winRoot .x'):$('#cashFig');if(!ref)return;const r=ref.getBoundingClientRect();const el=document.createElement('div');el.className='floaty';el.textContent=txt;el.style.color=color||'var(--gold-hi)';el.style.left=(win?r.left-170:r.left)+'px';el.style.top=(win?r.top+4:r.bottom+2)+'px';document.body.appendChild(el);setTimeout(()=>el.remove(),1500)}
+
+// ================= NEWS / XP =================
+function news(t,k){S.news.unshift({d:S.day,t,k:k||''});if(S.news.length>80)S.news.length=80}
+function gainXP(x){if(!(x>0))return;S.xp+=x;while(S.level<15&&S.xp>=xpNeed(S.level)){S.xp-=xpNeed(S.level);S.level++;onLevelUp()}}
+function onLevelUp(){const u=UNLOCKS[S.level];snd('lv');news(`${S.company} 晋升「${TITLES[S.level]}」${u?'，解锁 '+u:''}`,'gold');
+  queueModal(()=>`<div class="cap">Promotion</div><div class="lvn">${S.level}</div><h2>${TITLES[S.level]}</h2><div class="rule"></div>${u?`<p>新解锁 · <span class="gold">${u}</span></p>`:'<p class="muted">授信额度与订单规模随等级提升</p>'}<button class="btn pri lg" type="button" data-close>继续经营</button>`);
+  if(S.level>=9)grant('cAll')}
+function grant(id){if(S.ach[id]!=null)return;S.ach[id]=S.day;const a=ACH.find(x=>x.id===id);if(!a)return;toast(`荣誉 · ${a.n}`,'lv');snd('coin');news(`获得荣誉「${a.n}」`,'gold');S.prestige+=10;gainXP(30);pushPlayer(true)}
+
+// ================= SIMULATION =================
+const EVENTS=[
+ {t:'主产区遭遇罕见干旱，{g}减产预期升温',goods:['rice','soy','cotton','coffee'],m:[1.12,1.25],days:[20,40]},
+ {t:'全球大丰收，{g}供应过剩',goods:['rice','soy','cotton'],m:[.82,.9],days:[20,35]},
+ {t:'OPEC+ 宣布联合减产，原油供给收紧',goods:['oil'],m:[1.15,1.3],days:[25,45],stocks:{'600028':.06}},
+ {t:'美国页岩油产量创新高，原油承压',goods:['oil'],m:[.8,.9],days:[20,35],stocks:{'600028':-.05}},
+ {t:'全球晶圆产能告急，芯片缺货潮再现',goods:['chip'],m:[1.18,1.35],days:[25,45],stocks:{'600831':.05}},
+ {t:'新能源车销量暴增，铜需求大幅上调',goods:['copper'],m:[1.1,1.2],days:[25,40],stocks:{'600831':.03}},
+ {t:'房地产调控加码，钢材需求走弱',goods:['steel'],m:[.82,.9],days:[20,40],stocks:{'600019':-.07}},
+ {t:'基建刺激计划出台，钢铁有色需求回暖',goods:['steel','copper'],m:[1.08,1.18],days:[20,40],stocks:{'600019':.06}},
+ {t:'地缘局势紧张，避险资金涌入黄金原油',goods:['gold','oil'],m:[1.06,1.14],days:[20,40],stocks:{'601899':.06},mkt:-.02},
+ {t:'巴西咖啡锈病蔓延，咖啡豆暴涨',goods:['coffee'],m:[1.2,1.4],days:[25,45]},
+ {t:'{c}港口工人罢工，进口商品价格飙升',city:1,goods:null,m:[1.08,1.15],days:[8,15],stocks:{'601872':-.03}},
+ {t:'台风过境{c}，港口停摆数日',city:1,goods:null,m:[1.05,1.1],days:[5,10],delay:3},
+ {t:'央行意外降息25个基点，市场情绪大振',goods:[],m:[1,1],days:[1,1],mkt:.03,rate:-.0025},
+ {t:'央行加息抑制通胀，股市承压',goods:[],m:[1,1],days:[1,1],mkt:-.03,rate:.0025},
+ {t:'全球航运运价指数大涨',goods:[],m:[1,1],days:[1,1],stocks:{'601872':.08}},
+ {t:'监管约谈电商平台，板块大跌',goods:[],m:[1,1],days:[1,1],stocks:{'300750':-.09}},
+ {t:'创新药获批上市，医药板块走强',goods:[],m:[1,1],days:[1,1],stocks:{'600276':.08}},
+];
+function scheduleEvent(){const e=pick(EVENTS);const ug=unlockedGoods().map(g=>g.id);let city=null,gid=null;
+  if(e.city)city=pick(unlockedCities()).id;
+  if(e.goods&&e.goods.length){const o=e.goods.filter(g=>ug.includes(g));gid=o.length?pick(o):pick(e.goods)}
+  const m=e.m[0]+rnd()*(e.m[1]-e.m[0]),days=Math.round(e.days[0]+rnd()*(e.days[1]-e.days[0]));
+  const t=e.t.replace('{g}',gid?G[gid].n:'').replace('{c}',city?C[city].n:'');const lead=2+Math.floor(rnd()*3);
+  S.queued.push({t,city,goods:e.goods===null?'all':(e.goods.length>2?[gid]:e.goods.slice()),m,days,stocks:e.stocks||null,mkt:e.mkt||0,rate:e.rate||0,delay:e.delay||0,at:S.day+lead});
+  const al=upgLv('analyst');if(al>0&&rnd()<[0,.65,.8,.95][al])news(`内参 · 消息人士透露：${t}（${lead}天内）`,'rumor')}
+function fireEvent(ev){news(ev.t,ev.m>1||ev.mkt>0?'good':(ev.m<1||ev.mkt<0?'bad':''));
+  if(ev.goods==='all'||(ev.goods&&ev.goods.length))S.events.push({city:ev.city,goods:ev.goods,m:ev.m,until:S.day+ev.days});
+  if(ev.stocks)for(const s in ev.stocks)S.stk[s].p*=1+ev.stocks[s];
+  if(ev.mkt)for(const st of STOCKS)S.stk[st.s].p*=1+ev.mkt*st.beta;
+  if(ev.rate)S.rate=clamp(S.rate+ev.rate,.03,.09);
+  if(ev.delay&&ev.city)for(const sh of S.ships)if(sh.to===ev.city)sh.eta+=ev.delay}
+function evMult(city,g){let m=1;for(const e of S.events){if(e.city&&e.city!==city)continue;if(e.goods==='all'||e.goods.includes(g))m*=e.m}return m}
+function pushCandle(k,np){const o=k.c.length?k.c[k.c.length-1][3]:k.p;const hi=Math.max(o,np)*(1+Math.abs(randn())*.006),lo=Math.min(o,np)*(1-Math.abs(randn())*.006);k.prev=o;k.p=np;k.c.push([+o.toFixed(2),+hi.toFixed(2),+lo.toFixed(2),+np.toFixed(2)]);if(k.c.length>90)k.c.shift()}
+let lastTick=performance.now();
+function tick(){
+  S.day++;lastTick=performance.now();const wk=isWeekend(S.day);
+  for(const q of S.queued.filter(q=>q.at<=S.day))fireEvent(q);
+  S.queued=S.queued.filter(q=>q.at>S.day);S.events=S.events.filter(e=>e.until>S.day);
+  if(rnd()<.09)scheduleEvent();
+  for(const g of GOODS){let t=S.trend[g.id];t*=Math.exp(randn()*g.vol*.45);t+=.012*(1-t);S.trend[g.id]=clamp(t,.6,1.6)}
+  for(const c of CITIES)for(const g of GOODS){const m=S.mkt[c.id][g.id];m.prev=m.p;const E=g.base*c.cf[g.id]*S.trend[g.id]*evMult(c.id,g.id);
+    m.p=Math.max(g.base*.3,m.p+.07*(E-m.p)+m.p*g.vol*randn());m.h.push(+m.p.toPrecision(5));if(m.h.length>60)m.h.shift()}
+  if(!wk){const mk=.0003+randn()*.009;
+    for(const st of STOCKS){const k=S.stk[st.s];let r=st.beta*mk+randn()*st.vol;
+      if(st.good){r+=.5*(S.trend[st.good]-(k.lt||S.trend[st.good]));k.lt=S.trend[st.good]}
+      if(S.day>=k.earn){const sur=randn()*.06;r+=sur;k.earn=S.day+90;news(`${st.n}发布季报，${sur>0?'净利润超预期，股价大涨':'业绩不及预期，股价重挫'}`,sur>0?'good':'bad')}
+      const base=k.c[k.c.length-1][3];pushCandle(k,Math.max(.5,clamp(k.p*(1+r),base*.9,base*1.1)))}}
+  const pnw=netWorth();
+  for(const r of RIVALS){const rv=S.rivals.find(x=>x.id===r.id);let mu=r.mu;if(pnw>rv.nw*1.5)mu+=.0012;if(pnw<rv.nw/3)mu-=.0008;rv.nw*=Math.exp(mu+r.sig*randn()*.6);
+    const k=S.stk[r.s];if(!wk){const base=k.c[k.c.length-1][3];pushCandle(k,clamp(rv.nw/rv.shares*(1+randn()*.01),base*.9,base*1.1))}}
+  if(wk)for(const k in S.stk)S.stk[k].prev=S.stk[k].p;
+  if(rnd()<.2)rivalMove();
+  const arrived=S.ships.filter(x=>x.eta<=S.day);
+  for(const sh of arrived){const inv=S.inv[sh.to];const cur=inv[sh.good]||{q:0,cost:0};const room=whCap(upgLv('wh'))-invUsed(sh.to);
+    if(sh.q*G[sh.good].sz>room+1e-9){news(`${C[sh.to].n}仓库爆仓，${G[sh.good].n}暂存码头，产生堆存费`,'bad');S.cash-=Math.round(sh.q*G[sh.good].sz*40)}
+    inv[sh.good]={q:cur.q+sh.q,cost:(cur.q*cur.cost+sh.unit*sh.q)/(cur.q+sh.q)};toast(`货船抵达${C[sh.to].n} · ${G[sh.good].n} ${fmtQ(sh.q)}${G[sh.good].u}`);snd('buy')}
+  if(arrived.length)S.ships=S.ships.filter(x=>x.eta>S.day);
+  S.loan*=1+S.rate/365;S.cash-=dailyCost();
+  for(const o of S.owned){const l=LUXBY[o.id];o.val*=Math.exp(l.ap/365+randn()*.004)}
+  if(S.cash<0){const need=-S.cash;if(creditLimit()-S.loan>=need){S.loan+=need;S.cash=0;if(!S.seen.autoLoan){S.seen.autoLoan=1;news('现金不足，银行已自动放贷周转','bad')}}}
+  const slots=3+upgLv('office');if(S.offers.length<slots&&rnd()<.3)genOffer();
+  for(const o of S.offers.filter(o=>o.exp<=S.day))news(`${o.client}的${G[o.good].n}订单被${pick(RIVALS).co}抢走了`,'bad');
+  S.offers=S.offers.filter(o=>o.exp>S.day);
+  for(const k of S.contracts.filter(k=>k.due<S.day)){const pen=Math.round(k.reward*.1);S.cash-=pen;S.prestige=Math.max(0,S.prestige-15);news(`违约 · 未能按期向${k.client}交付，赔付${fmt(pen)}`,'bad');snd('bad')}
+  S.contracts=S.contracts.filter(k=>k.due>=S.day);
+  for(const iv of S.pendingInv.filter(x=>x.at<=S.day)){if(rnd()<iv.p){const back=iv.amt*iv.mult;S.cash+=back;news(`${iv.name}被巨头收购，投资回报${fmt(back)}`,'good');toast(`投资回报 +${fmt(back)}`,'lv');gainXP(back/800)}else news(`${iv.name}资金链断裂，投资血本无归`,'bad')}
+  S.pendingInv=S.pendingInv.filter(x=>x.at>S.day);
+  const nw=netWorth();S.stats.maxNW=Math.max(S.stats.maxNW,nw);
+  if(S.day%2===0){S.nwHist.push(Math.round(nw));if(S.nwHist.length>200)S.nwHist.shift()}
+  if(nw>=1e6)grant('nw1m');if(nw>=1e7)grant('nw10m');if(nw>=1e8)grant('nw100m');if(nw>=1e9)grant('nw1b');
+  if(S.rivals.every(r=>nw>r.nw))grant('beat');
+  if(S.tut>=TUT.length){if(!S.goal||S.day>=S.goal.end){const base=Math.max(nw,100000);S.goal={end:S.day+7,target:Math.round(base*(.04+rnd()*.04)/1000)*1000,baseProfit:S.stats.tradeProfit+S.stats.stockProfit,reward:Math.round(base*.02/1000)*1000+5000,done:false}}
+    else if(!S.goal.done&&S.stats.tradeProfit+S.stats.stockProfit-S.goal.baseProfit>=S.goal.target){S.goal.done=true;S.cash+=S.goal.reward;gainXP(S.goal.reward/300);toast(`周目标达成 · 奖励 ${fmt(S.goal.reward)}`,'lv');snd('coin');floaty('+'+fmt(S.goal.reward))}}
+  if(S.day>=S.nextDecision){S.nextDecision=S.day+20+Math.floor(rnd()*20);decision()}
+  if(nw<0&&S.cash<=0&&S.loan>=creditLimit()){gameOver();return}
+  checkTut();if(S.day%5===0)save();
+  refresh()}
+function rivalMove(){const r=pick(RIVALS),c=pick(unlockedCities()),g=pick(unlockedGoods()),dir=rnd()<.55?1:-1,mag=.03+rnd()*.05;S.mkt[c.id][g.id].p*=1+dir*mag;
+  news(`${r.co}${r.boss}在${c.n}${dir>0?'大举扫货':'集中抛售'}${g.n}，当地价格${dir>0?'上涨':'下跌'}${(mag*100).toFixed(1)}%`,dir>0?'good':'bad')}
+function genOffer(){const g=pick(unlockedGoods()),cities=unlockedCities(),c=pick(cities);const nw=Math.max(netWorth(),80000);const val=nw*(.15+rnd()*.5);
+  let q=Math.max(1,Math.round(val/g.base));q=Math.max(1,Math.min(q,Math.floor(whCap(upgLv('wh'))*.8/g.sz)));if(g.sz===1&&q>20)q=Math.round(q/5)*5;
+  const mval=q*g.base*c.cf[g.id]*S.trend[g.id];const prem=.1+Math.pow(rnd(),1.6)*.3;const reward=Math.round(mval*(1+prem)*rewardMul()/100)*100;
+  const far=Math.max(...cities.map(x=>dist(x.id,c.id)));
+  S.offers.push({id:S.offerId++,client:pick(CLIENTS),good:g.id,q,city:c.id,reward,prem,days:Math.round(12+rnd()*12+far*.6),exp:S.day+6+Math.floor(rnd()*6)})}
+function decision(){const nw=Math.max(netWorth(),50000);const opts=[
+  ()=>{const amt=Math.round(nw*.06/1000)*1000;const name=pick(['云图智能','极光出行','蓝鲸生物','星火机器人','绿洲咖啡连锁']);
+    return {h:'创业邀约',b:`大学同学在做「${name}」，A 轮还差一点，想请你投 <span class="gold">${fmt(amt)}</span>。60 天后揭晓：成功拿回 4 倍，失败血本无归。`,a:[['投资',()=>{if(S.cash<amt){toast('现金不够');return}S.cash-=amt;S.pendingInv.push({name,amt,mult:4,p:.32,at:S.day+60});news(`向${name}投资${fmt(amt)}`,'gold')}],['婉拒',()=>{}]]}},
+  ()=>{const amt=Math.round(nw*.03/1000)*1000+5000;const pr=Math.round(amt/2000)+20;return {h:'慈善晚宴',b:`商会邀你出席年度慈善晚宴。捐出 <span class="gold">${fmt(amt)}</span>，声望 <span class="gold">+${pr}</span>。`,a:[['捐赠',()=>{if(S.cash<amt){toast('现金不够');return}S.cash-=amt;S.prestige+=pr;news(`${S.company}在慈善晚宴上捐款${fmt(amt)}`,'gold')}],['下次再说',()=>{}]]}},
+  ()=>{if(!S.ships.length)return null;const fee=Math.round(shipValue()*.008)+3000;return {h:'海关抽检',b:`货船被列入抽检名单。缴纳 <span class="gold">${fmt(fee)}</span> 加急查验费可正常通关，否则一半概率全部滞港 5 天。`,a:[['缴费加急',()=>{S.cash-=fee}],['不缴费',()=>{if(rnd()<.5){for(const s of S.ships)s.eta+=5;news('货船遭海关扣留，全部延误 5 天','bad')}else news('抽检顺利通过','good')}]]}},
+  ()=>{const cost=Math.round(nw*.015/100)*100+3000;return {h:'猎头来电',b:`对手想挖走你的首席交易员。为他加薪 <span class="gold">${fmt(cost)}</span>？否则交易团队可能降一级。`,a:[['加薪挽留',()=>{S.cash-=cost}],['不挽留',()=>{if(upgLv('trader')>0&&rnd()<.6){S.upg.trader--;news('首席交易员跳槽，交易团队降级','bad')}else news('交易员最终选择留下','good')}]]}},
+  ()=>{const g=pick(unlockedGoods()),c=pick(unlockedCities());const q=Math.max(1,Math.round(nw*.25/g.base));const disc=.8+rnd()*.06;const price=Math.round(S.mkt[c.id][g.id].p*disc*q);
+    return {h:'工厂急售',b:`一家工厂周转困难，愿以市价 <span class="gold">${Math.round(disc*100)} 折</span> 打包转让 ${fmtQ(q)}${g.u} ${g.n}（货在${c.n}），总价 <span class="gold">${fmt(price)}</span>。`,a:[['接货',()=>{if(S.cash<price){toast('现金不够');return}if(invUsed(c.id)+q*g.sz>whCap(upgLv('wh'))){toast(`${c.n}仓库放不下`);return}S.cash-=price;const cur=S.inv[c.id][g.id]||{q:0,cost:0};S.inv[c.id][g.id]={q:cur.q+q,cost:(cur.q*cur.cost+price)/(cur.q+q)};news(`折价接手${g.n} ${fmtQ(q)}${g.u}`,'gold')}],['放弃',()=>{}]]}},
+ ];let d=null,n=0;while(!d&&n++<6)d=pick(opts)();if(!d)return;
+ queueModal(()=>`<div class="cap">Situation</div><h2>${d.h}</h2><div class="rule"></div><p>${d.b}</p><div class="row" style="justify-content:center">${d.a.map((x,i)=>`<button class="btn ${i?'':'pri'}" type="button" data-act="${i}">${x[0]}</button>`).join('')}</div>`,i=>{d.a[i][1]();refresh()})}
+
+// ================= ACTIONS =================
+function buyGood(city,g,q){q=Math.floor(q);if(!(q>0))return;const room=whCap(upgLv('wh'))-invUsed(city);
+  if(q*G[g].sz>room+1e-9){toast(`${C[city].n}仓库只剩 ${fmtQ(room)} 吨`,'bad');snd('bad');return}
+  const qt=quoteBuy(city,g,q);if(qt.total>S.cash){toast('现金不足','bad');snd('bad');return}
+  S.cash-=qt.total;S.mkt[city][g].p*=1+qt.impact;const cur=S.inv[city][g]||{q:0,cost:0};S.inv[city][g]={q:cur.q+q,cost:(cur.q*cur.cost+qt.total)/(cur.q+q)};
+  S.stats.trades++;if(S.stats.trades>=100)grant('tr100');snd('buy');toast(`买入 ${G[g].n} ${fmtQ(q)}${G[g].u} · ${fmt(qt.total)}`);flag('buy');refresh()}
+function sellGood(city,g,q){const cur=S.inv[city][g];if(!cur)return;q=Math.min(Math.floor(q*1000)/1000,cur.q);if(!(q>0))return;const qt=quoteSell(city,g,q);
+  S.mkt[city][g].p*=Math.max(.5,1-qt.impact);S.cash+=qt.total;const profit=qt.total-cur.cost*q;cur.q-=q;if(cur.q<1e-6)delete S.inv[city][g];
+  S.stats.trades++;S.stats.tradeProfit+=profit;
+  if(profit>0){gainXP(profit/500);grant('t1');flag('sellProfit');if(profit>=1e5)grant('p100k');snd('coin');floaty('+'+fmt(profit))}else{snd('bad');floaty(fmt(profit),'var(--down)')}
+  if(S.stats.trades>=100)grant('tr100');toast(`卖出 ${G[g].n} · ${profit>=0?'盈利':'亏损'} ${fmt(Math.abs(profit))}`);refresh()}
+function ship(from,to,g,q){const cur=S.inv[from][g];if(!cur||from===to)return;q=Math.min(Math.floor(q*1000)/1000,cur.q);if(!(q>0))return;
+  if(shipUsed()+q*G[g].sz>fleetCap(upgLv('fleet'))+1e-9){toast('船队运力不足','bad');snd('bad');return}
+  const fee=freight(from,to,g,q);if(fee>S.cash){toast('现金不够付运费','bad');return}
+  S.cash-=fee;const unit=cur.cost+fee/q;cur.q-=q;if(cur.q<1e-6)delete S.inv[from][g];const d=shipDays(from,to);
+  S.ships.push({id:S.shipId++,from,to,good:g,q,unit,dep:S.day,eta:S.day+d});snd('coin');toast(`起航 · ${C[from].n} → ${C[to].n}，预计 ${d} 天`);flag('ship');refresh()}
+function buyStock(s,lots){if(isWeekend(S.day)){toast('周末休市');return}const q=lots*100,k=S.stk[s],amt=k.p*q,fee=Math.max(5,amt*.00025);
+  if(!(lots>0)||amt+fee>S.cash){toast('现金不足','bad');return}S.cash-=amt+fee;const h=S.hold[s]||{q:0,cost:0};S.hold[s]={q:h.q+q,cost:(h.q*h.cost+amt+fee)/(h.q+q)};
+  grant('s1');flag('stock');snd('buy');toast(`买入 ${stockName(s)} ${q} 股`);refresh()}
+function sellStock(s,lots){if(isWeekend(S.day)){toast('周末休市');return}const h=S.hold[s];if(!h)return;const q=Math.min(lots*100,h.q),k=S.stk[s],amt=k.p*q,fee=Math.max(5,amt*.00025)+amt*.0005;
+  S.cash+=amt-fee;const profit=amt-fee-h.cost*q;h.q-=q;if(h.q<=0)delete S.hold[s];S.stats.stockProfit+=profit;
+  if(profit>0){gainXP(profit/1000);snd('coin');floaty('+'+fmt(profit))}else{snd('bad');floaty(fmt(profit),'var(--down)')}
+  if(S.stats.stockProfit>=5e5)grant('s50');toast(`卖出 ${stockName(s)} ${q} 股`);refresh()}
+const stockName=s=>{const a=STOCKS.find(x=>x.s===s);if(a)return a.n;const r=RIVALS.find(x=>x.s===s);return r?r.co:s};
+function acceptOffer(id){const o=S.offers.find(x=>x.id===id);if(!o)return;if(S.contracts.length>=3+upgLv('office')){toast('进行中的合同已满','bad');return}
+  S.offers=S.offers.filter(x=>x.id!==id);S.contracts.push({...o,due:S.day+o.days});flag('contract');snd('coin');toast(`签约 · ${o.client}`);refresh()}
+function deliver(id){const k=S.contracts.find(x=>x.id===id);if(!k)return;const inv=S.inv[k.city][k.good];if(!inv||inv.q<k.q-1e-9){toast('库存不足');return}
+  const basis=inv.cost*k.q;inv.q-=k.q;if(inv.q<1e-6)delete S.inv[k.city][k.good];S.cash+=k.reward;const profit=k.reward-basis;S.stats.tradeProfit+=profit;
+  S.contracts=S.contracts.filter(x=>x.id!==id);S.stats.contracts++;S.prestige+=5+(k.prem>=.3?20:0);gainXP(k.reward/400+Math.max(0,profit)/500);
+  grant('k1');if(S.stats.contracts>=10)grant('k10');if(k.prem>=.3)grant('leg');news(`按期向${k.client}交付${G[k.good].n}，回款${fmt(k.reward)}`,'good');
+  snd('coin');floaty('+'+fmt(k.reward));toast(`合同完成 · 回款 ${fmt(k.reward)}`,'lv');refresh()}
+function buyLux(id){const l=LUXBY[id];if(S.cash<l.p){toast('现金不足','bad');return}S.cash-=l.p;S.owned.push({id,val:l.p*.92,day:S.day,paid:l.p});
+  news(`${S.company}董事长购入${l.n}`,'gold');snd('lv');flag('lux');
+  if(l.cat==='watch')grant('lw');if(l.cat==='car')grant('lc');if(l.cat==='house')grant('lh');if(l.cat==='yacht'||l.cat==='jet')grant('ly');
+  queueModal(()=>`<div class="cap">Acquisition</div><div style="color:var(--gold);margin:6px auto">${ic(l.cat,'width:84px;height:84px;stroke-width:.9')}</div><h2>${l.n}</h2><div class="note">${l.spec}</div><div class="rule"></div><p>成交价 <span class="gold">${fmt(l.p)}</span> · 声望 +${l.pr}</p><button class="btn pri lg" type="button" data-close>收下</button>`);refresh()}
+function sellLux(i){const o=S.owned[i];if(!o)return;S.cash+=o.val;S.owned.splice(i,1);snd('coin');toast(`出售 ${LUXBY[o.id].n} · ${fmt(o.val)}`);refresh()}
+function buyUpg(id){const u=UPG.find(x=>x.id===id),l=upgLv(id);if(l>=u.max)return;if(u.lv&&S.level<u.lv){toast(`需要 Lv${u.lv}`);return}const c=u.cost(l);if(S.cash<c){toast('现金不足','bad');return}
+  S.cash-=c;S.upg[id]=l+1;snd('lv');toast(`${u.n} 升至 ${l+1} 级`,'lv');refresh()}
+function borrow(a){a=Math.min(a,creditLimit()-S.loan);if(a<=0){toast('额度不足');return}S.loan+=a;S.cash+=a;snd('coin');floaty('+'+fmt(a));toast(`贷款到账 ${fmt(a)}`);refresh()}
+function repay(a){a=Math.min(a,S.loan,S.cash);if(a<=0)return;S.loan-=a;S.cash-=a;if(S.loan<1)S.loan=0;snd('buy');toast(`已还款 ${fmt(a)}`);refresh()}
+function doIPO(){const nw=netWorth();if(S.level<10||nw<5e7||S.ipo)return;const raise=nw*.25;S.cash+=raise;S.ipo=true;S.prestige+=600;grant('ipo');news(`${S.company}今日挂牌上市，募资${fmt(raise)}`,'gold');snd('lv');
+  queueModal(()=>`<div class="cap">Listing</div><h2>${esc(S.company)} 上市</h2><div class="rule"></div><p>募资 <span class="gold">${fmt(raise)}</span> · 声望 +600</p><button class="btn pri lg" type="button" data-close>敲钟</button>`);refresh()}
+const WHEEL=[['现金','s'],['经验','x'],['现金','m'],['声望','p'],['现金','s'],['仓储','w'],['头奖','l'],['经验','x']];
+let spinning=false;
+function spin(){if(spinning||S.wheel===todayKey())return;spinning=true;const i=Math.floor(rnd()*8);const a0=S.wheelAng||0;const ang=a0-(a0%360)+1800+((360-i*45)%360);S.wheelAng=ang;S.wheel=todayKey();
+  const el=$('#wheelSvg');if(el)el.style.transform=`rotate(${ang}deg)`;let ticks=0;const iv=setInterval(()=>{snd('tick');if(++ticks>22)clearInterval(iv)},180);
+  setTimeout(()=>{spinning=false;S.stats.spins++;const nw=Math.max(netWorth(),100000);const k=WHEEL[i][1];let msg='';
+    if(k==='s'){const v=Math.round(nw*.01/100)*100+2000;S.cash+=v;msg=`现金 ${fmt(v)}`;floaty('+'+fmt(v))}
+    if(k==='m'){const v=Math.round(nw*.03/100)*100+5000;S.cash+=v;msg=`现金 ${fmt(v)}`;floaty('+'+fmt(v))}
+    if(k==='l'){const v=Math.round(nw*.08/100)*100+20000;S.cash+=v;msg=`头奖 · 现金 ${fmt(v)}`;floaty('+'+fmt(v))}
+    if(k==='x'){const v=Math.round(xpNeed(S.level)*.25);msg=`经验 +${v}`;gainXP(v)}
+    if(k==='p'){S.prestige+=30;msg='声望 +30'}
+    if(k==='w'){if(upgLv('wh')<12){S.upg.wh++;msg='仓储中心免费升级一级'}else{S.cash+=50000;msg='现金 ¥5万'}}
+    snd('lv');toast(`今日红利 · ${msg}`,'lv');save();refresh()},4300)}
+
+// ================= TUTORIAL =================
+const TUT=[
+ {t:'在「交易所」买入一批商品',k:'buy',r:5000},{t:'在「航运」把货运到另一个港口',k:'ship',r:6000},
+ {t:'在价高的港口卖出获利',k:'sellProfit',r:8000},{t:'在「合同」签下一份订单',k:'contract',r:10000},
+ {t:'在「证券」买入一手股票',k:'stock',r:8000},{t:'在「珍藏」购入第一件藏品',k:'lux',r:15000},{t:'晋升至 Lv3「小老板」',k:'lv3',r:40000},
+];
+function flag(k){S.seen['f_'+k]=1;checkTut()}
+function checkTut(){if(S.level>=3)S.seen.f_lv3=1;while(S.tut<TUT.length&&S.seen['f_'+TUT[S.tut].k]){const t=TUT[S.tut];S.cash+=t.r;toast(`任务完成 · 奖励 ${fmt(t.r)}`,'lv');floaty('+'+fmt(t.r));snd('coin');S.tut++}}
+
+// ================= CASINO =================
+const RANKS=['2','3','4','5','6','7','8','9','10','J','Q','K','A'],SUITS=['♠','♥','♦','♣'];
+function newDeck(n){const d=[];for(let k=0;k<n;k++)for(let c=0;c<52;c++)d.push(c);for(let i=d.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[d[i],d[j]]=[d[j],d[i]]}return d}
+function card(c,opt=''){if(c==null||opt.includes('back'))return `<div class="pc back ${opt}"></div>`;const r=c%13,s=c/13|0;return `<div class="pc ${s===1||s===2?'red':''} ${opt}"><span class="r">${RANKS[r]}</span><span class="s">${SUITS[s]}︎</span><span class="b">${SUITS[s]}︎</span></div>`}
+const CS={room:'main',game:'bacc',chip:0,bets:{P:0,B:0,T:0,PP:0,BP:0},last:null,shoe:[],road:[],phase:'bet',pc:[],bc:[],msg:'',win:null,sl:{bet:0,spinning:false,msg:'',last:null},buyPct:40,prevSpeed:1};
+const room=()=>ROOMS.find(r=>r.id===CS.room);
+const roomOpen=r=>S.level>=r.lv;
+function casinoResult(net,staked){S.casino.net+=net;S.casino.wagered+=staked;grant('mac');
+  if(net>0){snd('coin');floaty('+'+fmt(net));if(net>=1e6)grant('god')}else if(net<0)floaty(fmt(net),'var(--down)')}
+// baccarat
+const bVal=c=>{const r=c%13;return r===12?1:r>=8?0:r+2};
+const bPts=a=>a.reduce((s,c)=>s+bVal(c),0)%10;
+function betTotal(){return Object.values(CS.bets).reduce((a,b)=>a+b,0)}
+function baccPlace(area){if(CS.phase==='deal')return;if(CS.phase==='done')baccReset();const r=room();const v=CS.chip||r.chips[0];
+  if(S.cash<v){toast('现金不足','bad');return}if(betTotal()+v>r.max){toast(`超出本桌限红 ${fmt(r.max)}`,'bad');return}
+  S.cash-=v;CS.bets[area]+=v;snd('chip');refresh()}
+function baccReset(){CS.phase='bet';CS.pc=[];CS.bc=[];CS.msg='';CS.win=null}
+function baccClear(){if(CS.phase!=='bet')return;S.cash+=betTotal();for(const k in CS.bets)CS.bets[k]=0;refresh()}
+function baccRebet(){if(!CS.last)return;if(CS.phase==='done')baccReset();if(CS.phase!=='bet')return;const need=Object.values(CS.last).reduce((a,b)=>a+b,0);if(S.cash<need){toast('现金不足','bad');return}
+  if(betTotal()+need>room().max){toast('超出本桌限红','bad');return}for(const k in CS.last){CS.bets[k]+=CS.last[k];S.cash-=CS.last[k]}snd('chip');refresh()}
+function baccDeal(){const tot=betTotal();const r=room();if(CS.phase!=='bet')return;if(!tot){toast('请先下注');return}if(tot<r.min){toast(`本桌最低下注 ${fmt(r.min)}`);return}
+  if(CS.shoe.length<16){CS.shoe=newDeck(8);CS.road=[];toast('更换新牌靴 · 8 副牌')}
+  CS.phase='deal';CS.pc=[];CS.bc=[];const draw=()=>CS.shoe.pop();
+  const p=[draw()],b=[draw()];p.push(draw());b.push(draw());let p3=null;
+  if(!(bPts(p)>=8||bPts(b)>=8)){if(bPts(p)<=5){p3=draw();p.push(p3)}const bs=bPts(b);let bd;
+    if(p3===null)bd=bs<=5;else{const t=bVal(p3);bd=bs<=2||(bs===3&&t!==8)||(bs===4&&t>=2&&t<=7)||(bs===5&&t>=4&&t<=7)||(bs===6&&(t===6||t===7))}
+    if(bd)b.push(draw())}
+  const seq=[['p',p[0]],['b',b[0]],['p',p[1]],['b',b[1]]];if(p.length>2)seq.push(['p',p[2]]);if(b.length>2)seq.push(['b',b[2]]);
+  let i=0;const step=()=>{const [w,c]=seq[i++];(w==='p'?CS.pc:CS.bc).push(c);snd('card');renderWin(true);if(i<seq.length)setTimeout(step,i===4?950:520);else setTimeout(()=>baccSettle(p,b),650)};step()}
+function baccSettle(p,b){const P=bPts(p),B=bPts(b);const res=P>B?'P':B>P?'B':'T';const bt=CS.bets;let ret=0;
+  if(res==='P')ret+=bt.P*2;if(res==='B')ret+=bt.B*1.95;if(res==='T')ret+=bt.T*9+bt.P+bt.B;
+  const pp=p[0]%13===p[1]%13,bp=b[0]%13===b[1]%13;if(pp)ret+=bt.PP*12;if(bp)ret+=bt.BP*12;
+  const staked=betTotal();S.cash+=ret;CS.last={...bt};for(const k in bt)bt[k]=0;
+  CS.road.push(res);if(CS.road.length>120)CS.road.splice(0,6);
+  CS.phase='done';CS.win={res,pp,bp};const net=ret-staked;
+  CS.msg=`${res==='P'?'闲赢':res==='B'?'庄赢':'和局'} · 闲 ${P} 点 · 庄 ${B} 点${pp?' · 闲对':''}${bp?' · 庄对':''} · ${net>=0?'赢':'输'} ${fmt(Math.abs(net))}`;
+  casinoResult(net,staked);refresh()}
+// slots
+const SYM=[['7',1,300],['D',2,100],['B',3,40],['C',4,20],['S',7,10],['P',15,4]];
+const STRIP=[];SYM.forEach(([k,w])=>{for(let i=0;i<w;i++)STRIP.push(k)});
+const symHTML=k=>k==='7'?'<div class="sym s7">7</div>':k==='D'?'<div class="sym sD">◆</div>':k==='B'?'<div class="sym sB"><span>BAR</span></div>':k==='C'?'<div class="sym sC">♛︎</div>':k==='S'?'<div class="sym">♠︎</div>':'<div class="sym" style="color:#a8262a">♥︎</div>';
+function slotPay(a){if(a[0]===a[1]&&a[1]===a[2])return SYM.find(s=>s[0]===a[0])[2];const n7=a.filter(x=>x==='7').length;if(n7===2)return 10;const nd=a.filter(x=>x==='D').length;if(nd===2)return 5;if(n7===1)return 2;if(a[0]==='D')return 1;return 0}
+const jackpot=()=>{const r=room();if(S.jackpot[r.id]==null)S.jackpot[r.id]=r.seed;return S.jackpot[r.id]};
+function slotSpin(){const sl=CS.sl;if(sl.spinning)return;const r=room();const bet=sl.bet||r.slot[0];if(S.cash<bet){toast('现金不足','bad');return}
+  S.cash-=bet;jackpot();S.jackpot[r.id]+=bet*.015;sl.spinning=true;sl.msg='';const res=[0,1,2].map(()=>pick(STRIP));
+  renderTop();const btn=$('[data-spinslot]');if(btn)btn.disabled=true;const msg=$('#slotMsg');if(msg)msg.innerHTML='&nbsp;';
+  const els=[...document.querySelectorAll('.strip')];
+  els.forEach((el,i)=>{const n=24+i*8;const syms=[pick(STRIP)];for(let k=0;k<n;k++)syms.push(pick(STRIP));syms.push(pick(STRIP),res[i],pick(STRIP));
+    el.style.transition='none';el.style.transform='translateY(0)';el.innerHTML=syms.map(symHTML).join('');const h=el.firstElementChild.offsetHeight;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{el.style.transition=`transform ${1.3+i*.45}s cubic-bezier(.2,.7,.2,1)`;el.style.transform=`translateY(-${(syms.length-3)*h}px)`}))});
+  let t=0;const iv=setInterval(()=>{snd('tick');if(++t>14)clearInterval(iv)},140);
+  setTimeout(()=>{sl.spinning=false;sl.last=res;const mult=slotPay(res);let win=bet*mult;let jp=false;
+    if(res.every(x=>x==='7')&&bet===r.slot[r.slot.length-1]){win+=S.jackpot[r.id];jp=true;S.jackpot[r.id]=r.seed;grant('jp')}
+    S.cash+=win;sl.msg=jp?`累积大奖 · ${fmt(win)}`:win?`赢得 ${fmt(win)}（${mult} 倍）`:'未中奖';if(jp)snd('lv');
+    casinoResult(win-bet,bet);refresh()},reduce?200:2400)}
+// hold'em
+let HD=null;
+const AINAMES=[['陈先生','香港'],['Tanaka','东京'],['Viktor','莫斯科'],['林太太','台北'],['Mr. Kim','首尔'],['Rashid','迪拜'],['Sophie','巴黎'],['何公子','澳门']];
+const STY={tight:{t:.06,bl:.03,ag:0,n:'谨慎'},loose:{t:-.06,bl:.07,ag:.04,n:'松散'},aggro:{t:0,bl:.13,ag:.14,n:'激进'}};
+const HN=['高牌','一对','两对','三条','顺子','同花','葫芦','四条','同花顺'];
+function evalH(cs){const rc=Array(13).fill(0),sc=[0,0,0,0],bs=[0,0,0,0];let mask=0;
+  for(const c of cs){const r=c%13,s=c/13|0;rc[r]++;sc[s]++;mask|=1<<r;bs[s]|=1<<r}
+  const sh=m=>{for(let h=12;h>=4;h--)if(((m>>(h-4))&31)===31)return h;if((m&0b1000000001111)===0b1000000001111)return 3;return -1};
+  const enc=(cat,ks)=>{let v=cat;for(let i=0;i<5;i++)v=v*13+(ks[i]||0);return v};
+  const fs=sc.findIndex(n=>n>=5);let flush;
+  if(fs>=0){const h=sh(bs[fs]);if(h>=0)return enc(8,[h]);const ks=[];for(let r=12;r>=0&&ks.length<5;r--)if(bs[fs]>>r&1)ks.push(r);flush=enc(5,ks)}
+  const g4=[],g3=[],g2=[],g1=[];for(let r=12;r>=0;r--){if(rc[r]===4)g4.push(r);else if(rc[r]===3)g3.push(r);else if(rc[r]===2)g2.push(r);else if(rc[r]===1)g1.push(r)}
+  if(g4.length){const k=[...g3,...g2,...g1].sort((a,b)=>b-a)[0];return enc(7,[g4[0],k])}
+  if(g3.length&&(g3.length>1||g2.length)){const pr=Math.max(g3[1]??-1,g2[0]??-1);return enc(6,[g3[0],pr])}
+  if(flush!==undefined)return flush;
+  const st=sh(mask);if(st>=0)return enc(4,[st]);
+  if(g3.length)return enc(3,[g3[0],...g1.slice(0,2)]);
+  if(g2.length>=2){const k=[...g2.slice(2),...g1].sort((a,b)=>b-a)[0];return enc(2,[g2[0],g2[1],k])}
+  if(g2.length)return enc(1,[g2[0],...g1.slice(0,3)]);
+  return enc(0,g1.slice(0,5))}
+const catOf=v=>Math.floor(v/Math.pow(13,5));
+function equity(hole,board,nOpp,it){const known=new Set([...hole,...board]);const rest=[];for(let c=0;c<52;c++)if(!known.has(c))rest.push(c);let w=0;const need=nOpp*2+5-board.length;
+  for(let t=0;t<it;t++){for(let i=0;i<need;i++){const j=i+Math.floor(rnd()*(rest.length-i));const tmp=rest[i];rest[i]=rest[j];rest[j]=tmp}
+    const bd=board.concat(rest.slice(nOpp*2,need));const me=evalH(hole.concat(bd));let ties=0,lose=false;
+    for(let o=0;o<nOpp;o++){const v=evalH([rest[o*2],rest[o*2+1]].concat(bd));if(v>me){lose=true;break}if(v===me)ties++}
+    if(!lose)w+=1/(ties+1)}
+  return w/it}
+function newAI(){const used=HD?HD.players.map(p=>p.name):[];const [n,f]=pick(AINAMES.filter(a=>!used.includes(a[0])));const r=room();
+  return {name:n,from:f,ai:true,style:pick(Object.keys(STY)),stack:Math.round((r.buy[0]+rnd()*(r.buy[1]-r.buy[0]))/r.blinds[1])*r.blinds[1],cards:[],bet:0,inv:0,folded:false,allin:false,acted:false,la:''}}
+const buyAmt=()=>{const r=room();return Math.round((r.buy[0]+(r.buy[1]-r.buy[0])*CS.buyPct/100)/r.blinds[1])*r.blinds[1]};
+function hdSit(){const r=room();const buy=buyAmt();if(S.cash<buy){toast('现金不足以买入','bad');return}
+  S.cash-=buy;HD={room:r.id,blinds:r.blinds,players:[{name:'你',from:S.company,ai:false,stack:buy,cards:[],bet:0,inv:0,folded:false,allin:false,acted:false,la:''}],dealer:Math.floor(rnd()*4),stage:'idle',board:[],log:[],toAct:-1};
+  for(let i=0;i<3;i++)HD.players.push(newAI());hdLog(`你以 ${fmt(buy)} 买入入座`);snd('chip');hdNewHand()}
+function hdLeave(){if(!HD)return;clearTimeout(HD.timer);const me=HD.players[0];const st=me.stack;S.cash+=st;
+  if(HD.stage!=='done'&&HD.stage!=='broke'&&me.inv>0)casinoResult(-me.inv,me.inv);HD=null;toast(`离桌 · 兑回 ${fmt(st)}`);refresh()}
+function hdLog(t){HD.log.unshift(t);if(HD.log.length>30)HD.log.length=30}
+function hdNewHand(){const [sb,bb]=HD.blinds;
+  HD.players.forEach((p,i)=>{if(p.ai&&p.stack<bb*2){HD.players[i]=newAI();hdLog(`${HD.players[i].name}（${HD.players[i].from}）入座`)}});
+  const me=HD.players[0];if(me.stack<bb){HD.stage='broke';refresh();return}
+  HD.deck=newDeck(1);HD.board=[];HD.res=null;HD.start=me.stack;
+  HD.players.forEach(p=>{p.cards=[HD.deck.pop(),HD.deck.pop()];p.bet=0;p.inv=0;p.folded=false;p.allin=false;p.acted=false;p.show=false;p.la='';p.won=0;p.hn=''});
+  HD.dealer=(HD.dealer+1)%4;const sbi=(HD.dealer+1)%4,bbi=(HD.dealer+2)%4;hdPost(sbi,sb,'小盲');hdPost(bbi,bb,'大盲');
+  HD.curBet=bb;HD.minRaise=bb;HD.stage='preflop';snd('card');hdStep(bbi)}
+function hdPost(i,a,l){const p=HD.players[i];const x=Math.min(a,p.stack);p.stack-=x;p.bet+=x;p.inv+=x;if(!p.stack)p.allin=true;p.la=l}
+const hdPot=()=>HD.players.reduce((a,p)=>a+p.inv,0);
+const canAct=p=>!p.folded&&!p.allin;
+const needs=p=>canAct(p)&&(!p.acted||p.bet<HD.curBet);
+function hdStep(from){const live=HD.players.filter(p=>!p.folded);if(live.length===1)return hdFold(live[0]);
+  if(!HD.players.some(needs))return hdStreet();
+  let i=from;for(let k=0;k<4;k++){i=(i+1)%4;if(needs(HD.players[i]))break}
+  HD.toAct=i;refresh();if(HD.players[i].ai){const h=HD;HD.timer=setTimeout(()=>{if(HD===h)aiAct(i)},650+rnd()*600)}}
+function hdStreet(){HD.players.forEach(p=>{p.bet=0;p.acted=false;if(!p.folded&&!p.allin)p.la=''});HD.curBet=0;HD.minRaise=HD.blinds[1];
+  if(HD.stage==='river')return hdShow();
+  if(HD.stage==='preflop'){HD.board.push(HD.deck.pop(),HD.deck.pop(),HD.deck.pop());HD.stage='flop'}else if(HD.stage==='flop'){HD.board.push(HD.deck.pop());HD.stage='turn'}else{HD.board.push(HD.deck.pop());HD.stage='river'}
+  snd('card');HD.toAct=-1;
+  if(HD.players.filter(canAct).length<=1){refresh();const h=HD;HD.timer=setTimeout(()=>{if(HD===h)hdStreet()},1000);return}
+  hdStep(HD.dealer)}
+function hdAct(i,type,to){const p=HD.players[i];const call=HD.curBet-p.bet;
+  if(type==='fold'){p.folded=true;p.la='弃牌'}
+  else if(type==='call'){const x=Math.min(call,p.stack);p.stack-=x;p.bet+=x;p.inv+=x;if(!p.stack)p.allin=true;p.la=p.allin?'全下':x?'跟注 '+chipLbl(x):'过牌'}
+  else{const cap=p.stack+p.bet;let t=Math.min(to,cap);const minTo=HD.curBet+HD.minRaise;if(t<minTo)t=Math.min(minTo,cap);const prevBet=HD.curBet;const x=t-p.bet;p.stack-=x;p.bet=t;p.inv+=x;if(!p.stack)p.allin=true;
+    if(t>HD.curBet){const inc=t-HD.curBet;if(inc>=HD.minRaise)HD.minRaise=inc;HD.curBet=t;HD.players.forEach(q=>{if(q!==p)q.acted=false})}
+    p.la=p.allin?'全下 '+chipLbl(t):(prevBet===0?'下注 ':'加注到 ')+chipLbl(t)}
+  p.acted=true;snd(type==='fold'?'card':'chip');hdLog(`${p.name} ${p.la}`);hdStep(i)}
+function aiAct(i){const p=HD.players[i],st=STY[p.style],call=HD.curBet-p.bet,pot=hdPot(),opp=HD.players.filter(q=>!q.folded).length-1;
+  const eq=equity(p.cards,HD.board,Math.max(1,opp),HD.board.length?260:200);const rel=eq*(opp+1);const odds=call>0?call/(pot+call):0;const r=rnd();const bb=HD.blinds[1];
+  const size=f=>Math.max(HD.curBet+HD.minRaise,Math.round((HD.curBet+(pot+call)*f)/bb)*bb);
+  if(call===0){if(rel>1.45-st.ag*2||r<st.bl)return hdAct(i,'raise',size(.45+rnd()*.4));return hdAct(i,'call')}
+  if(call>=p.stack&&eq<.5+st.t&&r>st.bl)return hdAct(i,'fold');
+  if(rel>1.85-st.ag*2&&r<.75)return hdAct(i,'raise',size(.6+rnd()*.5));
+  if(eq>odds+.03+st.t)return hdAct(i,'call');
+  if(r<st.bl*.5)return hdAct(i,'raise',size(.7));
+  return hdAct(i,'fold')}
+function hdFold(w){const pot=hdPot();w.stack+=pot;w.won=pot;HD.stage='done';HD.toAct=-1;HD.res=`${w.name} 赢得底池 ${fmt(pot)}`;hdLog(HD.res);hdEnd()}
+function hdShow(){HD.stage='done';HD.toAct=-1;const ps=HD.players;ps.forEach(p=>{if(!p.folded){p.show=true;p.score=evalH(p.cards.concat(HD.board));p.hn=HN[catOf(p.score)]}});
+  const rem=ps.map(p=>p.inv);const msgs=[];
+  while(true){const live=ps.filter((p,i)=>!p.folded&&rem[i]>0);if(!live.length)break;const m=Math.min(...live.map(p=>rem[ps.indexOf(p)]));let pot=0;ps.forEach((p,i)=>{const t=Math.min(rem[i],m);pot+=t;rem[i]-=t});
+    const top=Math.max(...live.map(p=>p.score));const ws=live.filter(p=>p.score===top);const share=Math.floor(pot/ws.length);ws.forEach((p,k)=>{const amt=share+(k===0?pot-share*ws.length:0);p.stack+=amt;p.won+=amt});msgs.push(ws.map(p=>p.name).join('、')+' 以'+HN[catOf(top)]+'胜出')}
+  const extra=rem.reduce((a,b)=>a+b,0);if(extra){const w=ps.filter(p=>!p.folded).sort((a,b)=>b.score-a.score)[0];w.stack+=extra;w.won+=extra}
+  HD.res='摊牌 · '+msgs.join(' ｜ ');hdLog(HD.res);hdEnd()}
+function hdEnd(){const me=HD.players[0];const net=me.stack-HD.start;if(me.inv>0)casinoResult(net,me.inv);refresh()}
+// flight
+function flyMacau(){const own=S.owned.some(o=>o.id==='j1');
+  queueModal(()=>`<div class="cap">Flight · PVG → MFM</div><h2>飞往澳门</h2><div class="rule"></div><p class="note">在澳门期间商业时间暂停，离开时自动返回上海。</p>
+   <button class="opt" type="button" data-act="0"><span><b>经济舱</b><br><span class="note">直飞 · 2小时50分</span></span><span class="m">¥2,800</span></button>
+   <button class="opt" type="button" data-act="1"><span><b>头等舱</b><br><span class="note">贵宾休息室 · 声望 +5</span></span><span class="m">¥26,000</span></button>
+   <button class="opt" type="button" data-act="2" ${own?'':'disabled'}><span><b>湾流 G700 公务机</b><br><span class="note">${own?'随时起飞':'购入公务机后可用'}</span></span><span class="m">${own?'¥0':'—'}</span></button>
+   <button class="btn" type="button" data-close>取消</button>`,i=>{const cost=[2800,26000,0][i];if(S.cash<cost){toast('现金不足','bad');return}S.cash-=cost;if(i===1)S.prestige+=5;
+    S.casino.trips++;CS.prevSpeed=speed||1;S.inMacau=true;setSpeed(0);news(`${S.company}董事长飞抵澳门`,'gold');snd('lv');openWin('macau')})}
+function leaveMacau(){if(HD)hdLeave();if(CS.phase==='bet'&&betTotal()){S.cash+=betTotal();for(const k in CS.bets)CS.bets[k]=0}
+  S.inMacau=false;toast(`已返回上海 · 澳门累计 ${S.casino.net>=0?'赢':'输'} ${fmt(Math.abs(S.casino.net))}`);setSpeed(CS.prevSpeed||1)}
+
+// ================= PERSIST / MULTIPLAYER =================
+const LS='shanghai_tycoon_v1';
+let db=null,userCap=null,myId=null,canWrite=true,players=[],lastPush=0,profiles={};
+function snapshot(){S.pokerStack=tableValue();const s=JSON.stringify(S);S.pokerStack=0;return s}
+function save(){if(!S||!S.started)return;const js=snapshot();try{localStorage.setItem(LS,js)}catch(e){}
+  if(db&&myId&&canWrite)db.doc('data/users/'+myId+'/game').set({json:js,day:S.day}).catch(e=>{if(e&&e.code==='invalid_argument')canWrite=false});pushPlayer()}
+function pushPlayer(force){if(!db||!myId||!canWrite||!S||!S.started)return;const now=Date.now();if(!force&&now-lastPush<15000)return;lastPush=now;
+  const top=S.owned.map(o=>LUXBY[o.id]).sort((a,b)=>b.p-a.p)[0];
+  db.doc('players/'+myId).set({company:String(S.company).slice(0,24),nw:Math.round(netWorth()),level:S.level,day:S.day,ach:Object.keys(S.ach).length,top:top?top.n:'',ipo:!!S.ipo,at:now}).catch(e=>{if(e&&e.code==='invalid_argument')canWrite=false})}
+async function initCloud(){try{const cl=window.claude;if(!cl||!cl.use)return;userCap=await cl.use('user');db=await cl.use('db');if(!db)return;
+  myId=userCap?await userCap.id():null;if(userCap&&userCap.can){const w=await userCap.can('data.write');if(w===false)canWrite=false}
+  db.collection('players').orderBy('nw','desc').limit(50).onSnapshot(async snap=>{players=snap.docs.map(d=>({id:d.id,...d.data()}));if(userCap&&userCap.profiles){try{profiles=await userCap.profiles(players.map(p=>p.id))}catch(e){}}refresh()});
+  if(myId){const snap=await db.doc('data/users/'+myId+'/game').get();if(snap.exists){const d=snap.data();if(d&&d.json){try{const cloud=JSON.parse(d.json);if(cloud.started&&(!S||!S.started||cloud.day>S.day)){S=migrate(cloud);S.inMacau=false;$('#modalRoot').innerHTML='';mq.length=0;modalOpen=false;setSpeed(speed||1);refresh();toast('已读取云端存档')}}catch(e){}}}}
+}catch(e){}}
+
+// ================= UI =================
+let speed=1,timer=null,win=null,dragging=false;
+const ui={city:'sh',good:null,mode:'b',pct:30,stock:'600831',smode:'b',spct:25,luxCat:'watch',from:null,to:null,sgood:null,shpct:100,bamt:50};
+const DESKS=[
+ {id:'trade',n:'交易所',en:'Commodities'},{id:'port',n:'航运',en:'Shipping'},{id:'deal',n:'合同',en:'Contracts'},
+ {id:'stock',n:'证券',en:'Equities'},{id:'bank',n:'私人银行',en:'Private Bank',lv:2},{id:'hq',n:'总部',en:'Headquarters'},
+ {id:'lux',n:'珍藏',en:'Collection'},{id:'macau',n:'澳门',en:'Macau · Grand Palace',wide:1},
+ {id:'rank',n:'富豪榜',en:'Rich List'},{id:'wheel',n:'每日红利',en:'Daily Dividend'},{id:'ach',n:'荣誉',en:'Honours'},
+];
+const readyContracts=()=>S.contracts.filter(k=>{const i=S.inv[k.city][k.good];return i&&i.q>=k.q-1e-9}).length;
+const affordableUpg=()=>UPG.filter(u=>upgLv(u.id)<u.max&&!(u.lv&&S.level<u.lv)&&S.cash>=u.cost(upgLv(u.id))).length;
+function idx(){let v=0,p=0;for(const st of STOCKS){v+=S.stk[st.s].p/st.p;p+=S.stk[st.s].prev/st.p}return {v:v/STOCKS.length*3000,ch:p?v/p-1:0}}
+function deskStatus(id){switch(id){
+ case'trade':{const b=bestArb();return b&&b.r>0?`价差机会 · ${b.g.n} ${b.a.n}→${b.b.n} <b class="up">${pct(b.r,1)}</b>`:'各港口价格平稳'}
+ case'port':return S.ships.length?`<b>${S.ships.length}</b> 艘在途 · 最近 ${Math.min(...S.ships.map(s=>s.eta-S.day))} 天到港`:'船队在港待命';
+ case'deal':{const r=readyContracts();return r?`<b class="gold">${r} 份可交付</b>`:`${S.offers.length} 份新订单 · ${S.contracts.length} 份执行中`}
+ case'stock':{const i=idx();return isWeekend(S.day)?'周末休市':`综指 <b>${i.v.toFixed(0)}</b> <span class="${cls(i.ch)}">${pct(i.ch)}</span>`}
+ case'lux':{const nx=LUX.filter(l=>!S.owned.some(o=>o.id===l.id)).sort((a,b)=>a.p-b.p)[0];return S.owned.length?`藏品 <b>${S.owned.length}</b> 件 · 估值 ${fmt(luxValue())}`:nx?`可选 · ${nx.n}`:''}
+ case'bank':return S.loan?`负债 <b>${fmt(S.loan)}</b> · 年息 ${(S.rate*100).toFixed(2)}%`:`授信 <b>${fmt(creditLimit())}</b>`;
+ case'hq':{const n=affordableUpg();return n?`<b class="gold">${n}</b> 项升级可执行`:`日常开支 ${fmt(dailyCost())}`}
+ case'macau':return `百家乐 · 德州扑克 · 老虎机 ｜ 中场 · 贵宾厅 · 至尊厅<br><span class="muted">${S.casino.trips?`累计 ${S.casino.net>=0?'+':''}${fmt(S.casino.net)} · 到访 ${S.casino.trips} 次`:'经济舱 ¥2,800 起'}</span>`;
+ case'rank':return `当前第 <b>${myRank()}</b> 名`;
+ case'wheel':return S.wheel===todayKey()?'今日已领取':'<b class="gold">今日可领取</b>';
+ case'ach':return `<b>${Object.keys(S.ach).length}</b> / ${ACH.length}`}}
+function deskBadge(id){if(id==='deal')return readyContracts();if(id==='wheel')return S.wheel===todayKey()?0:1;if(id==='hq')return affordableUpg();return 0}
+function rankRows(){const rows=[{me:1,name:S.company,who:'你',nw:netWorth(),level:S.level}];
+  for(const r of RIVALS){const rv=S.rivals.find(x=>x.id===r.id);rows.push({ai:1,name:r.co,who:`${r.boss} · ${r.style}`,nw:rv.nw,level:lvFromNW(rv.nw)})}
+  for(const p of players){if(p.id===myId)continue;const pr=profiles[p.id];rows.push({real:1,name:p.company||'神秘商人',who:(pr&&pr.name)||'玩家',nw:+p.nw||0,level:+p.level||1,top:p.top,on:Date.now()-(+p.at||0)<120000,ipo:p.ipo})}
+  return rows.sort((a,b)=>b.nw-a.nw)}
+const myRank=()=>rankRows().findIndex(r=>r.me)+1;
+function lvFromNW(nw){let L=1;const t=[0,0,3e5,8e5,2e6,5e6,1.2e7,3e7,8e7,2e8,5e8,1.2e9,3e9,8e9,2e10,5e10];while(L<15&&nw>=t[L+1])L++;return L}
+
+function renderTop(){const need=xpNeed(S.level),p=S.level>=15?1:clamp(S.xp/need,0,1);
+  setHTML($('#top'),`<button class="mark" type="button" data-open="hq" aria-label="总部"><span class="mono">${esc(S.company.slice(0,1))}</span><span style="min-width:0"><span class="co" style="display:block">${esc(S.company)}</span><span class="ti">Lv${S.level} ${TITLES[S.level]}<span class="xp"><i style="width:${(p*100).toFixed(1)}%"></i></span></span></span></button>
+   <div class="figs"><div><span class="cap">Cash</span><b id="cashFig">${fmt(S.cash)}</b></div><div><span class="cap">Net Worth</span><b>${fmt(netWorth())}</b></div><div><span class="cap">Prestige</span><b>${prestigeTotal()}</b></div></div>
+   <div class="ctl"><div class="date"><div class="d">${dateStr(S.day)}</div><div class="w">${weekday(S.day)} · 第 ${S.day} 天${S.inMacau?' · 身在澳门':''}</div></div>
+   <div class="seg">${[[0,'暂停'],[1,'1×'],[2,'2×'],[4,'4×']].map(([s,l])=>`<button type="button" data-speed="${s}" class="${speed===s?'on':''}">${l}</button>`).join('')}</div>
+   <button class="ib" type="button" id="muteBtn" aria-label="${muted?'打开音效':'关闭音效'}">${ic(muted?'mute':'snd')}</button></div>`)}
+function renderMain(){const nw=netWorth();const h=S.nwHist.slice(-30);const wk=h.length>4?h[h.length-4]:h[0]||nw;
+  setHTML($('#main'),`<div class="hero"><div><div class="cap">Total Net Worth · 净资产</div><div class="big">${fmt(nw)}</div><div class="chg ${cls(nw-wk)}">${pct(wk?(nw-wk)/Math.abs(wk):0)} <span class="muted">近 7 日 · 富豪榜第 ${myRank()} 名</span></div></div><canvas data-a="${esc(JSON.stringify(h.length>1?h:[nw,nw]))}" data-mini="1"></canvas></div>
+  <div class="desks">${DESKS.map(d=>{const locked=d.lv&&S.level<d.lv;const bd=locked?0:deskBadge(d.id);
+   return `<button type="button" class="desk ${d.wide?'macau':''} ${locked?'lock':''}" data-open="${d.id}"><div class="row1">${ic(d.id)}${bd?`<span class="dot">${bd}</span>`:''}</div><div><div class="cap">${d.en}</div><h3>${d.n}</h3></div><div class="st">${locked?`Lv${d.lv} 开放`:deskStatus(d.id)}</div></button>`}).join('')}</div>`);
+  drawCharts($('#main'))}
+function renderSide(){const tut=S.tut<TUT.length;let q='';
+  if(tut){const t=TUT[S.tut];q=`<div class="quest"><b>${t.t}</b><div class="note">奖励 <span class="gold m">${fmt(t.r)}</span> · ${S.tut}/${TUT.length}</div></div><div class="bar"><i style="width:${S.tut/TUT.length*100}%"></i></div>`}
+  else if(S.goal){const p=S.stats.tradeProfit+S.stats.stockProfit-S.goal.baseProfit;q=`<div class="quest"><b>本周实现利润 ${fmt(S.goal.target)}</b><div class="note">奖励 <span class="gold m">${fmt(S.goal.reward)}</span> · 剩 ${S.goal.end-S.day} 天 · ${S.goal.done?'已达成':'当前 '+fmt(p)}</div></div><div class="bar"><i style="width:${clamp(p/S.goal.target*100,0,100)}%"></i></div>`}
+  const nx=UNLOCKS[S.level+1];
+  setHTML($('#side'),`<div class="panel"><h4>${tut?'入门指引':'本周目标'}<span class="cap">Agenda</span></h4>${q}${nx?`<div class="note" style="margin-top:12px">Lv${S.level+1} 解锁 · <span class="gold">${nx}</span></div>`:''}${S.level>=10&&!S.ipo?`<button class="btn pri" style="margin-top:12px;width:100%" type="button" data-ipo ${netWorth()<5e7?'disabled':''}>申请上市（需净资产 ¥5000万）</button>`:''}</div>
+  <div class="panel"><h4>上海现货<span class="cap">Spot · SHA</span></h4><table class="mini-t"><tbody>${unlockedGoods().map(g=>{const m=S.mkt.sh[g.id];const ch=(m.p-m.prev)/m.prev;return `<tr><td><span class="code">${g.code}</span>${g.n}</td><td>${fmtP(m.p)}</td><td class="${cls(ch)}">${pct(ch)}</td></tr>`}).join('')}</tbody></table></div>
+  <div class="panel"><h4>财经快讯<span class="cap">${isWeekend(S.day)?'Market Closed':'Newswire'}</span></h4><div class="feed">${S.news.slice(0,25).map(n=>`<div class="it ${n.k}"><span class="d">${dateStr(n.d,1)}</span>${esc(n.t)}</div>`).join('')||'<div class="note">暂无消息</div>'}</div></div>`)}
+function renderTicker(){setHTML($('#ticker'),S.news.slice(0,10).map(n=>`<span><b>${dateStr(n.d,1)}</b>${esc(n.t)}</span>`).join(''))}
+
+const WT={trade:['交易所','Commodities Exchange'],port:['航运','Shipping & Logistics'],deal:['合同','Contracts Desk'],stock:['证券','Equities'],bank:['私人银行','Private Banking'],hq:['总部','Headquarters'],lux:['珍藏','The Collection'],macau:['澳门 · 金殿娱乐场','Grand Palace Casino · Macau'],rank:['富豪榜','Rich List'],wheel:['每日红利','Daily Dividend'],ach:['荣誉','Honours']};
+function openWin(id){const d=DESKS.find(x=>x.id===id);if(d&&d.lv&&S.level<d.lv){toast(`Lv${d.lv} 开放`);return}
+  if(id==='macau'&&!S.inMacau){flyMacau();return}
+  win=id;snd('click');const [n,en]=WT[id];
+  $('#winRoot').innerHTML=`<div class="ov" id="ov"><div class="win" role="dialog" aria-modal="true" aria-label="${n}"><div class="win-h">${ic(id)}<div style="min-width:0"><div class="cap">${en}</div><h2>${n}</h2><div class="ws" id="ws"></div></div><button class="x" type="button" data-closew>${id==='macau'?'返回上海':'关闭'}</button></div><div id="wtabs"></div><div class="wb" id="wb"></div></div></div>`;
+  renderWin(true);const x=$('#winRoot .x');x&&x.focus({preventScroll:true})}
+function closeWin(){if(win==='macau'){if(CS.phase==='deal'||CS.sl.spinning)return;leaveMacau()}win=null;cancelAnimationFrame(shipRAF);$('#winRoot').innerHTML='';snd('click');refresh()}
+function renderWin(force){if(!win)return;if(!force&&(dragging||(spinning&&win==='wheel')))return;if(CS.sl.spinning&&win==='macau'&&CS.game==='slot')return;
+  const body=$('#wb');if(!body)return;const ae=document.activeElement;const rk=ae&&ae.dataset&&ae.dataset.range;const st=body.scrollTop;
+  const V=VIEWS[win]();setHTML($('#ws'),V.sub||'');setHTML($('#wtabs'),V.tabs||'');if(body._h!==V.body){body.innerHTML=V.body;body._h=V.body;drawCharts(body)}body.scrollTop=st;
+  if(rk){const r=body.querySelector(`[data-range="${rk}"]`);r&&r.focus({preventScroll:true})}
+  if(win==='port')drawShips()}
+function tradeQ(){const inv=S.inv[ui.city][ui.good];if(ui.mode==='b'){const mx=maxBuy(ui.city,ui.good);let q=Math.floor(mx*ui.pct/100);if(ui.pct>0&&q<1&&mx>=1)q=1;return q}return inv?Math.round(inv.q*ui.pct/100*1000)/1000:0}
+function stockLots(){const k=S.stk[ui.stock],h=S.hold[ui.stock];if(ui.smode==='b')return Math.round(Math.floor(S.cash/(k.p*100*1.001))*ui.spct/100);return h?Math.round(h.q/100*ui.spct/100):0}
+function shipQ(){if(!ui.from||!ui.sgood||!S.inv[ui.from][ui.sgood])return 0;const have=S.inv[ui.from][ui.sgood].q;return Math.min(have,Math.max(Math.min(have,1),Math.round(have*ui.shpct/100*100)/100))}
+const bankAmt=()=>Math.round(Math.max(0,creditLimit()-S.loan)*ui.bamt/100/1000)*1000;
+const LIVE={pct:()=>`${fmtQ(tradeQ())} ${G[ui.good]?G[ui.good].u:''}`,spct:()=>`${stockLots()} 手`,shpct:()=>`${fmtQ(shipQ())} ${ui.sgood?G[ui.sgood].u:''}`,bamt:()=>fmt(bankAmt()),buyPct:()=>fmt(buyAmt())};
+const VIEWS={
+trade(){const cap=whCap(upgLv('wh')),used=invUsed(ui.city);
+  const tabs=`<div class="tabs">${CITIES.map(c=>`<button type="button" class="tab ${c.id===ui.city?'on':''}" data-city="${c.id}" ${cityUnlocked(c.id)?'':'disabled'}>${c.n}${cityUnlocked(c.id)?'':' · Lv'+c.lv}</button>`).join('')}</div>`;
+  const rows=GOODS.map(g=>{if(!goodUnlocked(g.id))return `<tr class="lk"><td><span class="code">${g.code}</span>${g.n}</td><td colspan="6">Lv${g.lv} 开放交易</td></tr>`;
+    const m=S.mkt[ui.city][g.id],ch=(m.p-m.prev)/m.prev,inv=S.inv[ui.city][g.id];let best=null;
+    for(const c of unlockedCities()){if(c.id===ui.city)continue;const p=bidP(c.id,g.id);if(!best||p>best.p)best={c,p}}
+    const gap=best?(best.p-askP(ui.city,g.id))/askP(ui.city,g.id):0;const E=g.base*C[ui.city].cf[g.id]*S.trend[g.id]*evMult(ui.city,g.id);const dev=(m.p-E)/E;
+    return `<tr class="cl ${ui.good===g.id?'sel':''}" data-good="${g.id}"><td><span class="code">${g.code}</span>${g.n} <span class="note">/${g.u}</span>${upgLv('analyst')>=2&&Math.abs(dev)>.04?` <span class="tag ${dev<0?'cold':'hot'}">${dev<0?'低估':'高估'}</span>`:''}</td><td class="r m">${fmtP(m.p)}</td><td class="r m ${cls(ch)}">${pct(ch)}</td><td><canvas class="spark" data-d="${esc(JSON.stringify(m.h.slice(-30)))}"></canvas></td><td>${best?`${best.c.n} <span class="m ${cls(gap)}">${pct(gap,1)}</span>`:'—'}</td><td class="r m">${inv?fmtQ(inv.q):'—'}</td><td class="r m ${inv?cls(bidP(ui.city,g.id)-inv.cost):''}">${inv?pct((bidP(ui.city,g.id)-inv.cost)/inv.cost,1):''}</td></tr>`}).join('');
+  return {sub:`${C[ui.city].n}港 · 仓库 ${fmtQ(used)} / ${fmtQ(cap)} 吨 · 买卖价差 ${(spread(upgLv('trader'))*100).toFixed(2)}%`,tabs,
+    body:`<div class="tbl"><table><thead><tr><th>品种</th><th class="r">现价</th><th class="r">日涨跌</th><th>30日</th><th>最佳卖出港 / 价差</th><th class="r">持仓</th><th class="r">浮盈</th></tr></thead><tbody>${rows}</tbody></table></div>${ui.good&&goodUnlocked(ui.good)?ticket():'<div class="empty">选择一个品种下单。「最佳卖出港」显示扣除买卖价差后，运到别的港口能多卖多少。</div>'}`}},
+port(){const al=unlockedCities();const routes=[];for(let i=0;i<al.length;i++)for(let j=i+1;j<al.length;j++)routes.push([al[i],al[j]]);
+  const fromOpts=al.filter(c=>Object.keys(S.inv[c.id]).length);if(!fromOpts.find(c=>c.id===ui.from))ui.from=fromOpts[0]?fromOpts[0].id:null;
+  if(!ui.to||ui.to===ui.from||!cityUnlocked(ui.to))ui.to=(al.find(c=>c.id!==ui.from)||{}).id;
+  const goods=ui.from?Object.keys(S.inv[ui.from]):[];if(!goods.includes(ui.sgood))ui.sgood=goods[0]||null;
+  let form='<div class="empty">各港口仓库暂无存货。先在交易所买入，再回来安排运输。</div>';
+  if(ui.from&&ui.sgood){const q=shipQ();const fee=freight(ui.from,ui.to,ui.sgood,q);const gain=(bidP(ui.to,ui.sgood)-bidP(ui.from,ui.sgood))*q;
+    form=`<div class="ticket" style="margin-top:0"><div class="g2"><div><div class="k">起运港</div><div class="row" style="margin-top:8px">${fromOpts.map(c=>`<button type="button" class="chip ${c.id===ui.from?'on':''}" data-from="${c.id}">${c.n}</button>`).join('')}</div></div>
+     <div><div class="k">目的港</div><div class="row" style="margin-top:8px">${al.filter(c=>c.id!==ui.from).map(c=>`<button type="button" class="chip ${c.id===ui.to?'on':''}" data-to="${c.id}">${c.n} · ${shipDays(ui.from,c.id)}天</button>`).join('')}</div></div></div>
+     <div><div class="k">货物</div><div class="row" style="margin-top:8px">${goods.map(g=>`<button type="button" class="chip ${g===ui.sgood?'on':''}" data-sgood="${g}">${G[g].n} ${fmtQ(S.inv[ui.from][g].q)}${G[g].u}</button>`).join('')}</div></div>
+     <div><div class="sp"><span class="k">装船数量</span><span class="m" id="liveQ">${LIVE.shpct()}</span></div><input type="range" min="1" max="100" value="${ui.shpct}" data-range="shpct" style="--p:${ui.shpct}%" aria-label="装船比例"></div>
+     <div class="sp" style="flex-wrap:wrap"><div class="kv"><span class="muted">运费及保险</span><span>${fmt(fee)}</span><span class="muted">航程</span><span>${shipDays(ui.from,ui.to)} 天</span><span class="muted">按现价预计毛利</span><span class="${cls(gain-fee)}">${fmt(gain-fee)}</span></div>
+     <button class="btn pri lg" type="button" data-sail>确认起航</button></div></div>`}
+  const map=`<svg viewBox="330 60 560 290" aria-label="航线图">${Array.from({length:12},(_,i)=>`<line x1="${330+i*50}" y1="60" x2="${330+i*50}" y2="350" stroke="rgba(236,230,218,.04)"/>`).join('')}${Array.from({length:7},(_,i)=>`<line x1="330" y1="${60+i*50}" x2="890" y2="${60+i*50}" stroke="rgba(236,230,218,.04)"/>`).join('')}
+   ${CONT}${routes.map(([a,b])=>`<path d="${routePath(a,b)}" fill="none" stroke="rgba(200,169,106,.22)" stroke-width=".8" stroke-dasharray="2 4"/>`).join('')}
+   ${ui.from&&ui.to?`<path d="${routePath(C[ui.from],C[ui.to])}" fill="none" stroke="#e4cb93" stroke-width="1.4"/>`:''}<g id="shipLayer"></g>
+   ${CITIES.map(c=>{const ok=cityUnlocked(c.id);const n=Object.keys(S.inv[c.id]).length;return `<g opacity="${ok?1:.35}"><circle cx="${c.x}" cy="${c.y}" r="4" fill="${ok?'#c8a96a':'#5f5c56'}"/><circle cx="${c.x}" cy="${c.y}" r="8" fill="none" stroke="${ok?'rgba(200,169,106,.4)':'transparent'}"/><text x="${c.x}" y="${c.y-13}" text-anchor="middle">${c.n}${ok?'':' · Lv'+c.lv}</text>${n?`<text x="${c.x}" y="${c.y+21}" text-anchor="middle" style="font-size:10px;fill:#c8a96a">${n} 种存货</text>`:''}</g>`}).join('')}</svg>`;
+  const list=S.ships.length?S.ships.map(s=>{const tot=s.eta-s.dep,done=S.day-s.dep;return `<div class="box"><div class="sp"><span>${C[s.from].n} → ${C[s.to].n}</span><span class="tag g">${s.eta-S.day} 天</span></div><div class="note" style="margin-top:4px">${G[s.good].n} ${fmtQ(s.q)}${G[s.good].u} · 到港估值 ${fmt(s.q*bidP(s.to,s.good))}</div><div class="bar"><i style="width:${clamp(done/tot*100,0,100)}%"></i></div></div>`}).join(''):'<div class="note">暂无在途货船</div>';
+  return {sub:`运力 ${fmtQ(shipUsed())} / ${fmtQ(fleetCap(upgLv('fleet')))} 吨 · ${S.ships.length} 艘在途`,body:`<div class="map">${map}</div><div style="margin-top:14px">${form}</div><div class="sec">船队动态</div><div class="g3">${list}</div>`}},
+stock(){const all=[...STOCKS.map(s=>({s:s.s,n:s.n,sec:s.sec})),...RIVALS.map(r=>({s:r.s,n:r.co,sec:'对手'}))];const k=S.stk[ui.stock],h=S.hold[ui.stock],wk=isWeekend(S.day);const i=idx();const lots=stockLots();
+  return {sub:`沪深综指 ${i.v.toFixed(1)} <span class="${cls(i.ch)}">${pct(i.ch)}</span> · ${wk?'周末休市':'交易中'} · 持仓市值 ${fmt(stockValue())}`,
+  body:`<div class="g2" style="grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)"><div><div class="sp"><div><span class="code">${ui.stock}</span><b style="font-family:var(--f-serif);font-size:20px;font-weight:600">${stockName(ui.stock)}</b></div><div style="text-align:right"><div class="v ${cls(k.p-k.prev)}">${k.p.toFixed(2)}</div><div class="m ${cls(k.p-k.prev)}" style="font-size:12px">${pct((k.p-k.prev)/k.prev)}</div></div></div>
+   <canvas class="chart" data-k="${esc(JSON.stringify(k.c.slice(-60)))}"></canvas><div class="note">日 K 线 · 金线为 5 日均线</div>
+   ${h?`<div class="row" style="margin-top:8px"><span class="tag g">持有 ${h.q} 股</span><span class="tag">成本 ${h.cost.toFixed(2)}</span><span class="tag ${k.p>=h.cost?'hot':'cold'}">${fmt((k.p-h.cost)*h.q)}</span></div>`:''}
+   <div class="ticket"><div class="sp"><div class="seg2"><button type="button" class="b ${ui.smode==='b'?'on':''}" data-smode="b">买入</button><button type="button" class="s ${ui.smode==='s'?'on':''}" data-smode="s">卖出</button></div><span class="m" id="liveQ">${lots} 手</span></div>
+    <input type="range" min="0" max="100" value="${ui.spct}" data-range="spct" style="--p:${ui.spct}%" aria-label="仓位比例"><div class="quick">${[10,25,50,100].map(v=>`<button type="button" data-pctset="spct:${v}">${v===100?'全部':v+'%'}</button>`).join('')}</div>
+    <div class="sp" style="flex-wrap:wrap"><span class="note">1 手 = 100 股 · 佣金万 2.5 · 卖出印花税 0.05% · 涨跌停 ±10%</span><button class="btn ${ui.smode==='b'?'buy':'sell'}" type="button" data-strade ${wk||!lots?'disabled':''}>${wk?'休市':ui.smode==='b'?'买入':'卖出'}</button></div></div></div>
+   <div class="tbl"><table><thead><tr><th>证券</th><th class="r">现价</th><th class="r">涨跌</th><th class="r">持仓</th></tr></thead><tbody>${all.map(a=>{const q=S.stk[a.s],hh=S.hold[a.s],ch=(q.p-q.prev)/q.prev;return `<tr class="cl ${a.s===ui.stock?'sel':''}" data-stk="${a.s}"><td>${a.n}<div class="note m">${a.s} · ${a.sec}</div></td><td class="r m">${q.p.toFixed(2)}</td><td class="r m ${cls(ch)}">${pct(ch)}</td><td class="r m">${hh?hh.q:''}</td></tr>`}).join('')}</tbody></table></div></div>`}},
+deal(){const slots=3+upgLv('office');const cd=(o,active)=>{const t=tier(o.prem);const inv=S.inv[o.city][o.good];const have=inv?inv.q:0;const mv=o.q*S.mkt[o.city][o.good].p;const left=active?o.due-S.day:o.exp-S.day;
+   return `<div class="ct" style="--rc:${t[3]}"><div class="sp"><span class="tier">${t[2]} · ${t[1]}</span><span class="tag ${left<=(active?5:2)?'hot':''}">${active?'剩 '+left+' 天':left+' 天内签约'}</span></div><div class="cl">${o.client}</div>
+    <div class="note">${G[o.good].n} <span class="m" style="color:var(--ink)">${fmtQ(o.q)}</span> ${G[o.good].u} · 交付 ${C[o.city].n}港 · 期限 ${o.days} 天</div>
+    <div class="sp"><span class="v gold">${fmt(o.reward)}</span><span class="note">溢价 ${pct(o.reward/mv-1,0)}</span></div>
+    ${active?`<div class="note">当地库存 <span class="m ${have>=o.q?'up':''}">${fmtQ(have)}</span> / ${fmtQ(o.q)}</div><div class="bar" style="margin-top:0"><i style="width:${clamp(have/o.q*100,0,100)}%"></i></div><button class="btn ${have>=o.q?'pri':''}" type="button" data-deliver="${o.id}" ${have>=o.q?'':'disabled'}>${have>=o.q?'交付结算':'备货中'}</button>`
+     :`<button class="btn pri" type="button" data-accept="${o.id}">签约</button>`}</div>`};
+  return {sub:`执行中 ${S.contracts.length} / ${slots} · 声望溢价 +${Math.round((rewardMul()-1)*100)}% · 逾期未签的订单会被对手拿走`,body:`<div class="sec">执行中</div>${S.contracts.length?`<div class="g3">${S.contracts.map(k=>cd(k,1)).join('')}</div>`:'<div class="note">暂无执行中的合同</div>'}
+   <div class="sec">新订单</div>${S.offers.length?`<div class="g3">${S.offers.map(o=>cd(o,0)).join('')}</div>`:'<div class="note">新订单会陆续到来。升级总部大楼可增加栏位。</div>'}`}},
+bank(){const lim=creditLimit();const amt=bankAmt();
+  return {sub:`年利率 ${(S.rate*100).toFixed(2)}% · 随央行政策调整`,body:`<div class="g3" style="grid-template-columns:repeat(auto-fill,minmax(170px,1fr))">${[['贷款余额',fmt(S.loan)],['授信额度',fmt(lim)],['可用额度',fmt(Math.max(0,lim-S.loan))],['每日利息',fmt(S.loan*S.rate/365)]].map(([a,b])=>`<div class="box"><div class="k">${a}</div><div class="v">${b}</div></div>`).join('')}</div>
+   <div class="bar" style="margin:16px 0"><i style="width:${lim?clamp(S.loan/lim*100,0,100):0}%"></i></div>
+   <div class="ticket"><div class="sp"><span class="k">借款金额</span><span class="v gold" id="liveQ" style="font-size:22px">${fmt(amt)}</span></div><input type="range" min="0" max="100" value="${ui.bamt}" data-range="bamt" style="--p:${ui.bamt}%" aria-label="借款比例">
+    <div class="row" style="justify-content:flex-end"><button class="btn pri" type="button" data-borrow ${amt>0?'':'disabled'}>提款</button><button class="btn" type="button" data-repayall ${S.loan?'':'disabled'}>全部还清</button></div></div>
+   <p class="note">授信随净资产、等级与声望提高。现金不足时银行自动放贷周转；资不抵债将破产清算。</p>
+   <div class="sec">天使投资</div>${S.pendingInv.length?S.pendingInv.map(i=>`<div class="box sp"><span>${esc(i.name)}</span><span class="m">${fmt(i.amt)} · ${i.at-S.day} 天后揭晓</span></div>`).join(''):'<div class="note">经营中会遇到投资机会</div>'}`}},
+lux(){const tabs=`<div class="tabs">${Object.entries(LUXCAT).map(([k,v])=>`<button type="button" class="tab ${k===ui.luxCat?'on':''}" data-lcat="${k}">${v}</button>`).join('')}<button type="button" class="tab ${ui.luxCat==='mine'?'on':''}" data-lcat="mine">我的藏品${S.owned.length?' · '+S.owned.length:''}</button></div>`;
+  if(ui.luxCat==='mine')return {sub:`藏品估值 ${fmt(luxValue())} · 声望 ${prestigeTotal()}`,tabs,body:S.owned.length?`<div class="g3">${S.owned.map((o,i)=>{const l=LUXBY[o.id];return `<div class="lot"><span class="ln">INV · ${String(i+1).padStart(3,'0')}</span>${ic(l.cat)}<div class="nm">${l.n}</div><div class="note">${l.spec} · 购于 ${dateStr(o.day)}</div><div class="sp"><span class="pr" style="font-size:22px">${fmt(o.val)}</span><span class="m ${cls(o.val-o.paid)}">${pct(o.val/o.paid-1,1)}</span></div><button class="btn sm" type="button" data-lsell="${i}">委托出售</button></div>`}).join('')}</div>`:'<div class="empty">尚无藏品</div>'};
+  return {sub:`声望 ${prestigeTotal()} · 合同溢价 +${Math.round((rewardMul()-1)*100)}% · 新购藏品转手约有 8% 损耗`,tabs,body:`<div class="g3">${LUX.filter(l=>l.cat===ui.luxCat).map(l=>{const own=S.owned.filter(o=>o.id===l.id).length;const ok=S.cash>=l.p;const n=LUX.indexOf(l)+1;
+   return `<div class="lot">${own?`<span class="tag g own">已藏 ×${own}</span>`:''}<span class="ln">LOT ${String(n).padStart(3,'0')}</span>${ic(l.cat)}<div class="nm">${l.n}</div><div class="note">${l.spec}</div><div class="pr">${fmt(l.p)}</div><div class="note">声望 +${l.pr} · 年${l.ap>=0?'升值':'折旧'}约 ${Math.abs(l.ap*100).toFixed(0)}%${l.up?' · 日养护 '+fmt(l.up):''}</div>
+    <button class="btn ${ok?'pri':''}" type="button" data-lbuy="${l.id}" ${ok?'':'disabled'}>${ok?'购入':'尚差 '+fmt(l.p-S.cash)}</button></div>`}).join('')}</div>`}},
+hq(){const nw=netWorth();return {sub:`${TITLES[S.level]} · 经营第 ${S.day} 天 · 日常开支 ${fmt(dailyCost())}`,
+  body:`<div class="g3" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">${[['净资产',fmt(nw)],['现金',fmt(S.cash)],['库存与在途',fmt(invValue()+shipValue())],['股票',fmt(stockValue())],['藏品',fmt(luxValue())],['负债',fmt(S.loan)]].map(([a,b])=>`<div class="box"><div class="k">${a}</div><div class="v" style="font-size:21px">${b}</div></div>`).join('')}</div>
+  <div class="box" style="margin-top:14px"><div class="sp" style="flex-wrap:wrap"><span class="k">净资产走势</span><span class="note">贸易利润 ${fmt(S.stats.tradeProfit)} · 股票利润 ${fmt(S.stats.stockProfit)} · 澳门 ${fmt(S.casino.net)}</span></div><canvas class="chart" style="height:180px" data-a="${esc(JSON.stringify(S.nwHist.length>1?S.nwHist:[nw,nw]))}"></canvas></div>
+  <div class="sec">公司建设</div><div class="g2">${UPG.map(u=>{const l=upgLv(u.id),max=l>=u.max,lock=u.lv&&S.level<u.lv,c=u.cost(l);
+   return `<div class="box up-r">${ic(u.ic)}<div style="flex:1;min-width:0"><div class="sp"><b style="font-family:var(--f-serif);font-weight:600">${u.n}</b><span class="m note">${l} / ${u.max}</span></div><div class="pips">${Array.from({length:u.max},(_,i)=>`<i class="${i<l?'on':''}"></i>`).join('')}</div><div class="note">${u.d(l)}${max?'':` → <span class="gold">${u.d(l+1)}</span>`}</div>
+    <div class="sp" style="margin-top:8px"><span class="note">${max?'':'日薪 +'+fmt(u.sal)}</span><button class="btn sm ${!max&&!lock&&S.cash>=c?'pri':''}" type="button" data-upg="${u.id}" ${max||lock||S.cash<c?'disabled':''}>${max?'已满级':lock?`Lv${u.lv} 开放`:fmt(c)}</button></div></div></div>`}).join('')}</div>
+  <div class="row" style="margin-top:18px"><button class="btn sm" type="button" data-rename>更改公司名称</button><button class="btn sm" type="button" data-reset>重新开局</button></div>`}},
+rank(){const rows=rankRows();return {sub:players.length?`${players.length} 位真人玩家 · 4 家 AI 财团`:db?'分享链接，邀请朋友同榜竞争':'真人榜单需在 Claude 中打开',
+  body:rows.map((r,i)=>`<div class="rl ${i<3?'top3':''} ${r.me?'me':''}"><span class="no">${i+1}</span><span class="av">${esc(String(r.name).slice(0,1))}</span><div style="flex:1;min-width:0"><div><b style="font-family:var(--f-serif);font-weight:600">${esc(r.name)}</b> ${r.ai?'<span class="tag">AI</span>':''}${r.real?`<span class="tag ${r.on?'g':''}">${r.on?'在线':'玩家'}</span>`:''}${r.me?'<span class="tag g">你</span>':''}${r.ipo?' <span class="tag g">已上市</span>':''}</div><div class="note">${esc(r.who)} · Lv${r.level} ${TITLES[r.level]||''}${r.top?' · '+esc(r.top):''}</div></div><span class="v" style="font-size:22px">${fmt(r.nw)}</span></div>`).join('')+'<p class="note" style="margin-top:12px">AI 财团会在各港口扫货抛售、抢夺订单；它们也在证券所挂牌交易。</p>'}},
+wheel(){const done=S.wheel===todayKey();
+  const segs=WHEEL.map((w,i)=>{const a0=(i*45-90-22.5)*Math.PI/180,a1=(i*45-90+22.5)*Math.PI/180,mid=(i*45-90)*Math.PI/180;const tx=100+64*Math.cos(mid),ty=100+64*Math.sin(mid);
+   return `<path d="M100 100L${(100+92*Math.cos(a0)).toFixed(1)} ${(100+92*Math.sin(a0)).toFixed(1)}A92 92 0 0 1 ${(100+92*Math.cos(a1)).toFixed(1)} ${(100+92*Math.sin(a1)).toFixed(1)}z" fill="${i%2?'#13161b':'#1d2128'}" stroke="rgba(200,169,106,.5)" stroke-width=".8"/><text x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" fill="${w[1]==='l'?'#e4cb93':'#ece6da'}" font-size="12" font-family="Noto Serif SC,serif" text-anchor="middle" dominant-baseline="middle" transform="rotate(${i*45} ${tx.toFixed(1)} ${ty.toFixed(1)})">${w[0]}</text>`}).join('');
+  return {sub:'每个自然日可领取一次',body:`<div style="display:flex;flex-direction:column;align-items:center;gap:18px;padding:16px 0"><div class="dial"><span class="ptr"></span><svg id="wheelSvg" viewBox="0 0 200 200" style="transform:rotate(${S.wheelAng||0}deg)"><circle cx="100" cy="100" r="97" fill="#0b0d10" stroke="#c8a96a"/>${segs}<circle cx="100" cy="100" r="12" fill="#0b0d10" stroke="#c8a96a"/></svg></div>
+   <button class="btn pri lg" type="button" data-spin ${done?'disabled':''}>${done?'明日再来':'领取今日红利'}</button><p class="note" style="text-align:center">奖励与净资产挂钩：现金、经验、声望、仓储升级，以及头奖。</p></div>`}},
+ach(){return {sub:`${Object.keys(S.ach).length} / ${ACH.length}`,body:`<div class="g3">${ACH.map(a=>{const ok=S.ach[a.id]!=null;return `<div class="hon ${ok?'got':''}"><span class="md">${a.n.slice(0,1)}</span><div><b style="font-family:var(--f-serif);font-weight:600">${a.n}</b><div class="note">${a.d}${ok?' · '+dateStr(S.ach[a.id],1):''}</div></div></div>`}).join('')}</div>`}},
+macau(){const r=room();const busy=HD||CS.phase==='deal'||CS.sl.spinning||betTotal();
+  const tabs=`<div class="tabs">${[['bacc','百家乐'],['hd','德州扑克'],['slot','老虎机']].map(([k,v])=>`<button type="button" class="tab ${CS.game===k?'on':''}" data-game="${k}">${v}</button>`).join('')}<span style="flex:1"></span>${ROOMS.map(x=>`<button type="button" class="tab ${x.id===CS.room?'on':''}" data-room="${x.id}" ${roomOpen(x)&&(!busy||x.id===CS.room)?'':'disabled'}>${x.n}${roomOpen(x)?'':' · Lv'+x.lv}</button>`).join('')}</div>`;
+  const sub=`${r.n} · ${r.en} · 限红 ${fmt(r.min)} – ${fmt(r.max)} · 在澳门期间商业时间暂停`;
+  return {sub,tabs,body:CS.game==='bacc'?baccView():CS.game==='hd'?hdView():slotView()}},
+};
+function chipsRow(vals,cur,attr){return `<div class="chips">${vals.map((v,i)=>`<button type="button" class="tok ${v===cur?'on':''}" style="--cc:${CHIPCOL[i%CHIPCOL.length]}" data-${attr}="${v}" aria-label="筹码 ${fmt(v)}"><span>${chipLbl(v)}</span></button>`).join('')}</div>`}
+function baccView(){const r=room();if(!r.chips.includes(CS.chip))CS.chip=r.chips[0];const w=CS.win||{};const done=CS.phase==='done';
+  const spot=(k,n,po)=>`<button type="button" class="spot ${k} ${done&&((k===w.res)||(k==='PP'&&w.pp)||(k==='BP'&&w.bp))?'win':''}" data-bet="${k}"><span class="sn">${n}</span><span class="po">${po}</span><span class="amt">${CS.bets[k]?chipLbl(CS.bets[k]):''}</span></button>`;
+  return `<div class="felt"><div class="lgd">PUNTO BANCO · 8 DECKS · BANKER PAYS 0.95</div>
+   <div class="hands"><div class="hand"><div class="who" style="color:#8fb4e8">闲 PLAYER</div><div class="pts">${CS.pc.length?bPts(CS.pc):''}</div><div class="cards">${CS.pc.map(c=>card(c)).join('')}</div></div><div class="hand"><div class="who" style="color:#e8908a">庄 BANKER</div><div class="pts">${CS.bc.length?bPts(CS.bc):''}</div><div class="cards">${CS.bc.map(c=>card(c)).join('')}</div></div></div>
+   <div style="text-align:center;min-height:24px;font-family:var(--f-serif);color:var(--gold-hi);margin-bottom:12px">${CS.msg||(CS.phase==='deal'?'发牌中…':'请选择筹码并下注')}</div>
+   <div class="spots">${spot('P','闲','1 : 1')}${spot('T','和','8 : 1')}${spot('B','庄','0.95 : 1')}</div><div class="spots2">${spot('PP','闲对','11 : 1')}${spot('BP','庄对','11 : 1')}</div></div>
+  <div style="margin:16px 0">${chipsRow(r.chips,CS.chip,'chip')}</div>
+  <div class="row" style="justify-content:center"><span class="note">本局下注 <span class="m" style="color:var(--ink)">${fmt(betTotal())}</span> · 现金 <span class="m" style="color:var(--ink)">${fmt(S.cash)}</span></span><button class="btn" type="button" data-bclear ${CS.phase==='bet'&&betTotal()?'':'disabled'}>撤回</button><button class="btn" type="button" data-rebet ${CS.last&&CS.phase!=='deal'?'':'disabled'}>重复上局</button><button class="btn pri lg" type="button" data-deal ${CS.phase==='bet'&&betTotal()?'':'disabled'}>发牌</button></div>
+  <div class="sec">珠盘路 <span class="note">牌靴剩余 ${CS.shoe.length||416} 张 · 庄 ${CS.road.filter(x=>x==='B').length} · 闲 ${CS.road.filter(x=>x==='P').length} · 和 ${CS.road.filter(x=>x==='T').length}</span></div>
+  <div class="road">${CS.road.map(x=>`<i class="${x}">${x==='B'?'庄':x==='P'?'闲':'和'}</i>`).join('')}</div>`}
+function slotView(){const r=room();const sl=CS.sl;if(!r.slot.includes(sl.bet))sl.bet=r.slot[0];const last=sl.last||['7','D','B'];const maxb=r.slot[r.slot.length-1];
+  return `<div class="jp"><div class="cap">Progressive Jackpot · ${r.n}</div><div class="v fig">${fmt(jackpot())}</div><div class="note">押注 ${fmt(maxb)} 转出三个 7，赢得全部奖池</div></div>
+  <div class="reels">${[0,1,2].map(i=>`<div class="reel"><div class="strip">${['P',last[i],'S'].map(symHTML).join('')}</div></div>`).join('')}</div>
+  <div id="slotMsg" style="text-align:center;min-height:26px;margin:14px 0 6px;font-family:var(--f-serif);color:var(--gold-hi)">${sl.msg||'&nbsp;'}</div>
+  <div style="margin:6px 0 14px">${chipsRow(r.slot,sl.bet,'sbet')}</div>
+  <div class="row" style="justify-content:center"><span class="note">现金 <span class="m" style="color:var(--ink)">${fmt(S.cash)}</span></span><button class="btn pri lg" type="button" data-spinslot ${sl.spinning?'disabled':''}>拉杆 · ${fmt(sl.bet)}</button></div>
+  <div class="sec">赔率表 <span class="note">理论返还率约 94.7%（含奖池）</span></div>
+  <div class="tbl"><table class="pay"><tbody>${[['7 7 7','300 倍 + 累积奖池（最高押注）'],['◆ ◆ ◆','100 倍'],['BAR BAR BAR','40 倍'],['♛ ♛ ♛','20 倍'],['♠ ♠ ♠','10 倍'],['♥ ♥ ♥','4 倍'],['任意两个 7','10 倍'],['任意两个 ◆','5 倍'],['任意一个 7','2 倍'],['首轴 ◆','1 倍']].map(([a,b])=>`<tr><td class="m">${a.replace(/[♛♠♥]/g,'$&︎')}</td><td class="r">${b}</td></tr>`).join('')}</tbody></table></div>`}
+function hdView(){const r=room();
+  if(!HD)return `<div class="felt" style="text-align:center"><div class="lgd">NO-LIMIT TEXAS HOLD'EM · 4-MAX</div><h3 style="font-family:var(--f-serif);font-weight:600;font-size:22px;margin:16px 0 6px">${r.n} · 盲注 ${chipLbl(r.blinds[0])} / ${chipLbl(r.blinds[1])}</h3><p class="note">与三位来自各地的牌手同桌。买入额 ${fmt(r.buy[0])} – ${fmt(r.buy[1])}，离桌时筹码兑回现金。</p>
+   <div style="max-width:360px;margin:18px auto 6px"><div class="sp"><span class="k">买入</span><span class="v gold" id="liveQ" style="font-size:22px">${fmt(buyAmt())}</span></div><input type="range" min="0" max="100" value="${CS.buyPct}" data-range="buyPct" style="--p:${CS.buyPct}%" aria-label="买入金额"></div>
+   <button class="btn pri lg" type="button" data-sit ${S.cash>=buyAmt()?'':'disabled'}>入座</button></div>`;
+  const me=HD.players[0];const myTurn=HD.toAct===0&&HD.stage!=='done'&&HD.stage!=='broke';const call=HD.curBet-me.bet;const pot=hdPot();
+  const seat=i=>{const p=HD.players[i];const showC=i===0||p.show;return `<div class="seat ${HD.toAct===i?'act':''} ${p.folded?'out':''}" style="grid-area:s${i}"><div class="nm">${esc(p.name)}${HD.dealer===i?'<span class="dbtn">D</span>':''}</div><div class="note">${p.ai?esc(p.from)+' · '+STY[p.style].n:'你的座位'}</div><div class="stk fig">${fmt(p.stack)}</div><div class="cards">${p.cards.map(c=>card(c,'sm '+(showC?'':'back')+(p.folded&&i===0?' dim':''))).join('')}</div><div class="la">${[p.won?'<span class="gold">赢 '+fmt(p.won)+'</span>':esc(p.la||''),p.hn&&p.show?p.hn:'',p.bet&&!p.won?'注 '+chipLbl(p.bet):''].filter(Boolean).join(' · ')}</div></div>`};
+  let ctl='';
+  if(HD.stage==='broke')ctl=`<span class="note">筹码不足大盲，请离桌后重新买入。</span><button class="btn" type="button" data-hdleave>离桌</button>`;
+  else if(HD.stage==='done')ctl=`<button class="btn pri lg" type="button" data-hdnext>下一手</button><button class="btn" type="button" data-hdleave>离桌兑现</button>`;
+  else if(myTurn){const cap=me.stack+me.bet,minTo=Math.min(cap,HD.curBet+HD.minRaise);const bb=HD.blinds[1];const opts=[[minTo,'最小加注'],[HD.curBet+Math.round((pot+call)*.5/bb)*bb,'½ 底池'],[HD.curBet+Math.round((pot+call)/bb)*bb,'底池'],[cap,'全下']].filter(([v])=>v>HD.curBet&&v<=cap&&v>=minTo);
+    const seen=new Set();const ro=opts.filter(([v])=>{if(seen.has(v))return false;seen.add(v);return true});
+    ctl=`<button class="btn" type="button" data-hda="fold">弃牌</button><button class="btn" type="button" data-hda="call">${call?'跟注 '+fmt(Math.min(call,me.stack)):'过牌'}</button>${ro.map(([v,l])=>`<button class="btn pri" type="button" data-hda="raise" data-to="${v}">${l} · ${chipLbl(v)}</button>`).join('')}`}
+  else ctl=`<span class="note">${me.folded?'已弃牌，等待本手结束…':'等待其他牌手行动…'}</span>`;
+  return `<div class="felt"><div class="lgd">NO-LIMIT HOLD'EM · 盲注 ${chipLbl(HD.blinds[0])}/${chipLbl(HD.blinds[1])}</div><div class="pk" style="margin-top:12px">${seat(2)}${seat(1)}<div class="mid" style="grid-area:mid"><div class="cards">${HD.board.map(c=>card(c)).join('')||'<span class="note" style="align-self:center">翻牌前</span>'}</div><div class="cap" style="margin-top:6px">Pot</div><div class="pot fig">${fmt(pot)}</div><div class="note" style="min-height:18px;color:var(--gold-hi)">${HD.res?esc(HD.res):''}</div></div>${seat(3)}${seat(0)}</div></div>
+   <div class="row" style="justify-content:center;margin-top:14px">${ctl}</div>
+   <div class="sec">牌局记录</div><div class="feed" style="max-height:160px">${HD.log.map(l=>`<div class="it">${esc(l)}</div>`).join('')}</div>`}
+function ticket(){const g=G[ui.good],c=ui.city,inv=S.inv[c][ui.good];const q=tradeQ();
+  const qt=q>0?(ui.mode==='b'?quoteBuy(c,ui.good,q):quoteSell(c,ui.good,q)):null;const profit=ui.mode==='s'&&inv&&qt?qt.total-inv.cost*q:null;const m=S.mkt[c][ui.good];
+  return `<div class="ticket"><div class="sp" style="flex-wrap:wrap"><div><span class="code">${g.code}</span><b style="font-family:var(--f-serif);font-size:18px;font-weight:600">${g.n} · ${C[c].n}</b><div class="note" style="margin-top:4px">买价 <span class="m">${fmtP(askP(c,g.id))}</span> · 卖价 <span class="m">${fmtP(bidP(c,g.id))}</span> / ${g.u}${inv?` · 持仓 <span class="m">${fmtQ(inv.q)}</span> · 成本 <span class="m">${fmtP(inv.cost)}</span>`:''}</div></div>
+   <div class="seg2"><button type="button" class="b ${ui.mode==='b'?'on':''}" data-mode="b">买入</button><button type="button" class="s ${ui.mode==='s'?'on':''}" data-mode="s">卖出</button></div></div>
+   <canvas class="chart" style="height:150px" data-a="${esc(JSON.stringify(m.h))}"></canvas>
+   <div><div class="sp"><span class="k">${ui.mode==='b'?'买入数量（受现金与仓容限制）':'卖出数量'}</span><span class="m" style="font-size:15px" id="liveQ">${fmtQ(q)} ${g.u}</span></div><input type="range" min="0" max="100" value="${ui.pct}" data-range="pct" style="--p:${ui.pct}%" aria-label="数量比例"><div class="quick">${[10,25,50,100].map(v=>`<button type="button" data-pctset="pct:${v}">${v===100?'最大':v+'%'}</button>`).join('')}</div></div>
+   <div class="sp" style="flex-wrap:wrap"><div class="kv">${qt?`<span class="muted">成交均价</span><span>${fmtP(qt.unit)}</span><span class="muted">${ui.mode==='b'?'成交金额':'成交收入'}</span><span>${fmt(qt.total)}</span><span class="muted">价格冲击</span><span>${pct(ui.mode==='b'?qt.impact:-qt.impact,1)}</span>${profit!=null?`<span class="muted">本笔盈亏</span><span class="${cls(profit)}">${fmt(profit)}</span>`:''}`:`<span class="muted">${ui.mode==='b'?'现金或仓容不足':'本港无持仓'}</span><span></span>`}</div>
+   <button class="btn lg ${ui.mode==='b'?'buy':'sell'}" type="button" data-gtrade ${q>0?'':'disabled'}>${ui.mode==='b'?'确认买入':'确认卖出'}</button></div></div>`}
+const CONT=`<g fill="rgba(236,230,218,.035)" stroke="rgba(236,230,218,.12)" stroke-width=".7">
+ <path d="M470 70 Q520 60 560 80 L600 70 Q680 60 760 75 Q840 85 880 110 L880 140 Q850 150 845 175 L830 200 Q810 215 795 210 L780 235 Q770 228 760 210 L735 205 Q715 215 700 200 L680 210 Q660 205 650 190 L630 175 Q600 160 585 145 L560 140 Q530 150 515 140 L500 125 Q480 115 470 100 Z"/>
+ <path d="M500 150 Q530 145 560 160 L600 170 Q625 200 610 240 L590 290 Q570 310 555 300 L540 260 Q520 230 505 200 Q490 180 500 150 Z"/>
+ <path d="M790 260 Q820 255 850 265 L870 300 Q850 320 820 312 L795 290 Z"/>
+ <path d="M340 230 Q360 220 395 235 L420 260 Q410 300 390 330 L375 345 Q360 330 362 300 L345 265 Z"/></g>`;
+function routePath(a,b){const mx=(a.x+b.x)/2,my=(a.y+b.y)/2,dx=b.x-a.x,dy=b.y-a.y,k=.18;return `M${a.x} ${a.y} Q${(mx-dy*k).toFixed(1)} ${(my+dx*k).toFixed(1)} ${b.x} ${b.y}`}
+function qpt(a,b,t){const mx=(a.x+b.x)/2,my=(a.y+b.y)/2,dx=b.x-a.x,dy=b.y-a.y,k=.18;const cx=mx-dy*k,cy=my+dx*k;const u=1-t;return {x:u*u*a.x+2*u*t*cx+t*t*b.x,y:u*u*a.y+2*u*t*cy+t*t*b.y}}
+let shipRAF=0;
+function drawShips(){cancelAnimationFrame(shipRAF);const layer=document.getElementById('shipLayer');if(!layer||win!=='port')return;
+  const frac=speed&&!modalOpen?clamp((performance.now()-lastTick)/(3000/speed),0,1):0;
+  layer.innerHTML=S.ships.map(s=>{const t=clamp((S.day+frac-s.dep)/(s.eta-s.dep),0,1);const a=C[s.from],b=C[s.to];const p=qpt(a,b,t),p2=qpt(a,b,Math.min(1,t+.01)),p0=qpt(a,b,Math.max(0,t-.01));const ang=Math.atan2(p2.y-p0.y,p2.x-p0.x)*180/Math.PI;
+    return `<g transform="translate(${p.x.toFixed(1)} ${p.y.toFixed(1)}) rotate(${ang.toFixed(0)})"><path d="M-8 -3h11l4 3-4 3h-11z" fill="#e4cb93"/></g>`}).join('');
+  if(!reduce)shipRAF=requestAnimationFrame(drawShips)}
+
+function drawCharts(root){const up='#d8604e',down='#4f9f80',muted='#8f8a80',gold='#c8a96a';
+  const prep=cv=>{const dpr=devicePixelRatio||1,w=cv.clientWidth,h=cv.clientHeight;if(!w||!h)return [null];cv.width=w*dpr;cv.height=h*dpr;const x=cv.getContext('2d');x.scale(dpr,dpr);return [x,w,h]};
+  root.querySelectorAll('canvas.spark').forEach(cv=>{const d=JSON.parse(cv.dataset.d);if(d.length<2)return;const [x,w,h]=prep(cv);if(!x)return;const mn=Math.min(...d),r=(Math.max(...d)-mn)||1;const col=d[d.length-1]>=d[0]?up:down;
+    x.beginPath();d.forEach((v,i)=>{const X=i/(d.length-1)*w,Y=2+(1-(v-mn)/r)*(h-4);i?x.lineTo(X,Y):x.moveTo(X,Y)});x.strokeStyle=col;x.lineWidth=1.1;x.stroke()});
+  root.querySelectorAll('canvas[data-a]').forEach(cv=>{const d=JSON.parse(cv.dataset.a);if(d.length<2)return;const [x,w,h]=prep(cv);if(!x)return;const mini=!!cv.dataset.mini;const pad=mini?{l:2,r:2,t:6,b:6}:{l:4,r:66,t:10,b:10};let mn=Math.min(...d),mx=Math.max(...d);if(mx===mn){mx+=1;mn-=1}const rr=mx-mn;mn-=rr*.08;mx+=rr*.08;
+    const X=i=>pad.l+i/(d.length-1)*(w-pad.l-pad.r),Y=v=>pad.t+(1-(v-mn)/(mx-mn))*(h-pad.t-pad.b);const col=mini?gold:(d[d.length-1]>=d[0]?up:down);const money=Math.max(...d.map(Math.abs))>1e5;
+    if(!mini){x.font='10.5px "IBM Plex Mono", monospace';x.fillStyle=muted;x.strokeStyle='rgba(236,230,218,.05)';for(let i=0;i<=3;i++){const v=mn+(mx-mn)*i/3,y=Y(v);x.beginPath();x.moveTo(pad.l,y);x.lineTo(w-pad.r,y);x.stroke();x.fillText(money?fmt(v):fmtP(v),w-pad.r+8,y+4)}}
+    const gr=x.createLinearGradient(0,pad.t,0,h);gr.addColorStop(0,col+'33');gr.addColorStop(1,col+'00');
+    x.beginPath();d.forEach((v,i)=>i?x.lineTo(X(i),Y(v)):x.moveTo(X(i),Y(v)));x.strokeStyle=col;x.lineWidth=1.4;x.stroke();x.lineTo(X(d.length-1),h-pad.b);x.lineTo(X(0),h-pad.b);x.closePath();x.fillStyle=gr;x.fill();
+    x.beginPath();x.arc(X(d.length-1),Y(d[d.length-1]),2.8,0,7);x.fillStyle=col;x.fill()});
+  root.querySelectorAll('canvas[data-k]').forEach(cv=>{const d=JSON.parse(cv.dataset.k);if(!d.length)return;const [x,w,h]=prep(cv);if(!x)return;const pad={l:4,r:54,t:8,b:8};let mn=Math.min(...d.map(c=>c[2])),mx=Math.max(...d.map(c=>c[1]));const rr=mx-mn||1;mn-=rr*.05;mx+=rr*.05;
+    const cw=(w-pad.l-pad.r)/d.length,Y=v=>pad.t+(1-(v-mn)/(mx-mn))*(h-pad.t-pad.b);x.font='10.5px "IBM Plex Mono", monospace';x.fillStyle=muted;x.strokeStyle='rgba(236,230,218,.05)';
+    for(let i=0;i<=3;i++){const v=mn+(mx-mn)*i/3,y=Y(v);x.beginPath();x.moveTo(pad.l,y);x.lineTo(w-pad.r,y);x.stroke();x.fillText(v.toFixed(2),w-pad.r+8,y+4)}
+    d.forEach((c,i)=>{const [o,hi,lo,cl]=c;const col=cl>=o?up:down;const cx=pad.l+i*cw+cw/2;x.strokeStyle=col;x.fillStyle=col;x.lineWidth=1;x.beginPath();x.moveTo(cx,Y(hi));x.lineTo(cx,Y(lo));x.stroke();const y1=Y(Math.max(o,cl)),y2=Y(Math.min(o,cl));x.fillRect(cx-cw*.32,y1,cw*.64,Math.max(1,y2-y1))});
+    x.beginPath();let s=0;d.forEach((c,i)=>{s+=c[3];if(i>=5)s-=d[i-5][3];if(i>=4){const cx=pad.l+i*cw+cw/2;i===4?x.moveTo(cx,Y(s/5)):x.lineTo(cx,Y(s/5))}});x.strokeStyle=gold;x.lineWidth=1.2;x.stroke()})}
+
+const mq=[];let modalOpen=false;
+function queueModal(fn,onAct,after){mq.push([fn,onAct,after]);if(!modalOpen)nextModal()}
+function nextModal(){const it=mq.shift();if(!it){modalOpen=false;return}modalOpen=true;const [fn,onAct,after]=it;$('#modalRoot').innerHTML=`<div class="mbg"><div class="modal" role="dialog" aria-modal="true">${fn()}</div></div>`;
+  $('#modalRoot').querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>{snd('click');closeModal()});
+  $('#modalRoot').querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{snd('click');const i=+b.dataset.act;closeModal();onAct&&onAct(i)});
+  after&&after();const f=$('#modalRoot .modal button:not([disabled])');f&&f.focus({preventScroll:true})}
+function closeModal(){$('#modalRoot').innerHTML='';modalOpen=false;setTimeout(()=>{if(!modalOpen)nextModal()},150)}
+function gameOver(){setSpeed(0);queueModal(()=>`<div class="cap">Liquidation</div><h2>${esc(S.company)} 破产清算</h2><div class="rule"></div><p>经营 ${S.day} 天，最高净资产 <span class="gold">${fmt(S.stats.maxNW)}</span>。</p><button class="btn pri lg" type="button" data-act="0">重新创业</button>`,()=>{try{localStorage.removeItem(LS)}catch(e){}startScreen()})}
+function startScreen(rename){if(!rename)setSpeed(0);
+  queueModal(()=>`<div class="cap">${rename?'Company':'Shanghai · January 2026'}</div><h2>${rename?'更改公司名称':'创办你的贸易公司'}</h2><div class="rule"></div>${rename?'':'<p>启动资金 ¥15 万。在六大港口之间低买高卖大宗商品，承接大客户合同，投资 A 股，与四家 AI 财团及其他真人玩家角逐富豪榜。闲暇时，可以飞往澳门。</p>'}
+   <input type="text" id="nameIn" maxlength="16" aria-label="公司名称" value="${rename?esc(S.company):esc(pick(['恒远','金帆','瑞丰','鸿运','华兴','万和'])+'贸易有限公司')}" style="text-align:center;font-size:16px;font-family:var(--f-serif)">
+   <button class="btn pri lg" type="button" id="startBtn">${rename?'保存':'注册开业'}</button>`,null,()=>{
+  $('#startBtn').onclick=()=>{const n=($('#nameIn').value||'').trim()||'无名贸易行';
+    if(rename){S.company=n;closeModal();save();pushPlayer(true);refresh();return}
+    S=newGame(n);S.started=true;news(`${n}在上海正式开业`,'gold');news('提示：交易所「最佳卖出港」一栏会显示跨港价差','');for(let i=0;i<3;i++)genOffer();
+    closeModal();snd('lv');setSpeed(1);save();pushPlayer(true);refresh()}})}
+
+function refresh(){if(!S)return;renderTop();renderMain();renderSide();renderTicker();if(win)renderWin()}
+
+document.addEventListener('pointerdown',e=>{if(e.target.matches&&e.target.matches('input[type=range]'))dragging=true});
+const endDrag=()=>{if(dragging){dragging=false;renderWin(true)}};
+document.addEventListener('pointerup',endDrag);document.addEventListener('pointercancel',endDrag);
+document.addEventListener('input',e=>{const t=e.target;if(!t.dataset||!t.dataset.range)return;const k=t.dataset.range;if(k==='buyPct')CS.buyPct=+t.value;else ui[k]=+t.value;t.style.setProperty('--p',t.value+'%');
+  if(dragging){const l=$('#liveQ');if(l&&LIVE[k])l.textContent=LIVE[k]()}else renderWin(true)});
+document.addEventListener('click',e=>{if(!S)return;if(e.target.id==='ov'){if(win!=='macau')closeWin();return}
+  const t=e.target.closest('button,tr[data-stk],tr[data-good]');if(!t||t.disabled)return;if(t.closest('#modalRoot'))return;const d=t.dataset||{};
+  if(t.id==='muteBtn'){muted=!muted;try{localStorage.setItem('sh_mute',muted?'1':'0')}catch(e){}renderTop();snd('click');return}
+  if(d.speed!=null){if(S.started){if(S.inMacau){toast('身在澳门，商业时间暂停');return}setSpeed(+d.speed);snd('click')}return}
+  if(d.open){if(win)return;openWin(d.open);return}
+  if('closew' in d){closeWin();return}
+  if('ipo' in d){doIPO();return}
+  if(!win)return;
+  const rw=()=>renderWin(true);
+  if(d.city){ui.city=d.city;snd('click');rw();return}
+  if(d.good){ui.good=d.good;ui.pct=ui.mode==='b'?30:100;snd('click');rw();setTimeout(()=>{const dr=$('#wb .ticket');dr&&dr.scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'})},30);return}
+  if(d.mode){ui.mode=d.mode;ui.pct=d.mode==='b'?30:100;snd('click');rw();return}
+  if(d.pctset){const [k,v]=d.pctset.split(':');ui[k]=+v;snd('click');rw();return}
+  if('gtrade' in d){const q=tradeQ();if(ui.mode==='b')buyGood(ui.city,ui.good,q);else sellGood(ui.city,ui.good,q);return}
+  if(d.from){ui.from=d.from;snd('click');rw();return}
+  if(d.to){ui.to=d.to;snd('click');rw();return}
+  if(d.sgood){ui.sgood=d.sgood;snd('click');rw();return}
+  if('sail' in d){ship(ui.from,ui.to,ui.sgood,shipQ());return}
+  if(d.stk){ui.stock=d.stk;snd('click');rw();return}
+  if(d.smode){ui.smode=d.smode;ui.spct=d.smode==='b'?25:100;snd('click');rw();return}
+  if('strade' in d){const l=stockLots();if(ui.smode==='b')buyStock(ui.stock,l);else sellStock(ui.stock,l);return}
+  if(d.accept){acceptOffer(+d.accept);return}
+  if(d.deliver){deliver(+d.deliver);return}
+  if('borrow' in d){borrow(bankAmt());return}
+  if('repayall' in d){repay(S.loan);return}
+  if(d.lcat){ui.luxCat=d.lcat;snd('click');rw();return}
+  if(d.lbuy){buyLux(d.lbuy);return}
+  if(d.lsell){sellLux(+d.lsell);return}
+  if(d.upg){buyUpg(d.upg);return}
+  if('spin' in d){spin();return}
+  if('rename' in d){startScreen(true);return}
+  if('reset' in d){queueModal(()=>'<h2>确定重新开局？</h2><div class="rule"></div><p>当前进度将被清空。</p><div class="row" style="justify-content:center"><button class="btn buy" type="button" data-act="0">清空重来</button><button class="btn" type="button" data-close>取消</button></div>',()=>{try{localStorage.removeItem(LS)}catch(e){}win=null;$('#winRoot').innerHTML='';startScreen()});return}
+  if(d.game){if(CS.sl.spinning||CS.phase==='deal')return;CS.game=d.game;snd('click');rw();return}
+  if(d.room){CS.room=d.room;CS.chip=0;CS.sl.bet=0;if(CS.phase==='done')baccReset();snd('click');rw();return}
+  if(d.chip){CS.chip=+d.chip;snd('chip');rw();return}
+  if(d.bet){baccPlace(d.bet);return}
+  if('bclear' in d){baccClear();return}
+  if('rebet' in d){baccRebet();return}
+  if('deal' in d){baccDeal();return}
+  if(d.sbet){if(CS.sl.spinning)return;CS.sl.bet=+d.sbet;snd('chip');rw();return}
+  if('spinslot' in d){slotSpin();return}
+  if('sit' in d){hdSit();return}
+  if('hdleave' in d){hdLeave();return}
+  if('hdnext' in d){hdNewHand();return}
+  if(d.hda){if(!HD||HD.toAct!==0)return;hdAct(0,d.hda,+d.to||0);return}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&win&&!modalOpen&&win!=='macau')closeWin()});
+function setSpeed(s){speed=s;clearInterval(timer);if(s>0)timer=setInterval(()=>{if(!document.hidden&&!modalOpen&&S&&S.started&&!S.inMacau)tick()},3000/s);if(S)renderTop()}
+window.addEventListener('beforeunload',()=>{if(S&&S.started)try{localStorage.setItem(LS,snapshot())}catch(e){}});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)save()});
+(function dayLoop(){const f=$('#dayFill');if(f&&S){const p=speed&&!modalOpen&&!S.inMacau?clamp((performance.now()-lastTick)/(3000/speed),0,1):0;f.style.width=(p*100).toFixed(1)+'%'}requestAnimationFrame(dayLoop)})();
+
+const bgc=$('#bgc');
+function drawBG(){const W=innerWidth,H=innerHeight,dpr=Math.min(2,devicePixelRatio||1);bgc.width=W*dpr;bgc.height=H*dpr;const x=bgc.getContext('2d');x.scale(dpr,dpr);
+  const g=x.createRadialGradient(W*.7,-H*.1,0,W*.7,-H*.1,Math.max(W,H)*1.1);g.addColorStop(0,'#1a1712');g.addColorStop(.5,'#0e1013');g.addColorStop(1,'#0a0b0d');x.fillStyle=g;x.fillRect(0,0,W,H);
+  x.strokeStyle='rgba(200,169,106,.05)';x.lineWidth=.6;const cx=W*.82,cy=H*.18,R=Math.min(W,H)*.42;
+  for(let k=0;k<26;k++){x.beginPath();for(let t=0;t<=Math.PI*2+.01;t+=.02){const r=R*(.55+.45*Math.cos(7*t+k*.24))*(.7+k*.012);const px=cx+r*Math.cos(t+k*.03),py=cy+r*Math.sin(t+k*.03);t?x.lineTo(px,py):x.moveTo(px,py)}x.stroke()}}
+drawBG();window.addEventListener('resize',()=>{drawBG();if(win){const b=$('#wb');if(b){b._h='';renderWin(true)}}const m=$('#main');if(m){m._h='';renderMain()}});
+
+function start(data){let loaded=data&&data.state;
+  if(!loaded){try{const raw=localStorage.getItem(LS);if(raw)loaded=JSON.parse(raw)}catch(e){}}
+  if(loaded&&loaded.started){S=migrate(loaded);S.inMacau=false;if(data&&data.ui)Object.assign(ui,data.ui);refresh();setSpeed(1);if(data&&data.win&&data.win!=='macau')openWin(data.win)}
+  else{S=newGame('商海浮沉');for(let i=0;i<3;i++)genOffer();refresh();startScreen()}
+  initCloud()}
+window.claude?.hot?.snapshot?.(()=>({state:JSON.parse(snapshot()),ui,win}));
+window.claude?.hot?.ready?window.claude.hot.ready(start):start(window.claude?.hot?.data??{});
+})();
+</script>
