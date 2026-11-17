@@ -14,7 +14,7 @@ await A.click('[data-h=mp-start]');await W(1500);
 console.log('B role',await B.evaluate(()=>__G.role+' me='+__G.me+' phase='+(__G.m&&__G.m.phase)));
 // place HQs
 const place=async p=>p.evaluate(()=>{const m=__G.m;const t=m.tiles.filter(t=>t.t==='land'&&t.owner===-1&&!m.players.some(q=>q.hq&&Math.max(Math.abs(q.hq.x-t.x),Math.abs(q.hq.y-t.y))<5)).sort((a,b)=>b.deco-a.deco)[0];__doAct({t:'hq',x:t.x,y:t.y});return [t.x,t.y]});
-console.log('A hq',await place(A));await W(800);console.log('B hq',await place(B));await W(1500);
+console.log('A hq',await place(A));await W(2000);console.log('B hq',await place(B));await W(1500);
 console.log('phases',await A.evaluate(()=>__G.m.phase),await B.evaluate(()=>__G.m.phase));
 await A.click('[data-speed="4"]');
 const build=async p=>p.evaluate(()=>{const G=__G,m=G.m;let n=0;for(const t of m.tiles.filter(t=>t.res&&t.owner===-1).sort((a,b)=>b.r-a.r)){if(n>=3)break;if(__canClaim(m,G.me,t.x,t.y))continue;__doAct({t:'claim',x:t.x,y:t.y});__doAct({t:'build',x:t.x,y:t.y,k:{food:'farm',oil:'well',ore:'mine'}[t.res]});n++;}return n});

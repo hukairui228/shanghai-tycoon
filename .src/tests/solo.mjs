@@ -10,7 +10,8 @@ await p.click('[data-h=start]');await p.clock.runFor(800);
 await p.screenshot({path:SP+'/g0.png'});
 // pick best valid HQ tile via page eval and click its screen position
 const pos=await p.evaluate(()=>{const m=window.__G.m;let best=null,bs=-1;for(const t of m.tiles){if(!(t.t==='land'||t.t==='urban')||t.owner!==-1)continue;if(m.players.some(q=>q.hq&&Math.max(Math.abs(q.hq.x-t.x),Math.abs(q.hq.y-t.y))<5))continue;let s=0;for(const u of m.tiles){if(Math.max(Math.abs(u.x-t.x),Math.abs(u.y-t.y))<=4&&u.res)s+=u.r;}if(s>bs){bs=s;best=t}}
- const R=window.__R;const wx=(best.x-best.y)*48,wy=(best.x+best.y+1)*24;return [(wx-R.cam.x)*R.cam.z+R.W/2,(wy-R.cam.y)*R.cam.z+R.H/2,best.x,best.y]});
+ const R=window.__R;R.cam.tx=(best.x+.5-11)*10;R.cam.tz=(best.y+.5-11)*10;return [best.x,best.y]});
+await p.clock.runFor(600);const xy=await p.evaluate(([x,y])=>window.__tileScreen(x,y),pos);pos.unshift(...xy);
 await p.mouse.click(pos[0],pos[1]);await p.clock.runFor(800);
 await p.screenshot({path:SP+'/g1.png'});
 // claim+build on a resource tile in range

@@ -90,7 +90,7 @@ function hqPlaced() {
   const m = G.m, me = m.players[G.me]; if (!me.hq) return; R.hl = null; R.resView = false;
   if (m.phase === 'setup') { setHTML($('#hBanner'), '<h3>等待其他董事长选址…</h3><div class="mut">所有人选好总部后商战开始。</div>'); } else $('#hBanner').hidden = true;
   if (G.placed) return; G.placed = true;
-  camTo(me.hq.x, me.hq.y); R.cam.z = Math.max(R.cam.z, .85);
+  camTo(me.hq.x, me.hq.y, Math.min(R.cam.dist, 150));
   G.sel = me.hq.y * MAP_W + me.hq.x; R.sel = G.sel; renderAct(true);
   toast('总部落成。点击周围带资源的地块占地建厂。', 'good');
 }

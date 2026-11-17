@@ -22,6 +22,8 @@ button{cursor:pointer}
 .up{color:var(--up)} .down{color:var(--down)} .mut{color:var(--mut)} .gold{color:var(--gold)}
 #cv{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
 #cv.drag{cursor:grabbing}
+#f3{position:fixed;inset:0;pointer-events:none;z-index:5;overflow:hidden}
+.f3{position:absolute;left:0;top:0;font:700 14px var(--fn);white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,.9),0 0 8px rgba(0,0,0,.5)}
 [hidden]{display:none!important}
 .scr{position:fixed;inset:0;z-index:10}
 .pnl{background:var(--glass);border:1px solid var(--line);border-radius:var(--r);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 12px 32px -14px rgba(0,0,0,.7)}
@@ -280,6 +282,17 @@ button:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
 <div id="home" class="scr" hidden></div>
 <div id="modal"></div>
 <div class="toast" id="toast"></div>
-<script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { Sky } from 'three/addons/objects/Sky.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { mergeGeometries, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
+import { Water } from 'three/addons/objects/Water.js';
+import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 (function(){
 "use strict";

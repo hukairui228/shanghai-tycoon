@@ -16,4 +16,4 @@ function boot(data) {
 window.claude?.hot?.snapshot?.(() => ({ pf: PF, m: G.role === 'solo' && G.m && !G.m.over ? G.m : null, me: G.me, speed: G.speed }));
 if (window.claude?.hot?.ready) window.claude.hot.ready(boot); else boot(window.claude?.hot?.data ?? null);
 // 测试钩子（Playwright 用）
-Object.assign(window, { __G: G, __R: R, __doAct: doAct, __canClaim: canClaim, __renderAct: renderAct });
+Object.assign(window, { __G: G, __R: R, __doAct: doAct, __canClaim: canClaim, __renderAct: renderAct, __tileScreen: tileScreen, __RD: () => RD, step, aiDay });

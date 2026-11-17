@@ -43,7 +43,7 @@ function runDemo() {
   demo = newMatch({ seed: (Math.random() * 1e9) | 0, players: ks.map(k => ({ ai: 1, persona: k, name: PERSONAS[k].name, co: PERSONAS[k].co })) });
   for (const p of demo.players) aiPlaceHQ(demo, p.id);
   for (let i = 0; i < 160; i++) { step(demo); aiDay(demo); }
-  rSetMatch(demo, -1); R.cam.z *= 1.25; R.drift = true; R.onClick = null; R.onHover = null;
+  rSetMatch(demo, -1); rZoom(.62); R.cam.pitch = .62; R.drift = true; R.onClick = null; R.onHover = null;
   clearInterval(demoTimer); demoTimer = setInterval(() => { if (!G.m && demo && !document.hidden) { if (demo.over) runDemo(); else { step(demo); aiDay(demo); } } }, 900);
 }
 function goHome() {
