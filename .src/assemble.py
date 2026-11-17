@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""把 .src/sec/* 拼回单文件 index.html。改完任意段落后跑一次即可。"""
+"""把 .src/sec/* 拼回旧版单文件 classic/index.html。改完任意段落后跑一次即可。"""
 import pathlib, sys
 
 SEC = [
@@ -17,6 +17,6 @@ for name in SEC:
         sys.exit('missing section: ' + name)
     out.append(f.read_text().rstrip('\n'))
 html = '\n'.join(out) + '\n'
-target = root.parent / 'index.html'
+target = root.parent / 'classic' / 'index.html'
 target.write_text(html)
 print(f'assembled {len(html)} bytes / {html.count(chr(10)) + 1} lines -> {target}')
